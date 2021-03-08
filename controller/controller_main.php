@@ -117,9 +117,6 @@
 					Ceci est un mail automatique, Merci de na pas y répondre.';
 
 					mail($email, $sujet, $message, $entete);
-					//mail pour moi
-					$messageadmin = 'nouvelle inscription sur halliday.fr de ' . $nom . " " . $prenom;  
-					mail('jmtentelier@gmail.com','nouvelle inscription', $messageadmin, $entete);
 				
 					require('view/public/messages/view_message_validation_inscription.php');
 				}
@@ -165,6 +162,9 @@
 						/** ACTIVATION MANUELLE
 						/** INTERVENTION DE L ADMINISTRATEUR
 						/***************************/
+							//mail pour moi
+							$messageadmin = 'nouvelle inscription sur TrocADC de ' . $nom . " " . $prenom;  
+							mail('jmtentelier@gmail.com','nouvelle inscription', $messageadmin, $entete);
 							require('view/public/messages/view_message_confirmation_activation_manuelle.php');
 
 						/**************************
