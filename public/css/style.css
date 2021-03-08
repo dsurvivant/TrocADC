@@ -1,0 +1,61 @@
+#main-frame
+{
+	background-color: snow;
+	height: calc( 100vh - 80px );
+}
+
+#cadrePrincipal
+{
+	padding-top: 80px;
+}
+
+#apropos:hover { cursor: pointer; }
+/**
+ * PAGE view_parametres.php
+ */
+
+	#containerParametres button
+	{
+		background-color: lightgrey;
+		border: none;
+		color: black;
+	}
+
+	#containerParametres button:hover
+	{
+		background-color: #343a40;
+		color: white;
+	}
+
+	#containerParametres #nocp:hover, #containerProfil #dateinscription:hover
+	{ cursor: not-allowed; }
+
+
+/**
+ * propositions
+/**/
+
+/** liste des propositions par date **/
+#sectionPropositions .proposition:hover { cursor: pointer; }
+
+#sectionPropositions .detailProposition
+{
+	display: none;
+}
+
+#sectionPropositions .head {background-color:lightgrey;} 
+
+#sectionPropositions h4 {color: #e91903;}
+
+/** liste de mes propositions **/
+#mespropositions .head {background-color: lightgrey;}
+
+#mespropositions .proposition:hover { cursor: pointer; background-color: lightgrey;}
+
+/**
+ * formulaires 
+ */
+#formAgent .form-group {background-color: lightgrey;}
+
+#ajoutproposition h4 {color: #e91903;}
+

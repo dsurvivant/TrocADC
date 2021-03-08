@@ -1,0 +1,42 @@
+#calendar h3 { color: #e91903 }
+
+#calendar .months ul { list-style-type: none; }
+
+#calendar .months a
+{
+	color: #8b8b8b;
+	font-weight: bold;
+}
+
+#calendar .months a:hover
+{
+	text-decoration: none;
+	color: #e91903;
+}
+
+#calendar .monthsupdown:hover { cursor: pointer; }
+#calendar .monthsupdown
+{
+	color: #8b8b8b;
+	font-weight: bold;
+	font-size: 1.5rem;
+	float: right;
+}
+
+#calendar .linkmonth { font-size: 1.5rem; }
+
+/*#calendar td:hover { cursor:pointer; background-color: lightblue;}*/
+
+#calendar .months .active { color: #e91903; }
+
+#calendar .day { color: black; }
+
+#calendar .day:hover { background-color: lightblue;  }
+
+#calendar .head {background-color:lightgrey;} 
+
+#calendar .day:hover {text-decoration: none;}
+
+#calendar .today {background-color: lightblue;}
+
+#calendar .hidemonth {display: none;}

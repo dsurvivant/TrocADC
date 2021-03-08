@@ -1,0 +1,25 @@
+#btn_openformconnexion
+{
+	display: none;
+}
+
+#openformconnexion
+{
+	visibility: hidden;
+}
+
+h1
+{
+	background-color: blue;
+	color: white;
+}
+
+#error_message
+{
+	display: none;
+	color: red;
+}
+
+input:invalid { border: solid 1px red;}
+input:valid { border: solid 1px #ced4da; }
+ 
