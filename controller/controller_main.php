@@ -124,6 +124,10 @@
 					Ceci est un mail automatique, Merci de na pas y répondre.';
 
 					mail($email, $sujet, $message, $entete);
+
+					//message admin de d'inscription
+					$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
+					mail('jmtentelier@gmail.com', "nouvelle inscription", $messageadmin, $entete);
 				
 					require('view/public/messages/view_message_validation_inscription.php');
 				}
@@ -156,6 +160,8 @@
 				$agent = returnAgent($nocp);
 				$actif = $agent->getActif();
 				$cleagent = $agent->getCle();
+				$nom = $agent->getNom();
+				$prenom = $agent->getPrenom();
 				
 				if ($actif==1) //déjà activé
 				{
@@ -170,8 +176,8 @@
 						/** INTERVENTION DE L ADMINISTRATEUR
 						/***************************/
 							//mail pour moi
-							$messageadmin = 'nouvelle inscription sur TrocADC de ' . $nom . " " . $prenom;  
-							mail('jmtentelier@gmail.com','nouvelle inscription', $messageadmin, $entete);
+							$messageadmin = 'Retour mail. Activation à confirmer de ' . $nom . " " . $prenom;  
+							mail('jmtentelier@gmail.com','Demande activation', $messageadmin, $entete);
 							require('view/public/messages/view_message_confirmation_activation_manuelle.php');
 
 						/**************************

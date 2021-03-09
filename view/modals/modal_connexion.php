@@ -46,7 +46,6 @@
             </div>
           </form>
 
-           <!--<a class="float-right" href="index.php?page=inscription">Inscription</a>-->
            <a class="float-right" href="index.php?page=inscription">Inscription</a>
         </div>
       </div>

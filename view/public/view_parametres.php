@@ -62,7 +62,7 @@ if (isset($_SESSION['nocp']))
 
 							<div class="input-group">
 								<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Roulement</span></div>
-								<input type="text" class="form-control" maxlength="5" id="roulement" name="idroulement" value="171" >
+								<input type="text" class="form-control" maxlength="5" id="roulement" name="idroulement" value="171" readonly >
 							</div>
 							<br>
 
