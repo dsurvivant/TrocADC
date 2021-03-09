@@ -118,12 +118,10 @@
 
 					https://trocadc.fr/index.php?page=activation&log='. urlencode($nocp) . '&cle=' . urlencode($cle) .'
 
-
-
 					--------------------------------------------------------
 					Ceci est un mail automatique, Merci de na pas y répondre.';
 
-					mail($email, $sujet, $message, $entete);
+					mail($email, $sujet, "test", $entete);
 
 					//message admin de d'inscription
 					$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
