@@ -116,7 +116,7 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
                 /** ADMINISTRATION */
                 if ($_SESSION['droits']==1)
                 {?>
-                    <button id="btn_modifier_agent" class="btn_form_agent btn btn-secondary btn-danger" name="modifier" disabled="enabled">Modifier</button>
+                    <button id="btn_modifier_agent" class="btn_form_agent btn btn-secondary btn-danger" name="modifier">Modifier</button>
                     <a id="btn_connexion" href="index.php?page=gestionsite" class="btn btn-secondary btn-danger">Annuler</a>
                     <button id="btn_connexion" type="submit" class="btn btn-secondary btn-danger" name="supprimer" disabled>Supprimer</button>
                 <?php

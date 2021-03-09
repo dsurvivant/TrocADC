@@ -13,7 +13,14 @@
 
 		if (isset($_SESSION['nocp'])) //connecté
 		{
-			header('location: index.php?page=calendrier');
+			//vérifiaction si l'utilisateur est bien activé
+			if($_SESSION['actif']==1) { header('location: index.php?page=calendrier');}
+			else 
+			{ 
+				session_destroy();
+				require('view/public/messages/view_message_compte_non_active.php');
+			}
+			
 		}
 		else
 		{
