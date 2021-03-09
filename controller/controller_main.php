@@ -121,7 +121,7 @@
 					--------------------------------------------------------
 					Ceci est un mail automatique, Merci de na pas y répondre.';
 
-					mail($email, $sujet, "test", $entete);
+					mail($email, $sujet, "$message", $entete);
 
 					//message admin de d'inscription
 					$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
