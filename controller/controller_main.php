@@ -111,11 +111,11 @@
 				{ 
 					AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $password, $actif, $idroulement, $cle); 
 					
-					require('view/public/messageview_message_confirmation_activation_manuelle.php');
+					require('view/public/messages/view_message_confirmation_activation.php');
 
 					//message admin de d'inscription
 					$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
-					mail('jmtentelier@gmail.com', "nouvelle inscription", $messageadmin, $entete);
+					mail('jmtentelier@gmail.com', "nouvelle inscription", $messageadmin, "trocadc.fr");
 				}
 			else 
 			{
