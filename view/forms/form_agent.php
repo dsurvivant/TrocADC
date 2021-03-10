@@ -33,31 +33,44 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
       
       <form id="formagent" method="post" action="index.php?page=<?= $page ?>" > 
           <div class="row">
-              <div class="form-group col border m-2 p-3">
-                <label for="input_nocp">N° CP</label>
-                <input id="input_nocp" type="text" class="form-control verifmodif" name="nocp" value="<?= $nocp ?>"<?php if($page=='ficheagent'){ echo "readonly"; } ?>>
-
-                 <label for="input_nom">Nom</label>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">No cp</span></div>
+              <input id="input_nocp" type="text" class="form-control verifmodif" name="nocp" value="<?= $nocp ?>"<?php if($page=='ficheagent'){ echo "readonly"; } ?>>
+            </div>
+            
+            <div class="input-group mb-2">
+                <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Nom</span></div>
                 <input id="input_nom" type="text" class="form-control verifmodif" name="nom" value="<?= $nom ?>">
-
-                <label for="input_prenom">Prenom</label>
+            </div>
+           
+            <div class="input-group mb-2">
+                <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Prenom</span></div>
                 <input id="input_prenom" type="text" class="form-control verifmodif" name="prenom" value="<?= $prenom ?>">
+            </div>
+            
 
-                <label for="input_telephone">Téléphone</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Tel</span></div>
                 <input id="input_telephone" type="text" class="form-control verifmodif" name="telephone" value="<?= $telephone ?>">
                 <p class="help text-danger m-0 text-center">Numéro de téléphone non valable</p>
+            </div>
 
-                <label for="input_email">email</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Email</span></div>
                 <input id="input_email" type="text" class="form-control verifmodif" name="email" value="<?= $email ?>">
                  <p class="help text-danger m-0 text-center">Format email non valable</p>
+            </div>
 
-                <label for="input_password">Mot de passe</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Mot de passe</span></div>
                 <input id="input_password" type="password" class="form-control" name="password" value="">
+            </div>
 
-                <label for="input_confirmpassword">Confirmer Mot de passe</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Confirmer MDP</span></div>
                 <input id="input_confirmpassword" type="password" class="form-control" name="confirmpassword" value="">
                 <p class="help text-danger m-0 text-center">Les mots de passe ne sont pas identiques</p>
-              </div>
+            </div>
 
 
               <!-- DEVELOPPEMENT FUTUR POUR EXTENSION AU DELA DU 171
