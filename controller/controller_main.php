@@ -111,23 +111,11 @@
 				{ 
 					AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $password, $actif, $idroulement, $cle); 
 					
-					//preparation et envoie du mail
-					$sujet = "Activer votre compte TrocADC";
-					$entete = "From: inscription@trocadc.fr";
-					$message = 'Bienvenue sur le site trocadc.fr. Pour activer votre compte, veuillez cliquer sur le lien ci dessous ou copier/coller celui ci dans votre navigateur internet
-
-					https://trocadc.fr/index.php?page=activation&log='. urlencode($nocp) . '&cle=' . urlencode($cle) .'
-
-					--------------------------------------------------------
-					Ceci est un mail automatique, Merci de na pas y répondre.';
-
-					mail($email, $sujet, "$message", $entete);
+					require('view/public/messageview_message_confirmation_activation_manuelle.php');
 
 					//message admin de d'inscription
 					$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
 					mail('jmtentelier@gmail.com', "nouvelle inscription", $messageadmin, $entete);
-				
-					require('view/public/messages/view_message_validation_inscription.php');
 				}
 			else 
 			{
@@ -139,65 +127,6 @@
 			//affichage formulaire d'inscription
 			$nocp=$nom=$prenom=$telephone=$email=$password=$roulement=$residence='';
 			require('view/public/view_form_agent.php');
-		}
-	}
-
-	//fonction d'activation utilisateur suite au retour du lien dans mail de validation
-	function demandeactivation()
-	{
-
-		if(isset($_GET['log']) and isset($_GET['cle']))
-		{
-			$nocp = $_GET['log'];
-			$cle = $_GET['cle'];
-
-			if(findCp($nocp))
-			{
-				
-				//instanciation de l'utilisateur
-				$agent = returnAgent($nocp);
-				$actif = $agent->getActif();
-				$cleagent = $agent->getCle();
-				$nom = $agent->getNom();
-				$prenom = $agent->getPrenom();
-				
-				if ($actif==1) //déjà activé
-				{
-					throw new Exception("Cet agent est déjà activé");
-				}
-				else
-				{	
-					if($cleagent==$cle)
-					{
-						/**************************
-						/** ACTIVATION MANUELLE
-						/** INTERVENTION DE L ADMINISTRATEUR
-						/***************************/
-							//mail pour moi
-							$messageadmin = 'Retour mail. Activation à confirmer de ' . $nom . " " . $prenom;  
-							mail('jmtentelier@gmail.com','Demande activation', $messageadmin, $entete);
-							require('view/public/messages/view_message_confirmation_activation_manuelle.php');
-
-						/**************************
-						/** ACTIVATION AUTOMATIQUE
-						/***************************
-							//la cle est valable, on active le compte
-							activerAgent($nocp);
-							
-							require('view/public/messages/view_message_confirmation_activation.php');
-						/** FIN ACTIVATION AUTOMATIQUE */
-					}
-					else
-					{
-						throw new Exception("Erreur d'activation. Merci de contacter le responsable du site");
-					}
-				}
-			}
-			else { throw new Exception("Erreur d'activation. Merci de contacter le responsable du site");}
-		}
-		else
-		{
-			header("location:index.php");
 		}
 	}
 

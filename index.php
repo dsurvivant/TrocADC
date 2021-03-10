@@ -29,9 +29,6 @@
 			 		session_destroy();
 			 		viewConnection();
 			 		break;
-			 	case 'activation':
-			 		demandeactivation();
-			 		break;
 			 	case 'calendrier':
 			 		menu('Calendrier');
 			 		viewMain();
