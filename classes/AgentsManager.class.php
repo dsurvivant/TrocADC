@@ -22,7 +22,7 @@ class AgentsManager
 	 */
 	public function add(Agent $agent) //retourne l'id de l'agent créé automatiquement par sql
 	{
-		$q = $this->_db->prepare('INSERT INTO agents(nom, prenom, telephone, email, nocp, droits, motdepasse, actif, idroulement, cle) VALUES (:nom, :prenom, :telephone, :email,  :nocp, :droits, :motdepasse, :actif, :idroulement, :cle)');
+		$q = $this->_db->prepare('INSERT INTO agents(nom, prenom, telephone, email, nocp, droits, motdepasse,dateinscription, actif, idroulement, cle) VALUES (:nom, :prenom, :telephone, :email,  :nocp, :droits, :motdepasse,:dateinscription, :actif, :idroulement, :cle)');
 
 		$q->bindValue(':nom', $agent->getNom());
 		$q->bindValue(':prenom', $agent->getPrenom());
@@ -31,7 +31,7 @@ class AgentsManager
 		$q->bindValue(':nocp', $agent->getNocp());
 		$q->bindValue(':droits', $agent->getdroits());
 		$q->bindValue(':motdepasse', $agent->getMotdepasse());
-		//$q->bindValue(':dateinscription', $agent->getDateinscription());
+		$q->bindValue(':dateinscription', $agent->getDateinscription());
 		$q->bindValue(':actif', $agent->getActif());
 		$q->bindValue(':idroulement', $agent->getIdroulement());
 		$q->bindValue(':cle', $agent->getCle());

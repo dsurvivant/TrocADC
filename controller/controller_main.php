@@ -109,7 +109,9 @@
 			//enregistrement en base de donnée de l'agent
 			if ($_SESSION['message']=='') 
 				{ 
-					AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $password, $actif, $idroulement, $cle); 
+					$dateinscription = time();
+
+					AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $password, $dateinscription, $actif, $idroulement, $cle); 
 					
 					require('view/public/messages/view_message_confirmation_activation.php');
 

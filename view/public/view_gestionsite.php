@@ -60,7 +60,9 @@ ob_start();
 
 					<tbody>
 						<?php
-							foreach ($agents as $agent):?>
+							foreach ($agents as $agent):
+								$dateinscription = $agent->getDateinscription();
+								?>
 								<tr>
 									<td class="d-none d-sm-table-cell border p-1"><?= $agent->getId(); ?></td>
 									<td class=" border p-1"><?= $agent->getNocp(); ?></td>
@@ -69,7 +71,7 @@ ob_start();
 									<td class="d-none d-sm-table-cell border p-1"><?= $agent->getEmail(); ?></td>
 									<td class="d-none d-sm-table-cell border p-1"><?= $agent->getTelephone(); ?></td>
 									<td class="d-none d-sm-table-cell border p-1"><?= $agent->getDroits(); ?></td>
-									<td class="d-none d-sm-table-cell border p-1"><?= $agent->getDateinscription(); ?></td>
+									<td class="d-none d-sm-table-cell border p-1"><?= $dateinscription ?></td>
 									<td class="d-none d-sm-table-cell border p-1"><?= $agent->getActif(); ?></td>
 									<td class="d-none d-sm-table-cell border p-1"><?= $agent->getIdroulement(); ?></td>
 									<td class="d-none d-sm-table-cell border p-1"></td>

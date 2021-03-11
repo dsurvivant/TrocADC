@@ -205,7 +205,7 @@
 		$_SESSION['password'] = $agent->getMotdepasse();
 	}
 
-	function AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $motdepasse, $actif, $roulement, $cle)
+	function AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $motdepasse, $dateinscription, $actif, $roulement, $cle)
 	{
 		global $bdd;
 
@@ -218,6 +218,7 @@
 						'nocp'=>$nocp,
 						'droits'=>$droits,
 						'motdepasse'=>cryptagemotdepasse($motdepasse),
+						'dateinscription'=>$dateinscription,
 						'actif'=>$actif,
 						'idroulement'=>$roulement,
 						'cle'=>$cle
