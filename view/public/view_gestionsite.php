@@ -61,7 +61,7 @@ ob_start();
 					<tbody>
 						<?php
 							foreach ($agents as $agent):
-								$dateinscription = $agent->getDateinscription();
+								$dateinscription = date('j-m-Y', $agent->getDateinscription());
 								?>
 								<tr>
 									<td class="d-none d-sm-table-cell border p-1"><?= $agent->getId(); ?></td>

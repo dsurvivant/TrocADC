@@ -12,9 +12,6 @@ if (isset($_SESSION['nocp']))
 	$idroulement = $_SESSION['idroulement'];
 	/**$residence = $_SESSION['idresidence'];**/
 
-	$date=new DateTime($dateinscription);
-
-
 	ob_start();
 	//***********************************************************************
 ?>
@@ -74,7 +71,7 @@ if (isset($_SESSION['nocp']))
 
 							<div class="input-group">
 								<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Inscrit depuis</span></div>
-								<input type="text" class="form-control" id="dateinscription" name="dateinscription" readonly value="<?= $date->format('j M Y') ?>" >
+								<input type="text" class="form-control" id="dateinscription" name="dateinscription" readonly value="<?= date('j-m-Y', $dateinscription); ?>" >
 							</div>
 						</form>
 					</div>
