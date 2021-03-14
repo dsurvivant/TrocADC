@@ -103,7 +103,7 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
                   <input id="input_droits" type="text" class="form-control verifmodif" name="droits" value="<?= $droits ?>">
 
                   <label for="input_dateinscription">Date d'inscription</label>
-                  <input id="input_dateinscription" type="text" class="form-control verifmodif" readonly name="dateinscription" value="<?= $dateinscription ?>">
+                  <input id="input_dateinscription" type="text" class="form-control verifmodif" readonly name="dateinscription" value="<?= date('d-m-Y', $dateinscription) ?>">
 
                   <input id="check_actif" type="checkbox" class="form-group mt-3" name="actif" <?php if($actif) { echo "checked"; } ?>>
                   <label class="form-check-label" for="check_actif">Actif</label>
