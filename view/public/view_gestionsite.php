@@ -20,8 +20,6 @@ if(isset($_GET['onglet']))
 }
 else { $onglet=1; }
 ob_start();
-
-echo $maisquelleerreur;
 ?>
 
 
