@@ -62,10 +62,6 @@
 				 		viewMain();
 				 	}
 			 		break;
-			 	case 'indisponible':
-			 		$_SESSION['menu'] = array ('');
-			 		viewIndisponible();
-			 		break;
 			 	case 'ajout_proposition':
 			 		menu('');
 			 		viewAjouterProposition();

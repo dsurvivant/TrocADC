@@ -298,11 +298,6 @@
 		//récupération des journées
 	}
 
-	function viewIndisponible()
-	{
-		require('view/public/view_indisponible.php');
-	}
-
 	function viewAjouterProposition()
 	{
 		if (isset($_SESSION['nocp']))
