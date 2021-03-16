@@ -40,7 +40,7 @@ $currentmonth = date('n', $datederecherche) -1;
 			<div class="col p-0  border text-center"><?= $journee->getHeureps() ?></div>
 			<div class="col p-0  border text-center"><?= $journee->getLieups() ?></div>
 			<div class="col p-0  border text-center"><?= $journee->getHeurefs() ?></div>
-			<div class="col p-0  border text-center"><?= $journee->getLieufs() ?></div>
+			<div class="col p-0  border text-center"><?= $journee->getLieufs() ?> <img class="float-right" src="public/images/icones/loupe1.png" alt="loupe" width="16px"></div>
 		</div>
 
 		<div class="row detailProposition">
