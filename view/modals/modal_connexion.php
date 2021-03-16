@@ -29,7 +29,8 @@
         </div>
 
         <div class="modal-body">
-          <div class="text-center"><?= $error ?></div>
+          <div class="text-center bg-danger text-white mb-2"><?= $error ?></div>
+
           <form id="formconnexion"  method="post" action="index.php?page=connexion" >
             <div class="form-group">
               <label for="input_nocp">N° CP</label>
