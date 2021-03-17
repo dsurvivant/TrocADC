@@ -5,23 +5,16 @@
  * Formulaire de saisi des informations d'un agent
  * Utilisé pour l'inscription ou la modification d'un agent
  */
+
 if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;} 
 
-  if ( $_SESSION['droits']==0 )
-  { 
-    $h2="INSCRIPTION"; 
-    $page = 'inscription';
-  }
-  else
-  { 
-    $h2= "Informations Agent";
-    $page = 'ficheagent';
-  }
+  if ( $_SESSION['droits']==0 ) { $page = 'inscription';}
+  else { $page = 'ficheagent';}
 ?>
   <div class="container" id="formAgent">
 
       <hr>
-      <div class="row text-center text-monospace"><h2 class="col"><?= $h2; ?></h2></div>
+      <div class="row text-center text-monospace"><h2 class="col"><?= $titrepage; ?></h2></div>
       <!-------------------message limitation au 171 --------------------------->
       <p class="text-danger text-center">
         ATTENTION APPLIWEB EN TEST. <br> 

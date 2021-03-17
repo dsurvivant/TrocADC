@@ -1,4 +1,5 @@
 /**
+ *	 AJOUTER JOURNNEE
  *   - vérification des champs non vide
  *   - vérification format duree et mis en forme auto des durees
  */
@@ -29,6 +30,16 @@ $(function()
 
 		//soumission formulaire
 		if (error == false) { $('#formajouterjournee').submit(); }		
+	});
+
+	/***
+	/** FICHE AGENT
+	/***	**/
+	$('#tableagents tr').dblclick(function()
+	{
+		id = $(this).find('td:first').text();
+		//$('#cadrePrincipal').load('view/forms/form_agent.php');
+		window.location.replace('index.php?page=ficheagent&id=' + id);
 	});
 
 }); //fin jquery

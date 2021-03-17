@@ -5,9 +5,11 @@
 	 */
 	session_start();
 
+	require ('model/model.php');
 	require ('model/fonctions.php');
 	require ('controller/controller_connexion.php');
 	require ('controller/controller_main.php');
+	require ('controller/controller_admin.php');
 	
 	$_SESSION['message']='';
 	$_SESSION['menu']=array();

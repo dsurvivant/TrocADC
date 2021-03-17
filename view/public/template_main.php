@@ -19,7 +19,7 @@
 	<meta name="description" content="Echange de journées de travail entre ADC">
 	<meta name="robots" content="nofollow">
 
-	<title><?= $titre ?></title>
+	<title><?= $titrepage ?></title>
 
 	<link rel="stylesheet" type="text/css" href="public/css/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="public/css/date.css">
