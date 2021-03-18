@@ -58,18 +58,18 @@ function viewFicheAgent()
 		else //modification
 		{
 			//récupération des éléments
-			$id = sanitizeString(trim($_POST['id']));
 			$nom = sanitizeString(trim($_POST['nom']));
 			$prenom = sanitizeString(trim($_POST['prenom']));
 			$telephone = sanitizeString(trim($_POST['telephone']));
 			$email = sanitizeString(trim($_POST['email']));
 			$nocp = sanitizeString(trim($_POST['nocp']));
 			$droits = sanitizeString(trim($_POST['droits']));
-			$dateinscription = sanitizeString(trim($_POST['dateinscription']));
 			$idroulement = 1;
 			
 			//récupération objet agent concerné
 			$agent = returnAgent($nocp);
+			$dateinscription = $agent->getDateinscription();
+			$id = $agent->getId();
 
 			if (isset($_POST['actif']))
 			{ $actif = sanitizeString(trim($_POST['actif']));} else { $actif=0;}
@@ -95,6 +95,7 @@ function viewFicheAgent()
 			if( $nocp=='' or $nom=='' or $prenom=='' or $telephone=='' or $email=='' or $droits=='') { $_SESSION['message']= "Merci de remplir tous les champs obligatoires";}
 			
 			//modification 
+				
 			if ($_SESSION['message']=='') 
 			{ 
 				if($modifpassword!='') { $modifpassword = cryptagemotdepasse($modifpassword); }
@@ -115,6 +116,7 @@ function viewFicheAgent()
 					]);
 				ModifierAgent($agent);
 				$_SESSION['message']="Modification effectuée avec succes";
+
 				viewGestionsite();
 			}
 			else //erreur sur un des champs

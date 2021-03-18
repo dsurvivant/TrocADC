@@ -76,9 +76,9 @@ class AgentsManager
 	public function updateById(Agent $agent)
 	{
 		if($agent->getMotdepasse()=='')
-		{ $q = $this->_db->prepare('UPDATE agents SET nom=:nom, prenom=:prenom, telephone=:telephone, email=:email, nocp=:nocp, droits=:droits, dateinscription=:dateinscription, actif=:actif, idroulement=:idroulement WHERE id=:id');}
+		{ $q = $this->_db->prepare('UPDATE agents SET nom=:nom, prenom=:prenom, telephone=:telephone, email=:email, nocp=:nocp, droits=:droits, actif=:actif, idroulement=:idroulement WHERE id=:id');}
 		else
-		{ $q = $this->_db->prepare('UPDATE agents SET nom=:nom, prenom=:prenom, telephone=:telephone, email=:email, nocp=:nocp, droits=:droits, motdepasse=:motdepasse, dateinscription=:dateinscription, actif=:actif, idroulement=:idroulement WHERE id=:id');}
+		{ $q = $this->_db->prepare('UPDATE agents SET nom=:nom, prenom=:prenom, telephone=:telephone, email=:email, nocp=:nocp, droits=:droits, motdepasse=:motdepasse, actif=:actif, idroulement=:idroulement WHERE id=:id');}
 		
 
 		$q->bindValue(':nom', $agent->getNom());
@@ -87,7 +87,6 @@ class AgentsManager
 		$q->bindValue(':email', $agent->getEmail());
 		$q->bindValue(':nocp', $agent->getNocp());
 		$q->bindValue(':droits', $agent->getdroits());
-		$q->bindValue(':dateinscription', $agent->getDateinscription());
 		$q->bindValue(':actif', $agent->getActif());
 		$q->bindValue(':idroulement', $agent->getIdroulement());
 		$q->bindValue(':id', $agent->getId());

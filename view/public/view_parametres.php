@@ -34,51 +34,50 @@ if (isset($_SESSION['nocp']))
 			<section  class = "col-sm-6 border border-secondary p-0 m-1">
 				<div class="card-header text-center bg-secondary text-white">Mes infos</div>
 
-					<div class="card-body">
+				<div class="card-body">
+					<form id="formMesInfos" method="post" action="index.php?page=parametres">
+						<div class="input-group">
+							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">No CP</span></div>
+							<input type="text" class="form-control" id="nocp" name="nocp" readonly value="<?= $nocp ?>" >
+						</div>
+						<br>
 
-						<form id="formMesInfos" method="post" action="index.php?page=parametres">
-							<div class="input-group">
-								<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">No CP</span></div>
-								<input type="text" class="form-control" id="nocp" name="nocp" readonly value="<?= $nocp ?>" >
-							</div>
+						<div class="input-group">
+							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Tel</span></div>
+							<input type="text" class="form-control" maxlength="14" id="telephone" name="telephone" value="<?= $telephone ?>" >
+							<span class="col-12 help text-danger text-center"></span>
+						</div>
+						<br>
+
+						<div class="input-group">
+							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Email</span></div>
+							<input type="mail" class="form-control" id="email" name="email"  value="<?= $email ?>" >
+							<span class="col-12 help text-danger text-center"></span>
+						</div>
 							<br>
 
-							<div class="input-group">
-								<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Tel</span></div>
-								<input type="text" class="form-control" maxlength="14" id="telephone" name="telephone" value="<?= $telephone ?>" >
-								<span class="col-12 help text-danger text-center"></span>
-							</div>
-							<br>
+						<div class="input-group">
+							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Roulement</span></div>
+							<input type="text" class="form-control" maxlength="5" id="roulement" name="idroulement" value="171" readonly >
+						</div>
+						<br>
 
-							<div class="input-group">
-								<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Email</span></div>
-								<input type="mail" class="form-control" id="email" name="email"  value="<?= $email ?>" >
-								<span class="col-12 help text-danger text-center"></span>
-							</div>
-							<br>
+						<div class="input-group">
+							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Résidence</span></div>
+							<input type="text" class="form-control" maxlength="30" id="residence" name="residence" value="Paris Est" readonly>
+						</div>
+						<br>
 
-							<div class="input-group">
-								<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Roulement</span></div>
-								<input type="text" class="form-control" maxlength="5" id="roulement" name="idroulement" value="171" readonly >
-							</div>
-							<br>
+						<div class="input-group">
+							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Inscrit depuis</span></div>
+							<input type="text" class="form-control" id="dateinscription" name="dateinscription" readonly value="<?= date('j-m-Y', $dateinscription); ?>" >
+						</div>
+					</form>
+				</div>
 
-							<div class="input-group">
-								<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Résidence</span></div>
-								<input type="text" class="form-control" maxlength="30" id="residence" name="residence" value="Paris Est" readonly>
-							</div>
-							<br>
-
-							<div class="input-group">
-								<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Inscrit depuis</span></div>
-								<input type="text" class="form-control" id="dateinscription" name="dateinscription" readonly value="<?= date('j-m-Y', $dateinscription); ?>" >
-							</div>
-						</form>
-					</div>
-
-					<div class="card-footer text-right">
-						<button type="submit" form="formMesInfos" id="btnSaveInfos" class="btn btn-secondary btn-sm btn-block bg-secondary text-white">Sauvegarder</button>
-					</div>
+				<div class="card-footer text-right">
+					<button type="submit" form="formMesInfos" id="btnSaveInfos" class="btn btn-secondary btn-sm btn-block bg-secondary text-white">Sauvegarder</button>
+				</div>
 			</section>
 				
 		<!--------------------------->

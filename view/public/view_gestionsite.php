@@ -19,12 +19,17 @@ if(isset($_GET['onglet']))
 	}
 }
 else { $onglet=1; }
+
+if (isset($_SESSION['message'])) { $message = $_SESSION['message']; }
+else { $message = ''; }
 ob_start();
 ?>
 
-
 <div class="container">
 
+	<h2 class="col-12 jumbotron p-3 text-center">Gestion du site</h2>
+
+	<h4 class="col-12 text-danger text-center p-2"><?= $message ?></h4>
 
 	<!-- LES ONGLETS -->
 

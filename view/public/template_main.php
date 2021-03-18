@@ -32,7 +32,7 @@
 
 	<nav class="navbar fixed-top navbar-dark bg-dark">
 
-		<a href="index.php" class="navbar-brand">trocADC</a>
+		<a href="index.php" class="navbar-brand">TrocADC</a>
 
 		<ul class="navbar-nav">
           <li class="nav-item dropdown">
