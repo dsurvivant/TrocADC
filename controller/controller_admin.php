@@ -21,7 +21,7 @@ function viewAjouterjournee()
 	}
 }
 
-function viewGestionsite()
+function viewGestionsite($id='')
 {
 	//récupération des listes agents, journees, roulements si administrateur
 	$agents = ListeAgents();
@@ -117,7 +117,7 @@ function viewFicheAgent()
 				ModifierAgent($agent);
 				$_SESSION['message']="Modification effectuée avec succes";
 
-				viewGestionsite();
+				viewGestionsite($id);
 			}
 			else //erreur sur un des champs
 			{
