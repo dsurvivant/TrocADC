@@ -92,13 +92,4 @@ $(function(){
 		}
 	});
 
-	/***
-	/**
-	/***	**/
-	$('#tableagents tr').dblclick(function()
-	{
-		id = $(this).find('td:first').text();
-		//$('#cadrePrincipal').load('view/forms/form_agent.php');
-		window.location.replace('index.php?page=ficheagent&id=' + id);
-	});
 });

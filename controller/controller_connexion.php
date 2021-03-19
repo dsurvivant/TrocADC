@@ -2,8 +2,6 @@
 	/**
 	 * créé par jmt janvier 2021
 	 */
-	require ('model/model.php');
-
 
 	function viewConnection()
 	{

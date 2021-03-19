@@ -10,8 +10,8 @@
 		private $_telephone;
 		private $_email;
 		private $_nocp;
-		private $_motdepasse;
 		private $_droits;
+		private $_motdepasse;
 		private $_dateinscription;
 		private $_actif;
 		private $_idroulement;

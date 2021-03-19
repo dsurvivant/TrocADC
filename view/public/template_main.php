@@ -19,7 +19,7 @@
 	<meta name="description" content="Echange de journées de travail entre ADC">
 	<meta name="robots" content="nofollow">
 
-	<title><?= $titre ?></title>
+	<title><?= $titrepage ?></title>
 
 	<link rel="stylesheet" type="text/css" href="public/css/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="public/css/date.css">
@@ -32,7 +32,7 @@
 
 	<nav class="navbar fixed-top navbar-dark bg-dark">
 
-		<a href="index.php" class="navbar-brand">trocADC</a>
+		<a href="index.php" class="navbar-brand">TrocADC</a>
 
 		<ul class="navbar-nav">
           <li class="nav-item dropdown">

@@ -19,12 +19,18 @@ if(isset($_GET['onglet']))
 	}
 }
 else { $onglet=1; }
+
+if (isset($_SESSION['message'])) { $message = $_SESSION['message']; }
+else { $message = ''; }
 ob_start();
 ?>
 
-
 <div class="container">
+	<?= $id; ?>
+	
+	<h2 class="col-12 jumbotron p-3 text-center">Gestion du site</h2>
 
+	<h4 class="col-12 text-danger text-center p-2"><?= $message ?></h4>
 
 	<!-- LES ONGLETS -->
 
@@ -64,7 +70,7 @@ ob_start();
 							foreach ($agents as $agent):
 								$dateinscription = date('j-m-Y', $agent->getDateinscription());
 								?>
-								<tr>
+								<tr <?php if($id==$agent->getId()) { echo "class='text-danger'"; } ?> >
 									<td class="d-none d-sm-table-cell border p-1"><?= $agent->getId(); ?></td>
 									<td class=" border p-1"><?= $agent->getNocp(); ?></td>
 									<td class=" border p-1"><?= $agent->getNom(); ?></td>
