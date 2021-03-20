@@ -114,12 +114,13 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
             }?>
         </div>
 
-        <div id="btn_confirmer_suppression" class="col-12 text-danger text-center" style="display: none;">
+        <div id="confirmer_suppression" class="col-12 text-danger text-center" style="display: none;">
           <?php
              /** ADMINISTRATION */
             if ($_SESSION['droits']==1)
             {?>
               <button id="btn_confirmer_suppression" class="btn btn-secondary btn-danger">Confirmer la suppression</button>
+              <button id="btn_annuler_confirmation" class="btn btn-secondary btn-danger">Annuler</button>
                 <?php
             }
           ?>

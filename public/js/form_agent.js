@@ -159,7 +159,7 @@ $(function(){
 
 		$('#formagent').css('background-color','#e55039');
 		$('#form_boutons').css('display', 'none');
-		$('#btn_confirmer_suppression').css('display','block');
+		$('#confirmer_suppression').css('display','block');
 	});
 
 	//bouton de confirmation de suppression
@@ -168,6 +168,15 @@ $(function(){
 		e.preventDefault();
 		$('#formagent').attr('action', 'index.php?page=ficheagent&supprimer');
 		$('#formagent').submit();
+	});
+
+	//bouton d'annulation de suppression
+	$('#btn_annuler_confirmation').click(function(e) 
+	{
+		e.preventDefault();
+		$('#formagent').css('background-color','white');
+		$('#form_boutons').css('display', 'block');
+		$('#confirmer_suppression').css('display','none');
 	});
 
 }) // jquery
