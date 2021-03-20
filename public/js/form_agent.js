@@ -147,8 +147,27 @@ $(function(){
 		//soumission formulaire
 		if (erreur == false) 
 		{
+			$('#formagent').attr('action', 'index.php?page=ficheagent&modifier');
 			$('#formagent').submit();
 		}	
+	});
+
+	//bouton de suppression. Ne supprime pas avant confirmation
+	$('#btn_supprimer_agent').click(function(e)
+	{
+		e.preventDefault();
+
+		$('#formagent').css('background-color','#e55039');
+		$('#form_boutons').css('display', 'none');
+		$('#btn_confirmer_suppression').css('display','block');
+	});
+
+	//bouton de confirmation de suppression
+	$('#btn_confirmer_suppression').click(function(e)
+	{
+		e.preventDefault();
+		$('#formagent').attr('action', 'index.php?page=ficheagent&supprimer');
+		$('#formagent').submit();
 	});
 
 }) // jquery

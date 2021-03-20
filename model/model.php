@@ -64,13 +64,13 @@
 	 * @param  [type] $nocp [nocp de l'agent à activer]
 	 * @return [type]         [description]
 	 */
-		function activerAgent($nocp)
-		{
-			global $bdd;
-			$agent = new Agent(['nocp'=>$nocp]);
-			$manager = new AgentsManager($bdd);
-			$manager->activer($agent);
-		}
+	function activerAgent($nocp)
+	{
+		global $bdd;
+		$agent = new Agent(['nocp'=>$nocp]);
+		$manager = new AgentsManager($bdd);
+		$manager->activer($agent);
+	}
 
 	/**
 	 * [findCp description] determine si le numéro de cp existe déjà
@@ -234,6 +234,13 @@
 		$manager->updateById($agent);
 	}
 
+	function SupprimerAgent($agent)
+	{
+		global $bdd;
+		$manager = new AgentsManager($bdd);
+		$manager->delete($agent);
+	}
+
 	//retourne un tableau contenant les objets Agents
 	function ListeAgents()
 	{
@@ -325,6 +332,10 @@
 		$manager->update($proposition);
 	}
 
+	/**
+	 * [Supprimerproposition suppression d'une propostion]
+	 * @param [type] $idproposition [id de la proposition à supprimer]
+	 */
 	function Supprimerproposition($idproposition)
 	{
 		global $bdd;
@@ -333,6 +344,17 @@
 		$proposition = new Proposition(['id'=>$idproposition]);
 		$manager = new PropositionsManager($bdd);
 		$manager->delete($proposition);
+	}
+
+	/**
+	 * [SupprimerPropositions supprime l'ensemble des propostions d'un agent]
+	 * @param [type] $agent [objet $agent]
+	 */
+	function SupprimerPropositions($agent)
+	{
+		global $bdd;
+		$manager = new PropositionsManager($bdd);
+		$manager->deletePropositions($agent);
 	}
 
 	//retourne un tableau contenant les objets propositions

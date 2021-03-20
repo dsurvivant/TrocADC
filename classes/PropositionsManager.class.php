@@ -56,6 +56,18 @@ class PropositionsManager
 	}
 
 	/**
+	 * [deletePropositions suppression de l'ensemble des propositions d'un agent]
+	 * @param  Agent  $agents [objet agent]
+	 */
+	function deletePropositions(Agent $agent)
+	{
+		$q = $this->_db->prepare('DELETE FROM propositions WHERE idagent=:idagent');
+
+		$q->bindValue(':idagent', $agent->getId());
+		$q-> execute();
+	}
+
+	/**
 	 * MODULES
 	 */
 	

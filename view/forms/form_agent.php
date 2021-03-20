@@ -11,21 +11,23 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
   if ( $_SESSION['droits']==0 ) { $page = 'inscription';}
   else { $page = 'ficheagent';}
 ?>
-  <div class="container" id="formAgent">
+  <div class="container">
 
       <hr>
 
       <div class="row text-center text-monospace"><h2 class="col"><?= $titrepage; ?></h2></div>
       <!-------------------message limitation au 171 --------------------------->
-      <p class="text-danger text-center">
-        ATTENTION APPLIWEB EN TEST. <br> 
-        SEULES LES INSCRIPTIONS DU 171 SERONT PRISES EN COMPTE. <br>
-      </p>
+      <div class="row">
+        <div class="col-12 text-danger text-center">
+          ATTENTION APPLIWEB EN TEST. <br> 
+          SEULES LES INSCRIPTIONS DU 171 SERONT PRISES EN COMPTE. <br>
+        </div>
+      </div>
       <!------------------------------------------------------------------------>
       <hr>
       <div class="row text-danger text-center p-1"><h3 id="message_form_agent" class="col"><?= $_SESSION['message']; ?></h3></div>
       
-      <form class="row" id="formagent" method="post" action="index.php?page=<?= $page ?>" > 
+      <form class="row pt-2 mb-4" id="formagent" method="post" action="index.php?page=<?= $page ?>" > 
         <section  class = "col-sm-6 m-1">
           <div class="input-group mb-2">
             <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">No cp</span></div>
@@ -73,9 +75,9 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
               if ($_SESSION['droits']==1)
               {?>
                 <div class="form-group col m-2 p-3">
-                  <label for="input_id">Id: <?= $id ?></label> <br>
+                  <label>Id: <?= $id ?></label> <br>
 
-                  <label for="input_dateinscription">Inscrit depuis le: <?= date('d M Y', $dateinscription); ?></label> <br>
+                  <label>Inscrit depuis le: <?= date('d M Y', $dateinscription); ?></label> <br>
 
                   <div class="input-group mb-2">
                     <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Droits</span></div>
@@ -91,8 +93,8 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
         </section>
       </form>
 
-      <div class="row">
-        <div class="col text-center">
+      <section class="row">
+        <div id="form_boutons" class="col-12 text-danger text-center"> 
           <?php
             /**  */
             if ($_SESSION['droits']==0)
@@ -105,11 +107,23 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
             /** ADMINISTRATION */
             if ($_SESSION['droits']==1)
             {?>
-              <button id="btn_modifier_agent" class="btn_form_agent btn btn-secondary btn-danger" name="modifier">Modifier</button>
+              <button id="btn_modifier_agent" class="btn_form_agent btn btn-secondary btn-danger">Modifier</button>
               <a id="btn_connexion" href="index.php?page=gestionsite" class="btn btn-secondary btn-danger">Annuler</a>
-              <button id="btn_connexion" type="submit" class="btn btn-secondary btn-danger" name="supprimer" disabled>Supprimer</button>
+              <button id="btn_supprimer_agent" class="btn btn-secondary btn-danger">Supprimer</button>
                 <?php
             }?>
         </div>
-      </div>
+
+        <div id="btn_confirmer_suppression" class="col-12 text-danger text-center" style="display: none;">
+          <?php
+             /** ADMINISTRATION */
+            if ($_SESSION['droits']==1)
+            {?>
+              <button id="btn_confirmer_suppression" class="btn btn-secondary btn-danger">Confirmer la suppression</button>
+                <?php
+            }
+          ?>
+        </div>
+
+        </section>
   </div>

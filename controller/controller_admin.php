@@ -2,6 +2,13 @@
 
 /**
  * CREE PAR JMT MARS 2021
+ * 
+ */
+
+/**
+ * [viewAjouterjournee ajoute une journee de roulement à la table journee.]
+ * Entree - OBLIGATOIRE - : noroulement, nomjournee, heureps, lieups, heurefs, lieufs en POST
+ * @return [type] [Retour sur la page gestion de site sur onglet journee (view_gestionsite.php&onglet=journees)]
  */
 function viewAjouterjournee()
 {
@@ -21,6 +28,13 @@ function viewAjouterjournee()
 	}
 }
 
+/**
+ * - Récupère la liste des objets agents dans $agents
+ * - Récupère la liste des objets journees dans $journees
+ * - Récupère la liste des objets roulements dans $roulements
+ * @param  string $id [facultatif: permet de mettre la ligne correspondant à l'id en rouge]
+ * @return affiche la page view_gestionsite.php
+ */
 function viewGestionsite($id='')
 {
 	//récupération des listes agents, journees, roulements si administrateur
@@ -32,11 +46,17 @@ function viewGestionsite($id='')
 	require('view/public/view_gestionsite.php');
 }
 
+/**
+ * [viewFicheAgent affichage / modification /suppression d'un agent]
+ * @param [$_GET['id']] [affichage de l'agent correspondant à l'id]
+ * @param [$_GET['modifier']] [modification de l'agent en retour formulaire type POST]
+ * @return [type] [description]
+ */
 function viewFicheAgent()
 	{
 		$nom=$prenom=$nocp=$telephone=$email=$roulement=$residence=$droits=$dateinscription='';
 		$actif=0;
-		//récupération infos de l'agent (fiche agent)
+	/******* FICHE AGENT *******/
 		if(isset($_GET['id']))
 		{
 			$id=sanitizeString(trim($_GET['id']));
@@ -55,7 +75,8 @@ function viewFicheAgent()
 			$titrepage = "Informations Agent";
 			require('view/public/view_form_agent.php');
 		}
-		else //modification
+	/******* MODIFICATION AGENT *******/
+		else if(isset($_GET['modifier']))
 		{
 			//récupération des éléments
 			$nom = sanitizeString(trim($_POST['nom']));
@@ -124,6 +145,19 @@ function viewFicheAgent()
 				$titrepage = "Informations Agent";
 				require('view/public/view_form_agent.php');
 			}
+		}
+	/******* SUPPRESSION AGENT *******/
+		else if (isset($_GET['supprimer'])) {
+			echo "suppression";
+
+			//récupération objet agent concerné
+			$nocp = sanitizeString(trim($_POST['nocp']));
+			$agent = returnAgent($nocp);
+			
+			SupprimerAgent($agent);
+			SupprimerPropositions($agent);
+			$_SESSION['message'] = "Suppression de " . $_POST['nom'] . " " . $_POST['prenom'] . " effectuée";
+			viewGestionsite();
 		}
 	}
 
