@@ -154,7 +154,7 @@ function viewFicheAgent()
 			$nocp = sanitizeString(trim($_POST['nocp']));
 			$agent = returnAgent($nocp);
 			
-			SupprimerAgent($agent);
+			git dSupprimerAgent($agent);
 			SupprimerPropositions($agent);
 			$_SESSION['message'] = "Suppression de " . $_POST['nom'] . " " . $_POST['prenom'] . " effectuée";
 			viewGestionsite();

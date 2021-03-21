@@ -72,14 +72,16 @@
 				{ 
 					$dateinscription = time();
 					$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
-
+					
+					mail('jmtentelier@gmail.com', "nouvelle inscription", $messageadmin, "trocadc.fr");
+					
 					AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $password, $dateinscription, $actif, $idroulement, $cle); 
 					
 					$titrepage = "inscription";
 					require('view/public/messages/view_message_confirmation_activation.php');
 					//message admin de d'inscription
 					
-					mail('jmtentelier@gmail.com', "nouvelle inscription", $messageadmin, "trocadc.fr");
+					
 				}
 			else 
 			{
