@@ -2,19 +2,19 @@ $(function()
 {
 	/** PROPOSITIONS PAR DATE **/
 
-	$('#sectionPropositions .detailProposition').hide();
+	$('.sectionPropositions .detailProposition').hide();
 
-	$('#cadrePrincipal').on('mouseenter', '#sectionPropositions .proposition', function()
+	$('#cadrePrincipal').on('mouseenter', '.sectionPropositions .proposition', function()
 		{
 			$(this).css('background-color', 'lightgrey');
 		});
 
-	$('#cadrePrincipal').on('mouseleave', '#sectionPropositions .proposition',function()
+	$('#cadrePrincipal').on('mouseleave', '.sectionPropositions .proposition',function()
 	{
 		$(this).css('background-color', 'white');
 	});
 
-	$('#cadrePrincipal').on('click','#sectionPropositions .proposition', function()
+	$('#cadrePrincipal').on('click','.sectionPropositions .proposition', function()
 	{
 		if($(this).hasClass('bg-dark'))
 		{$(this).removeClass('bg-dark text-white');}

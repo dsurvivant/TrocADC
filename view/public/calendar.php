@@ -24,8 +24,10 @@ if (isset($_SESSION['nocp']))
 
 
 	<div class="periods">
-			<h3 class="year col-lg-12"><?= $year ?></h3>
-
+			<div class="text-center">
+				<span class="year text-center h3" style="color:#e91903"><?= $year ?></span>
+				<img class="monthsupdown" src="public/images/icones/moins-16px.png" title="replier" alt="repliage calendrier">
+			</div>
 			<div class="months mb">
 				<div class="text-justify">
 					<?php foreach ($date->months as $id=>$value) 
@@ -38,7 +40,6 @@ if (isset($_SESSION['nocp']))
 						<?php
 						endif;
 					} ?>
-					<img class="monthsupdown" src="public/images/icones/moins-16px.png" title="replier" alt="repliage calendrier">
 				</div>
 			</div>
 

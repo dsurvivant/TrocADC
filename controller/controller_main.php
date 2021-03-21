@@ -73,9 +73,12 @@
 			if (isset($_GET['choixdate'])) { $datederecherche = $_GET['choixdate']; }
 			else { $datederecherche = time(); }
 
+			
+		//récupération des propositions sur la date choisie
 			$tabpropositions = [];
 			$i=0;
 			$listepropositions = ListePropositionsParDate($datederecherche);
+
 			//association pour chaque proposition à l'agent et le roulement
 			foreach ($listepropositions as $proposition) 
 			{
@@ -93,6 +96,9 @@
 				$tabpropositions[$i][2] = $agent;
 				$i++;	
 			}
+
+		//récupération des dernieres propositions
+		$tabDernieresPropositions = viewDernierespropositions();
 
 			$titrepage = "Calendrier";
 			require('view/public/view_main.php');
@@ -237,6 +243,43 @@
 		}
 	}
 
+	//récupération des 10 dernieres propositions
+	function viewDernierespropositions()
+	{
+		if (isset($_SESSION['nocp']))
+		{
+			$_SESSION['message']='';
+			
+			$tabDernieresPropositions = [];
+			//RECUPERATION DES 10 dernieres propositions
+			$listeDernieresPropositions = ListeDernieresPropositions();
+			//RECUPERATION DES JOURNEES LIEES AUX PROPOSITIONS
+
+			$i=0;
+			//association pour chaque proposition à l'agent et le roulement
+			foreach ($listeDernieresPropositions as $proposition) 
+			{
+				$idagent = $proposition->getIdagent();
+				$idjournee = $proposition->getIdjournee();
+
+				//recherche de la journee
+				$journee = findIdJournee($idjournee);
+				//recherche de l'agent correspondant
+				$agent = findId($idagent);
+
+				//ajout au tableau
+				$tabDernieresPropositions[$i][0] = $proposition;
+				$tabDernieresPropositions[$i][1] = $journee;
+				$tabDernieresPropositions[$i][2] = $agent;
+				$i++;
+			}
+			return $tabDernieresPropositions;;
+		}
+		else
+		{
+			require ('view/connection/view_connexion.php');
+		}
+	}
 	//retire $option du menu déroulant
 	function menu($option)
 	{

@@ -36,16 +36,16 @@
 /**/
 
 /** liste des propositions par date **/
-#sectionPropositions .proposition:hover { cursor: pointer; }
+.sectionPropositions .proposition:hover { cursor: pointer; }
 
-#sectionPropositions .detailProposition
+.sectionPropositions .detailProposition
 {
 	display: none;
 }
 
-#sectionPropositions .head {background-color:lightgrey;} 
+.sectionPropositions .head {background-color:lightgrey;} 
 
-#sectionPropositions h4 {color: #e91903;}
+.sectionPropositions h4 {color: #e91903;}
 
 /** liste de mes propositions **/
 #mespropositions .head {background-color: lightgrey;}

@@ -118,6 +118,20 @@ class PropositionsManager
 		return $propositions;
 	}
 
+	//liste des 10 dernieres propositions
+	public function findDernieresPropositions()
+	{
+		$propositions = [];
+
+		$q = $this->_db->query('SELECT * FROM propositions ORDER BY id DESC LIMIT 10');
+
+		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$propositions[] = new Proposition($donnees);
+		}
+		return $propositions;
+	}
+
     //retourne une liste d'objet propositions sur une date donnee
     public function findPropositionsOnDate(Proposition $proposition)
    	{
