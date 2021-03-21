@@ -391,6 +391,14 @@
 		return $manager->findPropositionsByIdAgent($proposition);
 	}
 
+	function ListeDernieresPropositions()
+	{
+		global $bdd;
+		$manager = new PropositionsManager($bdd);
+		//recherche des 10 dernieres proposition
+		return $manager->findDernieresPropositions();
+	}
+
 	//retourne le nombre de propositions sur une date
 	function NbPropositionsOnDate($date)
 	{

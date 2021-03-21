@@ -10,12 +10,13 @@ $currentmonth = date('n', $datederecherche) -1;
 
 <div class="container-fluid">
 	<div class="row">
-
-		<h4 id="jourPropositions" class="mr-2"><?= date('j', $datederecherche). " " . $mois[$currentmonth] . " " . date('Y', $datederecherche) ?></h4>
-		
-		<a href="index.php?page=ajout_proposition&jour=<?= $datederecherche ?>">
-			<img src="public/images/icones/plus-16px.png" alt="ajout de proposition" title="Ajouter une proposition">
-		</a>
+		<div class="col text-center">
+			<span id="jourPropositions" class="mr-2 h4" style="color:#e91903"><?= date('j', $datederecherche). " " . $mois[$currentmonth] . " " . date('Y', $datederecherche) ?></span>
+			
+			<a href="index.php?page=ajout_proposition&jour=<?= $datederecherche ?>" class="float-right">
+				<img src="public/images/icones/plus-16px.png" alt="ajout de proposition" title="Ajouter une proposition">
+			</a>
+		</div>
 	</div>
 
 	<div class="row head">

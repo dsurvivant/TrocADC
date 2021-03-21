@@ -4,18 +4,27 @@ if (isset($_SESSION['nocp']))
 {	
 	ob_start();
 		?>
-	<div id="containerMain" class="container-fluid">
+	<div id="containerMain" class="container">
 
 		<div class="row">
-			<div id="calendar" class="col-xs-12 col-lg-6">
-				<?php require("view/public/calendar.php");  ?>
+			<section  class="col-lg-6">
+				<div id="calendar" class="mb-3">
+					<?php require("view/public/calendar.php");  ?>
 
-			</div>
+				</div>
 
-			<section id="sectionPropositions" class="col-xs-12 col-lg-6">
-				<?php require("view/public/view_propositions_par_date.php"); ?>
+				<div class="sectionPropositions">
+					<?php require("view/public/view_propositions_par_date.php"); ?>
 
+				</div>
 			</section>
+
+			<section class="col-lg-6">
+				<div class="sectionPropositions">
+					<?php require("view/public/view_dernieres_propositions.php"); ?>
+				</div>
+			</section>
+
 		</div>
 
 	</div>
