@@ -8,7 +8,7 @@ $mois = array('Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 
 $currentmonth = date('n', $datederecherche) -1;
 ?>
 
-<div class="container-fluid">
+<div class="container-fluid border border-secondary">
 	<div class="row">
 		<div class="col text-center">
 			<span id="jourPropositions" class="mr-2 h4" style="color:#e91903"><?= date('j', $datederecherche). " " . $mois[$currentmonth] . " " . date('Y', $datederecherche) ?></span>
@@ -30,6 +30,14 @@ $currentmonth = date('n', $datederecherche) -1;
 	<?php
 	//rappel: tabpropositions[[$proposition,$journee,$agent]]
 	$nbproposition = count($tabpropositions);
+
+	if($nbproposition==0) 
+	{?>
+		<div class="row proposition" >
+			<div class="col p-0  border text-center">Pas de propositions ce jour</div>
+		</div>
+	<?php
+	}
 	for($i=0;$i<$nbproposition;$i++):
 		$proposition = $tabpropositions[$i][0];
 		$journee = $tabpropositions[$i][1];

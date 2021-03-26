@@ -5,10 +5,12 @@
 	 * cette page doit avoir en entree le tableau 'tabDernieresPropositions' qui
 	 * contient les 10 dernieres propositions ainsi que la journee et l'agent de chaque proposition
 	 */
+	
+$datedujour = new DateTime("now");
 ?>
-<div class="container-fluid">
-	<h3 class="col text-danger text-center">Dernières propositions</h3>
-
+<div class="container-fluid border border-secondary m-1">
+	<h4 class="col text-danger text-center">Dernières propositions</h4>
+	
 	<div class="row head">
 		<div class="col p-0 border text-center">Date</div>
 		<div class="col p-0 border text-center">Jnée</div>
@@ -27,6 +29,9 @@
 		$agent = $tabDernieresPropositions[$i][2];
 
 		$dateproposition= new DateTime($proposition->getDateproposition());
+
+		//on n'affiche pas les propositions obsolètes
+		if( $dateproposition->format('Y-m-j') < $datedujour->format('Y-m-j')) { continue; }
 	?>
 
 		<div class="row proposition" >
