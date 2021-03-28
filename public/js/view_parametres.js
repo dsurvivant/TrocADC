@@ -1,7 +1,8 @@
 $(function(){
 
 	/***
-	/** ici on vérifie la validité des champs infos profil et soumission du formulaire
+	/** CADRE INFOS
+	/** Soumission du formulaire si champs valident */
 	/** **/
 	$('#btnSaveInfos').click(function(e){
 		e.preventDefault();
@@ -52,7 +53,8 @@ $(function(){
 	});
 
 	/***
-	/** ici on vérifie la validité des champs mot de passe et soumission du formulaire
+	/** CADRE MOT DE PASSE
+	/** Soumission du formulaire si champs valident */
 	/** **/
 	$('#btnModifPassword').click(function(e) 
 	{
@@ -90,6 +92,56 @@ $(function(){
 			$('#errormdp').prepend('Remplir tous les champs avant modification');
 			$('#errormdp').css('display','block');
 		}
+	});
+
+	/***
+	/** CADRE FILTRES */
+	$('#inputname').change(function(event) 
+	{
+		if($(this).prop('checked')==true){ checkname=1;}
+		else { checkname = 0;}
+
+		$.ajax({
+			url: 'index.php?page=parametres',
+			type: 'POST',
+			data: {
+					filtrename: "filtrename",
+					checkname: checkname,
+				},
+		})
+		.done(function() {
+			console.log("success");
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});	
+	});
+
+	$('#inputmail').change(function(event) 
+	{
+		if($(this).prop('checked')==true){ checkmail=1;}
+		else { checkmail = 0;}
+
+		$.ajax({
+			url: 'index.php?page=parametres',
+			type: 'POST',
+			data: {
+					filtremail: "filtremail",
+					checkmail: checkmail,
+				},
+		})
+		.done(function() {
+			console.log("success");
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
 	});
 
 });

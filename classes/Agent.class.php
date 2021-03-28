@@ -16,6 +16,8 @@
 		private $_actif;
 		private $_idroulement;
 		private $_cle;
+		private $_displayname;
+		private $_displaymail;
 
 		public function __construct($donnees)
 		{
@@ -54,6 +56,8 @@
 		public function getActif(){return $this->_actif;}
 		public function getIdroulement(){return $this->_idroulement;}
 		public function getCle(){return $this->_cle;}
+		public function getDisplayname(){return $this->_displayname;}
+		public function getDisplaymail(){return $this->_displaymail;}
 
 		/**
 		 * SETTEURS
@@ -86,5 +90,7 @@
 		public function setActif($actif) { $this->_actif = $actif; }
 		public function setIdroulement($idroulement) { $this->_idroulement = $idroulement; }
 		public function setCle($cle) { $this->_cle = $cle; }
+		public function setDisplayname($displayname) { $this->_displayname = $displayname; }
+		public function setDisplaymail($displaymail) { $this->_displaymail = $displaymail; }
 
 	}

@@ -48,9 +48,9 @@ $datedujour = new DateTime("now");
 				<!-- Coordonnees de l'agent -->
 				<p>
 					<?php 
-						echo $agent->getNom() . " " . $agent->getPrenom() . "<br>";
+						if($agent->getDisplayname() == 1) { echo $agent->getNom() . " " . $agent->getPrenom() . "<br>"; }
 						echo $agent->getTelephone() . "<br>";
-						echo $agent->getEmail() . "<br>";
+						if($agent->getDisplaymail() == 1) { echo $agent->getEmail() . "<br>"; }
 
 						//findId($id);
 					?>	

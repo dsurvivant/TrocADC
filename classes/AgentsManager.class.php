@@ -22,7 +22,7 @@ class AgentsManager
 	 */
 	public function add(Agent $agent) //retourne l'id de l'agent créé automatiquement par sql
 	{
-		$q = $this->_db->prepare('INSERT INTO agents(nom, prenom, telephone, email, nocp, droits, motdepasse,dateinscription, actif, idroulement, cle) VALUES (:nom, :prenom, :telephone, :email,  :nocp, :droits, :motdepasse,:dateinscription, :actif, :idroulement, :cle)');
+		$q = $this->_db->prepare('INSERT INTO agents(nom, prenom, telephone, email, nocp, droits, motdepasse,dateinscription, actif, idroulement, cle, displayname, displaymail ) VALUES (:nom, :prenom, :telephone, :email,  :nocp, :droits, :motdepasse,:dateinscription, :actif, :idroulement, :cle, 1, 1)');
 
 		$q->bindValue(':nom', $agent->getNom());
 		$q->bindValue(':prenom', $agent->getPrenom());
@@ -66,6 +66,32 @@ class AgentsManager
 		$q->bindValue(':nocp', $agent->getNocp());
 
 		$q->execute();
+	}
+
+	/**
+	 * mise à jour du parametre displayname
+	 * @param  [type] $displayname [valeur d'affichage du nom et prenom 0 ou 1]
+	 * @param  [type] $nocp        [no de cp de l'agent concerné]
+	 */
+	public function updateDisplayName($displayname, $nocp)
+	{
+		$q = $this->_db->prepare("UPDATE agents SET displayname = :displayname WHERE nocp = :nocp");
+		$q->bindValue(':displayname', $displayname);
+		$q->bindValue(':nocp', $nocp);
+        $q->execute();
+	}
+
+	/**
+	 * mise à jour du parametre displaymail
+	 * @param  [type] $displaymail [valeur d'affichage du mail 0 ou 1]
+	 * @param  [type] $nocp        [no de cp de l'agent concerné]
+	 */
+	public function updateDisplayMail($displaymail, $nocp)
+	{
+		$q = $this->_db->prepare("UPDATE agents SET displaymail = :displaymail WHERE nocp = :nocp");
+		$q->bindValue(':displaymail', $displaymail);
+		$q->bindValue(':nocp', $nocp);
+        $q->execute();
 	}
 
 	/**

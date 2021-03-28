@@ -10,6 +10,10 @@ if (isset($_SESSION['nocp']))
 	$password = $_SESSION['password'];
 	$dateinscription = $_SESSION['dateinscription'];
 	$idroulement = $_SESSION['idroulement'];
+	if($_SESSION['displayname']==1){$displayname="checked";}
+	else {$displayname='';}
+	if($_SESSION['displaymail']==1){$displaymail="checked";}
+	else {$displaymail='';}
 	/**$residence = $_SESSION['idresidence'];**/
 
 	ob_start();
@@ -113,6 +117,27 @@ if (isset($_SESSION['nocp']))
 					<button  type="submit" form="formModifPassword" id="btnModifPassword" class="btn btn-secondary btn-sm btn-block bg-secondary text-white">Modifier Mot de passe</button>
 				</div>
 			</section>
+	</div>
+
+
+	<div class="row">
+		<section  class = "col-12 border border-secondary p-2 m-1">
+				<div class="card-header text-center bg-secondary text-white mb-3">Filtres</div>
+
+				<div class="card-body">
+					 <form id="formfiltres" method="post">
+					    <div class="form-check">
+					    	<input form="formfiltres" id="inputname" name="inputname" class="form-check-input" type="checkbox" value="on" <?= $displayname ?>>
+					    	<label class="form-check-label" for="inputname">Nom et Prénom visible</label>
+					    </div>
+
+					    <div class="form-check">
+					    	<input form="formfiltres" id="inputmail" name="inputmail" class="form-check-input" type="checkbox" value="on" <?= $displaymail ?>>
+					    	<label class="form-check-label" for="inputmail">Email visible</label>
+					    </div>
+				    </form>
+				</div>
+		</section>
 	</div>
 </div>
 

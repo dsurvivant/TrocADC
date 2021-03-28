@@ -7,43 +7,56 @@
 	{
 		$_SESSION['message']='';
 		//modification des infos sur la page parametres (retour form)
-		if( isset($_POST['telephone']) and isset($_POST['email']) )
-		{	
-			$telephone =sanitizeString(trim($_POST['telephone']));
-			$email=sanitizeString(trim($_POST['email']));
-			$idroulement= 1;
-	
-			$message = modifInfosProfil($telephone, $email, $idroulement);
-			$_SESSION['message']= $message;
-		}
+			if( isset($_POST['telephone']) and isset($_POST['email']) )
+			{	
+				$telephone =sanitizeString(trim($_POST['telephone']));
+				$email=sanitizeString(trim($_POST['email']));
+				$idroulement= 1;
+		
+				$message = modifInfosProfil($telephone, $email, $idroulement);
+				$_SESSION['message']= $message;
+			}
 
 		//modification du mot de passe (retour form)
-		if( isset($_POST['password']) and isset($_POST['newpassword']) and isset($_POST['confirmpassword']))
-		{
-			$password = sanitizeString(trim($_POST['password']));
-			$newpassword = sanitizeString(trim($_POST['newpassword']));
-			$confirmpassword = sanitizeString(trim($_POST['confirmpassword']));
-
-			if(cryptagemotdepasse($password) == $_SESSION['password'])
+			if( isset($_POST['password']) and isset($_POST['newpassword']) and isset($_POST['confirmpassword']))
 			{
-				if ($newpassword == $confirmpassword)
+				$password = sanitizeString(trim($_POST['password']));
+				$newpassword = sanitizeString(trim($_POST['newpassword']));
+				$confirmpassword = sanitizeString(trim($_POST['confirmpassword']));
+
+				if(cryptagemotdepasse($password) == $_SESSION['password'])
 				{
-					//tous les critères sont réunis pour modifier le mot de passe
-					modifPassword(cryptagemotdepasse($newpassword));
-					$_SESSION['message']='Mot de passe modifié avec succes';
+					if ($newpassword == $confirmpassword)
+					{
+						//tous les critères sont réunis pour modifier le mot de passe
+						modifPassword(cryptagemotdepasse($newpassword));
+						$_SESSION['message']='Mot de passe modifié avec succes';
+					}
+					else
+					{
+						$_SESSION['message'] = "Les nouveaux mots de passe ne sont pas identiques";
+					}
 				}
 				else
 				{
-					$_SESSION['message'] = "Les nouveaux mots de passe ne sont pas identiques";
-				}
+					$_SESSION['message'] = "L'ancien mot de passe n'est pas valide";
+				}		
 			}
-			else
-			{
-				$_SESSION['message'] = "L'ancien mot de passe n'est pas valide";
-			}		
+
+		//modification case à cocher "Afficher nom et prénom"
+		if (isset($_POST['filtrename']))
+		{
+			AffichageNomAgent($_POST['checkname'], $_SESSION['nocp']);
+			$_SESSION['displayname']=$_POST['checkname'];
 		}
 
-		//affichage page paramètres
+		//modification case à cocher "Afficher mail"
+		if (isset($_POST['filtremail']))
+		{
+			AffichageMailAgent($_POST['checkmail'], $_SESSION['nocp']);
+			$_SESSION['displaymail']=$_POST['checkmail'];
+		}
+
 		$titrepage = "Paramètres";
 		require('view/public/view_parametres.php');
 	}
