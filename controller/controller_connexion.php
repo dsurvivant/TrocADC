@@ -70,10 +70,11 @@
 			//enregistrement en base de donnée de l'agent
 			if ($_SESSION['message']=='') 
 				{ 
+					$entete = "From: inscription@trocadc.fr";
 					$dateinscription = time();
-					$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
+					//$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
 					
-					mail('jmtentelier@gmail.com', "nouvelle inscription", $messageadmin, "trocadc.fr");
+					mail('jmtentelier@gmail.com','nouvelle inscription','nouvelle inscription sur trocadc.fr',$entete);
 					
 					AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $password, $dateinscription, $actif, $idroulement, $cle); 
 					
