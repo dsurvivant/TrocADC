@@ -74,7 +74,7 @@
 					$dateinscription = time();
 					$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
 					
-					mail('jmtentelier@gmail.com','nouvelle inscription',$messageadmin,$entete);
+					mail('jmtentelier@gmail.com','nouvelle inscription',$messageadmin ,$entete);
 					
 					AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $password, $dateinscription, $actif, $idroulement, $cle); 
 					
