@@ -72,9 +72,9 @@
 				{ 
 					$entete = "From: inscription@trocadc.fr";
 					$dateinscription = time();
-					//$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
+					$messageadmin = "nouvelle inscription TrocADC de " . $nom . " " . $prenom;
 					
-					mail('jmtentelier@gmail.com','nouvelle inscription','nouvelle inscription sur trocadc.fr',$entete);
+					mail('jmtentelier@gmail.com','nouvelle inscription',$messageadmin,$entete);
 					
 					AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $password, $dateinscription, $actif, $idroulement, $cle); 
 					
