@@ -15,7 +15,11 @@
 	        </div>
 
 	        <div class="modal-body">
-	        	<?php include("view/forms/form_ajout_journee.php"); ?>
+	        	<?php 
+	        		dd($roulement);
+	        		exit;
+	        		include("view/forms/form_ajout_journee.php"); 
+	        	?>
 	        </div>
 	    </div>
 	</div>

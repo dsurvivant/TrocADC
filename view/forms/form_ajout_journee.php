@@ -3,11 +3,15 @@
     {$error = $_SESSION['message'];}
   else
     {$error='';}
+
+
+$roulement = array('171', 'FAC');
 ?>
 
 <div class="text-center text-danger m-2"><?= $error ?></div>
 
 <form id="formajouterjournee" method="post" action="index.php?page=ajouterjournee">
+   <!--
     <div class="input-group">
         <div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
         <input type="text" class="form-control mb-2" id="up" value="1" maxlength="11" name="idup" readonly>  
@@ -17,10 +21,14 @@
         <div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
         <input type="text" class="form-control mb-2" id="residence" name="idresidence" maxlength="11" value="1" readonly>
     </div>
-
-	<div class="input-group">
+-->
+    <div class="input-group">
         <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
-        <input type="text" class="form-control mb-2" id="noroulement" value="1" maxlength="11" name="noroulement" readonly>  
+        <select id="selection" class="form-control" name="roulement">
+            <?php for ($i=0; $i < count($roulement) ; $i++) { 
+                ?> <option value="<?= $roulement[$i]; ?>"><?= $roulement[$i]; ?></option> <?php
+            }?>
+        </select>
     </div>
 
     <div class="input-group">
@@ -50,6 +58,6 @@
 
    	<div class="float-right">
     	<button id="ajouterjournee" class="btn btn-primary mt-2" type="submit">Valider</button>
-    	<button id="annulerajoutjournee" class="btn btn-secondary mt-2" type="submit">Annuler</button>
+    	<button id="annulerajoutjournee" class="btn btn-primary mt-2" type="submit">Annuler</button>
     </div>
 </form>
