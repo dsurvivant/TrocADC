@@ -12,8 +12,6 @@
  */
 function viewAjouterjournee()
 {
-	dd($_POST);
-	exit;
 	if (isset($_POST['noroulement']) and isset($_POST['nomjournee']) and isset($_POST['heureps']) and isset($_POST['lieups']) and isset($_POST['heurefs']) and isset($_POST['lieufs']))
 	{
 		//sécurisation des champs

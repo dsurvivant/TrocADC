@@ -5,66 +5,54 @@
  * Formulaire d'ajout de proposition de journee par un agent (formproposition)
  * permet de saisir, sur une date sélectionnée dans le calendrier, la rédidence, le roulement, la journée concernée,
  * le commentaires lié à la proposition
+ *
+ * @param   $journees  contient les objets journees
+ * @param   $roulements  contient les objets roulements
  */
-
-if (isset($_GET['jour']))
-{
-  $mois = array('Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
-  $currentdate = $_GET['jour'];
-
-  $currentmonth = date('n', $currentdate) -1;
 ?>
-  <div class="container" id="ajoutproposition">
 
-      <div class="row text-center"><h4 class="col"><?= date('j', $currentdate). " " . $mois[$currentmonth] . " " . date('Y', $currentdate) ?></h4></div>
-  
-      <div class="row text-danger text-center p-1"><h3 id="message_form_proposition" class="col"><?= $_SESSION['message']; ?></h3></div>
-      
-      <form id="formproposition" method="post" action="index.php?page=ajout_proposition&jour=<?= $currentdate ?>" > 
-          <div class="row">
-              <div class="form-group col border m-2 p-3">
+<form id="formproposition" method="post" action="index.php?page=ajout_proposition&jour=<?= $currentdate ?>" > 
+    <div class="row">
+        <div class="form-group col border m-2 p-3">
+            <!--
+              <label for="input_up">UP</label>
+              <input id="input_up" type="text" class="form-control" name="idup" value="1" readonly>
+              <label for="input_residence">Résidence</label>
+              <input id="input_residence" type="text" class="form-control" name="idresidence" value="1" readonly>
+            -->
+            <div class="input-group">
+                <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
+                <select id="selectionroulement" class="form-control" name="idroulement">
+                    <?php foreach ($roulements as $roulement):
+                    if($roulement->getId()==$idroulement){$selected="selected";}
+                    else {$selected='';}
+                    ?>
+                    <option value="<?= $roulement->getId(); ?>" <?= $selected ?> ><?= $roulement->getNoroulement(); ?></option> 
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-                <label for="input_up">UP</label>
-                <input id="input_up" type="text" class="form-control" name="idup" value="1" readonly>
-
-
-                <label for="input_residence">Résidence</label>
-                <input id="input_residence" type="text" class="form-control" name="idresidence" value="1" readonly>
-
-                <label for="input_roulement">Roulement</label>
-                <input id="input_roulement" type="text" class="form-control" name="idroulement" value="1" readonly>
-
-                <label for="selection">Journée</label>
+            <div class="input-group">
+                <div class="input-group-prepend mb-2"><span class="input-group-text">Journées</span></div>
                 <select id="selection" class="form-control" name="idjournee">
-                  <?php foreach ($journees as $journee):
+                    <?php foreach ($journees as $journee):
+                    if ($journee->getIdroulement() == $idroulement ){
                     $heureps = new DateTime($journee->getHeureps());
                     $heurefs = new DateTime($journee->getHeurefs());
                     ?>
                     <option value="<?= $journee->getId(); ?>"><?= $journee->getNomjournee() . " " . $heureps->format('H\hi') . " " . $journee->getLieups() . " - " . $heurefs->format('H\hi') . " " . $journee->getLieufs(); ?></option>
-                  <?php endforeach; ?>
+                        <?php } endforeach; ?>
                 </select>
+            </div>
 
-                <label for="textarea_commentaires">Commentaires</label>
-                <textarea id="textarea_commentaires" class="form-control" name="commentaires" rows="5"></textarea>
-
-              </div>
-          </div>
-          
-          <div class="col text-center"> 
-              <!-- bouton soumission formulaire -->               
-              <button id="btn_valider_proposition" class="btn btn-danger" name="valider">Valider</button>
-              <a id="btn_connexion" href="index.php?page=calendrier" class="btn btn-danger">Annuler</a>
-          </div>
-          
-      </form>
-
-          
-  </div>
-<?php
-}
-else
-{
-  $_SESSION['menu'] = array('calendrier', 'parametres', 'deconnexion');
-  throw new Exception("Impossible d'afficher la page demandée");
-}
-?>
+            <textarea id="textarea_commentaires" class="form-control" name="commentaires" rows="5" placeholder="commentaires"></textarea>
+        </div>
+    </div>
+              
+    <div class="col text-center"> 
+        <!-- bouton soumission formulaire -->               
+        <button id="btn_valider_proposition" class="btn btn-primary" name="valider">Valider</button>
+        <a id="btn_connexion" href="index.php?page=calendrier" class="btn btn-primary">Annuler</a>
+    </div>  
+</form>
+        

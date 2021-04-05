@@ -30,8 +30,6 @@ $datedujour = new DateTime("now");
 
 		$dateproposition= new DateTime($proposition->getDateproposition());
 
-		//on n'affiche pas les propositions obsolètes
-		if( $dateproposition->format('Y-m-j') < $datedujour->format('Y-m-j')) { continue; }
 	?>
 
 		<div class="row proposition" >

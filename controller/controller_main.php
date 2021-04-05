@@ -128,11 +128,13 @@
 		{
 			if(isset($_GET['jour'])) //date de proposition obligatoire
 			{
-				if(isset($_POST['idresidence']) and isset($_POST['idroulement']) and isset($_POST['commentaires']) and isset($_POST['idjournee']) and isset($_POST['idup'])) // validation du formulaire d'ajout de proposition
+				
+				if(isset($_POST['idroulement']) and isset($_POST['commentaires']) and isset($_POST['idjournee']) ) // validation du formulaire d'ajout de proposition
 				{
 
 					//sécurisation des champs
-					$idresidence = sanitizeString(trim($_POST['idresidence']));
+					//$idresidence = sanitizeString(trim($_POST['idresidence']));
+					$idresidence = 1;
 					$noroulement = sanitizeString(trim($_POST['idroulement']));
 					$commentaires = sanitizeString(trim($_POST['commentaires']));
 					$idjournee = sanitizeString(trim($_POST['idjournee']));
@@ -151,6 +153,7 @@
 				{
 					//récupération des journées de roulement
 					$journees = ListeJournees();
+					$roulements = ListeRoulements();
 
 					$titrepage = "Ajout d'une proposition";
 					require('view/public/view_ajout_proposition.php');

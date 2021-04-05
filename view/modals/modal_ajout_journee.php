@@ -16,8 +16,7 @@
 
 	        <div class="modal-body">
 	        	<?php 
-	        		dd($roulement);
-	        		exit;
+	
 	        		include("view/forms/form_ajout_journee.php"); 
 	        	?>
 	        </div>

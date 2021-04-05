@@ -123,7 +123,7 @@ class PropositionsManager
 	{
 		$propositions = [];
 
-		$q = $this->_db->query('SELECT * FROM propositions ORDER BY id DESC LIMIT 10');
+		$q = $this->_db->query('SELECT * FROM propositions WHERE dateproposition > NOW()  ORDER BY id DESC LIMIT 10');
 
 		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
 		{

@@ -37,4 +37,11 @@ $(function()
 		$(this).next('.infosproposition').slideToggle();
 	});
 
+	//changement roulement dans le select
+	$('#selectionroulement').change(function(event) {
+		noroulement = $(this).val();
+		date = $('#currentdate').text();
+		window.location.replace('index.php?page=ajout_proposition&jour=' + date +"&idroulement=" + noroulement);
+	});
+
 });
