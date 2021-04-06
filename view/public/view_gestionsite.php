@@ -91,42 +91,71 @@ ob_start();
 
 		<!-- PANNEAU 2 - JOURNEES - -->
 			<div class="tab-pane fade <?php if($onglet==2){ echo "active show";} ?> mt-2" id="listejournees">
-				<table id="tablejournees" class="table table-collapse table-hover">
-					<thead class="thead-light" >
-						<tr>
-							<th class="d-none d-sm-table-cell border text-center p-1">id</th>
-							<th class=" border text-center p-1">Roulement</th>
-							<th class=" border text-center p-1">Journee</th>
-							<th class=" border text-center p-1">Heure PS</th>
-							<th class="d-none d-sm-table-cell border text-center p-1">Lieu FS</th>
-							<th class="d-none d-sm-table-cell border text-center p-1">Heure FS</th>
-							<th class="d-none d-sm-table-cell border text-center p-1">Lieu FS</th>
-							<th class="d-none d-sm-table-cell border text-center p-1">Résidence</th>
-							<th class="d-none d-sm-table-cell border text-center p-1">Up</th>
-						</tr>
-					</thead>
+				<form action="" class="container">
+					<div class="row">
+						<div class="col-md-4 border p-2">
+							<!-- liste UP -->
+							<div class="input-group">
+								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
+			                    <select id="selectionroulement" class="form-control" name="noroulement" disabled>
+			                        <option value="">UP Paris Est</option> 
+			                    </select>
+							</div>
 
-					<tbody>
-						<?php
-							foreach ($journees as $journee):?>
-								<tr>
-									<td class="d-none d-sm-table-cell border p-1"><?= $journee->getId(); ?></td>
-									<td class=" border p-1"><?= $journee->getIdroulement(); ?></td>
-									<td class=" border p-1"><?= $journee->getNomjournee(); ?></td>
-									<td class=" border p-1"><?= $journee->getHeureps(); ?></td>
-									<td class="d-none d-sm-table-cell border p-1"><?= $journee->getLieups(); ?></td>
-									<td class="d-none d-sm-table-cell border p-1"><?= $journee->getHeurefs(); ?></td>
-									<td class="d-none d-sm-table-cell border p-1"><?= $journee->getLieufs(); ?></td>
-									<td class="d-none d-sm-table-cell border p-1">?</td>
-									<td class="d-none d-sm-table-cell border p-1">?</td>
-								</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>	
-				<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalAjoutJournee" data-backdrop="static">Ajouter</button>
+							<!-- liste résidence -->
+							<div class="input-group">
+								<div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
+			                    <select id="selectionroulement" class="form-control" name="noroulement" disabled>
+			                       <option value="">Paris Est Transilien</option>
+			                    </select>
+							</div>
+
+							<!-- liste roulement -->
+							<div class="input-group">
+								<div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
+			                    <select id="selectionroulement" class="form-control" name="noroulement">
+			                        <?php foreach ($roulements as $roulement):?>
+			                            <option value="<?= $roulement->getId(); ?>"><?= $roulement->getNoroulement(); ?></option> 
+			                        <?php endforeach; ?>
+			                    </select>
+							</div>
+
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAjoutJournee" data-backdrop="static">Ajouter</button>
+						</div>
+
+						<div class="col-md-8 border p-2">
+							<table id="tablejournees" class="table table-collapse table-hover">
+								<thead class="thead-light" >
+									<tr>
+										<th class="d-none d-sm-table-cell border text-center p-1">id</th>
+										<th class=" border text-center p-1">Journee</th>
+										<th class=" border text-center p-1">Heure PS</th>
+										<th class="d-none d-sm-table-cell border text-center p-1">Lieu PS</th>
+										<th class="d-none d-sm-table-cell border text-center p-1">Heure FS</th>
+										<th class="d-none d-sm-table-cell border text-center p-1">Lieu FS</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<?php
+										foreach ($journees as $journee):?>
+											<tr>
+												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getId(); ?></td>
+												<td class=" border text-center p-1"><?= $journee->getNomjournee(); ?></td>
+												<td class=" border text-center p-1"><?= $journee->getHeureps(); ?></td>
+												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getLieups(); ?></td>
+												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getHeurefs(); ?></td>
+												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getLieufs(); ?></td>
+											</tr>
+									<?php endforeach; ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</form>
 			</div>
 
-			<!-- PANNEAU 3 - ROULEMENTS - -->
+		<!-- PANNEAU 3 - ROULEMENTS - -->
 			<div class="tab-pane fade <?php if($onglet==3){ echo "active show";} ?> mt-2" id="listeroulements">
 				<table id="tableroulements" class="table table-collapse table-hover">
 					<thead class="thead-light" >
