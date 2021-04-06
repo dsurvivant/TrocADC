@@ -126,9 +126,22 @@
 	{
 		if (isset($_SESSION['nocp']))
 		{
+			//cas d'une proposition journée fac
+			if(isset($_GET['journeefac']))
+			{
+				//sécurisation des champs
+				$noroulement = sanitizeString(trim($_POST['noroulement']));
+				$nomjournee = sanitizeString(trim($_POST['nomjournee']));
+				$heureps = sanitizeString(trim($_POST['heureps']));
+				$lieups = sanitizeString(trim($_POST['lieups']));
+				$heurefs = sanitizeString($_POST['heurefs']);
+				$lieufs = sanitizeString($_POST['lieufs']);
+
+				Ajouterjournee($noroulement, $nomjournee, $heureps, $heurefs, $lieups, $lieufs);
+			}
+
 			if(isset($_GET['jour'])) //date de proposition obligatoire
 			{
-				
 				if(isset($_POST['idroulement']) and isset($_POST['commentaires']) and isset($_POST['idjournee']) ) // validation du formulaire d'ajout de proposition
 				{
 

@@ -34,44 +34,63 @@ else {$page='';}
         <input type="text" class="form-control mb-2" id="residence" name="idresidence" maxlength="11" value="1" readonly>
     </div>
     -->
-    <?php if ($page=="gestionsite"){ ?>
-        <div class="input-group">
-            <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
-            <select id="selection" class="form-control" name="roulement">
+    
+    <div class="input-group">
+        <?php if( $page=="gestionsite" ){ ?>
+        <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
+            <select id="selectionroulement" class="form-control" name="noroulement">
                 <?php foreach ($roulements as $roulement):?>
-                   <option value=""><?= $roulement->getNoroulement(); ?></option> 
+                    <option value="<?= $roulement->getId(); ?>"><?= $roulement->getNoroulement(); ?></option> 
                 <?php endforeach; ?>
             </select>
-        </div>
-    <?php } ?>
+        <?php } ?>
+    </div>
+   
 
     <div class="input-group">
         <div class="input-group-prepend mb-2"><span class="input-group-text">Journée</span></div>
-        <input type="text" class="form-control mb-2" id="nomjournee" name="nomjournee" maxlength="10">                
+        <input type="text" class="form-control mb-2" id="nomjournee" name="nomjournee" maxlength="10" required>                
     </div>
 
     <div class="input-group">
         <div class="input-group-prepend mb-2"><span class="input-group-text">Heure PS</span></div>
-        <input type="time" class="heurejournee form-control mb-2" id="heureps" name="heureps" maxlength="5">                
+        <input type="time" class="heurejournee form-control mb-2" id="heureps" name="heureps" maxlength="5" required>                
     </div>
 
     <div class="input-group">
         <div class="input-group-prepend mb-2"><span class="input-group-text">Lieu PS</span></div>
-        <input type="text" class="form-control mb-2" id="lieups" name="lieups" maxlength="30">                
+        <input type="text" class="form-control mb-2" id="lieups" name="lieups" maxlength="30" required>                
     </div>
 
     <div class="input-group">
         <div class="input-group-prepend mb-2"><span class="input-group-text">Heure FS</span></div>
-        <input type="time" class="heurejournee form-control mb-2" id="heurefs" name="heurefs" maxlength="5">                
+        <input type="time" class="heurejournee form-control mb-2" id="heurefs" name="heurefs" maxlength="5" required>                
     </div>
 
     <div class="input-group">
         <div class="input-group-prepend mb-2"><span class="input-group-text">Lieu FS</span></div>
-        <input type="text" class="form-control mb-2" id="lieufs" name="lieufs" maxlength="30">                
+        <input type="text" class="form-control mb-2" id="lieufs" name="lieufs" maxlength="30" required>
     </div>
 
+    <?php 
+    if ($page=="ajout_proposition"){?>   
+    <textarea id="textarea_commentaires" class="form-control" name="commentaires" rows="5" placeholder="commentaires"></textarea>
+    <?php } ?>
+
    	<div class="text-center">
+        <?php
+        /** 2 éxécutions différentes selon qu'il s'agit d'une nouvelle proposition avec journée fac
+        /** ou s'il s'agit d'une journée rajoutée dans la partie administration **/
+        if ($page == "gestionsite" ){
+        ?>
     	<button id="ajouterjournee" class="btn btn-primary mt-2" type="submit">Valider</button>
     	<button id="annulerajoutjournee" class="btn btn-primary mt-2" type="submit">Annuler</button>
+        <?php } 
+
+         if ($page == "ajout_proposition" ){
+        ?>
+        <input id="ajouterpropositionfac" formaction="index.php?page=ajout_proposition&jour=<?= $currentdate ?>&journeefac" class="btn btn-primary mt-2" type="submit" value="Valider">
+        <a id="btn_connexion" href="index.php?page=calendrier" class="btn btn-primary mt-2">Annuler</a>
+        <?php } ?>
     </div>
 </form>

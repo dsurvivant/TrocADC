@@ -44,7 +44,7 @@ ob_start();
 	<!-- LES PANNEAUX -->
 
 		<div class="tab-content">
-			<!-- PANNEAU 1 - AGENTS - -->
+		<!-- PANNEAU 1 - AGENTS - -->
 			<div class="tab-pane fade <?php if($onglet==1){ echo "active show";} ?> mt-2" id="listeagents">
 				<!-- liste des agents -->
 				<table id="tableagents" class="table table-collapse table-hover">
@@ -89,7 +89,7 @@ ob_start();
 				</table>			
 			</div>
 
-			<!-- PANNEAU 2 - JOURNEES - -->
+		<!-- PANNEAU 2 - JOURNEES - -->
 			<div class="tab-pane fade <?php if($onglet==2){ echo "active show";} ?> mt-2" id="listejournees">
 				<table id="tablejournees" class="table table-collapse table-hover">
 					<thead class="thead-light" >
