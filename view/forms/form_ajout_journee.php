@@ -36,14 +36,26 @@ else {$page='';}
     -->
     
     <div class="input-group">
-        <?php if( $page=="gestionsite" ){ ?>
-        <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
-            <select id="selectionroulement" class="form-control" name="noroulement">
-                <?php foreach ($roulements as $roulement):?>
-                    <option value="<?= $roulement->getId(); ?>"><?= $roulement->getNoroulement(); ?></option> 
-                <?php endforeach; ?>
-            </select>
-        <?php } ?>
+        <?php 
+        //cas d'un ajout dans la partie admin
+            if( $page=="gestionsite" ){ ?>
+                <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
+                    <select id="selectionroulement" class="form-control" name="noroulement">
+                        <?php foreach ($roulements as $roulement):?>
+                            <option value="<?= $roulement->getId(); ?>"><?= $roulement->getNoroulement(); ?></option> 
+                        <?php endforeach; ?>
+                    </select>
+            <?php } 
+        //cas d'un ajout lors d'une proposition avec journée fac
+        //champ input nécessaire pour le traitement de l'information
+            if( $page == "ajout_proposition")
+            {
+                foreach ($roulements as $roulement) 
+                {
+                   if($roulement->getNoroulement()=="FAC") { ?> <input class='d-none' type="text" name="noroulement" value="<?= $roulement->getId(); ?>"> <?php }
+                }
+            }
+            ?>
     </div>
    
 

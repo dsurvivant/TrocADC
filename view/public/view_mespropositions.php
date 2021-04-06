@@ -18,7 +18,7 @@
 		<div class="col p-0 border text-center">Proposée le</div>
 	</div>
 
-
+	<div style="overflow: auto;">
 	<?php
 	//rappel: tabpropositions[[$proposition,$journee,$agent]]
 	$nbproposition = count($tabpropositions);
@@ -59,6 +59,7 @@
 		</div>
 	<?php 
 	endfor;?>	
+</div>
 
 </div>
 

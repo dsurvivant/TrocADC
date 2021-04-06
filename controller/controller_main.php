@@ -126,9 +126,11 @@
 	{
 		if (isset($_SESSION['nocp']))
 		{
-			//cas d'une proposition journée fac
+			//CAS D'UNE PROPOSITION JOURNEE FAC
 			if(isset($_GET['journeefac']))
 			{
+				//AJOUT DE LA JOURNEE FAC DANS LA BDD
+				
 				//sécurisation des champs
 				$noroulement = sanitizeString(trim($_POST['noroulement']));
 				$nomjournee = sanitizeString(trim($_POST['nomjournee']));
@@ -137,11 +139,25 @@
 				$heurefs = sanitizeString($_POST['heurefs']);
 				$lieufs = sanitizeString($_POST['lieufs']);
 
-				Ajouterjournee($noroulement, $nomjournee, $heureps, $heurefs, $lieups, $lieufs);
+				$idjournee= Ajouterjournee($noroulement, $nomjournee, $heureps, $heurefs, $lieups, $lieufs);
+
+				//AJOUT DE LA PROPOSITION DANS LA BDD
+				$idresidence = 1;
+				$commentaires = sanitizeString(trim($_POST['commentaires']));
+				$idagent = $_SESSION['id'];
+				$dateconcernee = date('Y-m-d', $_GET['jour']);
+
+				//controle des champs
+				if ($commentaires=='') { $commentaires= "Aucun commentaire";}
+				Ajouterproposition($dateconcernee, $idjournee, $idagent, $commentaires);
+
+				$chemin = "index.php?page=calendrier&choixdate=" . $_GET['jour'];
+				header('location:' . $chemin);
 			}
 
 			if(isset($_GET['jour'])) //date de proposition obligatoire
 			{
+				//CAS D'UNE PROPOSITION AVEC JOURNEE EN ROULEMENT
 				if(isset($_POST['idroulement']) and isset($_POST['commentaires']) and isset($_POST['idjournee']) ) // validation du formulaire d'ajout de proposition
 				{
 
@@ -162,7 +178,8 @@
 					$chemin = "index.php?page=calendrier&choixdate=" . $_GET['jour'];
 					header('location:' . $chemin);
 				}
-				else //affichage du formulaire d'ajout proposition
+				//AFFICHAGE FORMULAIRE AJOUT DE PROPOSITION
+				else 
 				{
 					//récupération des journées de roulement
 					$journees = ListeJournees();

@@ -13,6 +13,7 @@
 
 	        	<span class="text-monospace">Dernières modifs:</span><br>
 	        		<div class="lead">
+	        			- Possibilité d'ajouter une journée FAC.<br>
 		        		- Liste des 10 dernières journées proposées. <br>
 		        		- Dans les paramètres: possibilité de choisir d'afficher ou pas son nom prénom et mail.
 		        		le téléphone reste indispensable

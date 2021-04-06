@@ -292,6 +292,7 @@
 								]);
 		$manager = new JourneesManager($bdd);
 		$idjournee = $manager->add($journee);
+		return $idjournee;
 	}
 
 	/**
