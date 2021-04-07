@@ -4,7 +4,7 @@ if (isset($_SESSION['nocp']))
 {	
 	ob_start();
 		?>
-	<div id="containerMain" class="container">
+	<div class="container">
 
 		<div class="row">
 			<section  class="col-lg-6">

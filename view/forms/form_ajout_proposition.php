@@ -8,6 +8,7 @@
  *
  * @param   $journees  contient les objets journees
  * @param   $roulements  contient les objets roulements
+ * @param   $idroulement contient la référence roulement affiché par défaut
  */
 ?>
 

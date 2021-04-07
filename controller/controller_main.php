@@ -111,7 +111,7 @@
 			}
 
 		//récupération des dernieres propositions
-		$tabDernieresPropositions = viewDernierespropositions();
+		$tabDernieresPropositions = Dernierespropositions();
 
 			$titrepage = "Calendrier";
 			require('view/public/view_main.php');
@@ -290,7 +290,7 @@
 	}
 
 	//récupération des 10 dernieres propositions
-	function viewDernierespropositions()
+	function Dernierespropositions()
 	{
 		if (isset($_SESSION['nocp']))
 		{

@@ -4,10 +4,6 @@
 	height: calc( 100vh - 80px );
 }
 
-#cadrePrincipal
-{
-	padding-top: 80px;
-}
 
 #apropos:hover { cursor: pointer; }
 /**

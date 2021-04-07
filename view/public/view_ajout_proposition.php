@@ -21,8 +21,8 @@ if (isset($_GET['jour']))
 
 		<!-- LES ONGLETS -->
 			<nav class="nav nav-pills">
-			  <a class="nav-item nav-link active" href="#journeesroulements" data-toggle="pill">Journées en roulement</a>
-			  <a class="nav-item nav-link" href="#journeesfac" data-toggle="pill">Journées FAC</a>
+			  <a class="nav-item nav-link active" href="#journeesroulements" data-toggle="pill">Journée en roulement</a>
+			  <a class="nav-item nav-link" href="#journeesfac" data-toggle="pill">Journée FAC</a>
 			</nav>
 
 		<!-- LES PANNEAUX -->

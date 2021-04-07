@@ -24,53 +24,56 @@
 	<link rel="stylesheet" type="text/css" href="public/css/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="public/css/date.css">
 	<link rel="stylesheet" type="text/css" href="public/css/style.css">
+	<link rel="stylesheet" type="text/css" href="public/css/admin.css">
 	<!--<script src="https://kit.fontawesome.com/3f13d5366e.js" crossorigin="anonymous"></script>-->
 
 </head>
 
 <body>
 
-	<nav class="navbar fixed-top navbar-dark bg-dark">
+	<div class="container-fluid">
+		<nav class="row navbar navbar-dark bg-dark">
 
-		<a href="index.php" class="navbar-brand">TrocADC</a>
+			<a href="index.php" class="navbar-brand">TrocADC</a>
 
-		<ul class="navbar-nav">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"><?= $nom . " " . $prenom; ?></a>
-            <div class="dropdown-menu">
-            	<?php
+			<ul class="navbar-nav">
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button"><?= $nom . " " . $prenom; ?></a>
+	            <div class="dropdown-menu">
+	            	<?php
 
-            		array_push($_SESSION['menu'], 'A propos...');
+	            		array_push($_SESSION['menu'], 'A propos...');
 
-            		foreach ($_SESSION['menu'] as $value) 
-            		{
-            			if($value == "A propos...")
-            			{
-            				?>
-            				<?php if(isset($_SESSION['droits'])):
-            						if($_SESSION['droits']==1):?>
-            							<a class="dropdown-item" href="index.php?page=gestionsite">Gestion du site</a>
-            				<?php
-            					  endif; 
-            						endif; ?>
-            				<span id="apropos" class="dropdown-item" data-toggle="modal" data-target="#modalAPropos">A propos...</span> 
-            				<?php
-            			}
-            			else 
-            			{
-            				?> <a class="dropdown-item" href="index.php?page=<?= strtolower(skip_accents($value)) ?>"><?=  $value ?></a> <?php
-            			}
-            		}
-            	?>
-            </div>
-          </li>
-        </ul>
+	            		foreach ($_SESSION['menu'] as $value) 
+	            		{
+	            			if($value == "A propos...")
+	            			{
+	            				?>
+	            				<?php if(isset($_SESSION['droits'])):
+	            						if($_SESSION['droits']==1):?>
+	            							<a class="dropdown-item" href="index.php?page=gestionsite">Gestion du site</a>
+	            				<?php
+	            					  endif; 
+	            						endif; ?>
+	            				<span id="apropos" class="dropdown-item" data-toggle="modal" data-target="#modalAPropos">A propos...</span> 
+	            				<?php
+	            			}
+	            			else 
+	            			{
+	            				?> <a class="dropdown-item" href="index.php?page=<?= strtolower(skip_accents($value)) ?>"><?=  $value ?></a> <?php
+	            			}
+	            		}
+	            	?>
+	            </div>
+	          </li>
+	        </ul>
 
-	</nav>
+		</nav>
 
-	<section id="cadrePrincipal">
-			<?= $main; ?>
-	</section>
+		<section id="cadrePrincipal" class="row pt-2">
+				<?= $main; ?>
+		</section>
+	</div>
 
 <!-- *************** MODAL *********************-->
 	 <?php require('view/modals/modal_a_propos.php'); ?>

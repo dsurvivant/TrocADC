@@ -41,8 +41,11 @@ else {$page='';}
             if( $page=="gestionsite" ){ ?>
                 <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
                     <select id="selectionroulement" class="form-control" name="noroulement">
-                        <?php foreach ($roulements as $roulement):?>
-                            <option value="<?= $roulement->getId(); ?>"><?= $roulement->getNoroulement(); ?></option> 
+                        <?php foreach ($roulements as $roulement):
+                            if($roulement->getId()==$idroulement){$selected="selected";}
+                            else {$selected='';}
+                            ?>
+                            <option value="<?= $roulement->getId(); ?>" <?= $selected ?> ><?= $roulement->getNoroulement(); ?></option> 
                         <?php endforeach; ?>
                     </select>
             <?php } 

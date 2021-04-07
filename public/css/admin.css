@@ -1,0 +1,9 @@
+/**
+ * CREER AVRIL 2021 PAR JMT
+ */
+
+#gestionsite #entetejournee:hover, #gestionsite #enteteid:hover
+{
+	cursor: pointer;
+	background-color: lightblue;
+}

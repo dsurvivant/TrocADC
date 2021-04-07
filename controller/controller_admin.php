@@ -22,9 +22,9 @@ function viewAjouterjournee()
 		$heurefs = sanitizeString($_POST['heurefs']);
 		$lieufs = sanitizeString($_POST['lieufs']);
 
-		Ajouterjournee($noroulement, $nomjournee, $heureps, $heurefs, $lieups, $lieufs);
+		$idjournee = Ajouterjournee($noroulement, $nomjournee, $heureps, $heurefs, $lieups, $lieufs);
 
-		header('location:index.php?page=gestionsite&onglet=journees');
+		header('location:index.php?page=gestionsite&onglet=journees&idroulement=' . $noroulement . "&idjournee=" . $idjournee);
 	}
 }
 

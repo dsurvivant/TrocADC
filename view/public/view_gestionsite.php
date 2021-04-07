@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * @param   $idroulement contient la référence roulement affiché par défaut
+ */
+
+//roulement par défaut
+if(isset($_GET['idroulement'])) {$idroulement = $_GET['idroulement'];}
+  	else { $idroulement = $_SESSION['idroulement'];}
+//selection de la ligne journee
+if (isset($_GET['idjournee'])) {$idjournee=$_GET['idjournee'];}
+	else { $idjournee='';}
+
+
 //choix de l'onglet actif
 if(isset($_GET['onglet'])) 
 { 
@@ -25,10 +37,10 @@ else { $message = ''; }
 ob_start();
 ?>
 
-<div class="container">
+<div id="gestionsite" class="container">
 	<?= $id; ?>
 	
-	<h2 class="col-12 jumbotron p-3 text-center">Gestion du site</h2>
+	<h2 class="col-12 jumbotron p-2 text-center lead">Gestion du site</h2>
 
 	<h4 class="col-12 text-danger text-center p-2"><?= $message ?></h4>
 
@@ -97,7 +109,7 @@ ob_start();
 							<!-- liste UP -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
-			                    <select id="selectionroulement" class="form-control" name="noroulement" disabled>
+			                    <select id="selectionup" class="form-control" name="noup" disabled>
 			                        <option value="">UP Paris Est</option> 
 			                    </select>
 							</div>
@@ -105,7 +117,7 @@ ob_start();
 							<!-- liste résidence -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
-			                    <select id="selectionroulement" class="form-control" name="noroulement" disabled>
+			                    <select id="selectionresidence" class="form-control" name="noresidence" disabled>
 			                       <option value="">Paris Est Transilien</option>
 			                    </select>
 							</div>
@@ -114,9 +126,12 @@ ob_start();
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
 			                    <select id="selectionroulement" class="form-control" name="noroulement">
-			                        <?php foreach ($roulements as $roulement):?>
-			                            <option value="<?= $roulement->getId(); ?>"><?= $roulement->getNoroulement(); ?></option> 
-			                        <?php endforeach; ?>
+			                        <?php foreach ($roulements as $roulement):
+					                    if($roulement->getId()==$idroulement){$selected="selected";}
+					                    else {$selected='';}
+					                    ?>
+					                    <option value="<?= $roulement->getId(); ?>" <?= $selected ?> ><?= $roulement->getNoroulement(); ?></option> 
+					                <?php endforeach; ?>
 			                    </select>
 							</div>
 
@@ -127,8 +142,8 @@ ob_start();
 							<table id="tablejournees" class="table table-collapse table-hover">
 								<thead class="thead-light" >
 									<tr>
-										<th class="d-none d-sm-table-cell border text-center p-1">id</th>
-										<th class=" border text-center p-1">Journee</th>
+										<th id="enteteid" class="d-none d-sm-table-cell border text-center p-1">id</th>
+										<th id="entetejournee" class=" border text-center p-1">Journee</th>
 										<th class=" border text-center p-1">Heure PS</th>
 										<th class="d-none d-sm-table-cell border text-center p-1">Lieu PS</th>
 										<th class="d-none d-sm-table-cell border text-center p-1">Heure FS</th>
@@ -138,8 +153,14 @@ ob_start();
 
 								<tbody>
 									<?php
-										foreach ($journees as $journee):?>
-											<tr>
+										foreach ($journees as $journee):
+											//surbrilance ligne
+											if($journee->getId()==$idjournee) { $surbrillance = "class=bg-warning";}
+											else { $surbrillance=''; }
+											//affichage des journées du roulement choisi
+											if($journee->getIdroulement() == $idroulement) {
+											?>
+											<tr <?= $surbrillance ?> >
 												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getId(); ?></td>
 												<td class=" border text-center p-1"><?= $journee->getNomjournee(); ?></td>
 												<td class=" border text-center p-1"><?= $journee->getHeureps(); ?></td>
@@ -147,7 +168,7 @@ ob_start();
 												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getHeurefs(); ?></td>
 												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getLieufs(); ?></td>
 											</tr>
-									<?php endforeach; ?>
+									<?php } endforeach; ?>
 								</tbody>
 							</table>
 						</div>

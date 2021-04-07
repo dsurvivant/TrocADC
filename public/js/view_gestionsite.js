@@ -42,4 +42,24 @@ $(function()
 		window.location.replace('index.php?page=ficheagent&id=' + id);
 	});
 
+	/***
+	/** GESTION DES SELECT
+	/***  */
+	$('#gestionsite #selectionroulement').change(function()
+	{
+		noroulement = $(this).val();
+		window.location.replace('index.php?page=gestionsite&onglet=journees&idroulement=' + noroulement);
+	});
+
+	/***
+	/** CLIC SUR ENTETE
+	/*** */
+	$('#gestionsite #entetejournee').click(function(event) {
+		alert("en cours");
+	});
+
+
+	$('#gestionsite #enteteid').click(function(event) {
+		alert("en cours");
+	});
 }); //fin jquery
