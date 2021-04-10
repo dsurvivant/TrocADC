@@ -1,4 +1,5 @@
-	
+<!DOCTYPE html>
+
 <?php 
 	ini_set('default_charset', 'utf-8');
 	
@@ -9,8 +10,7 @@
 	else {$prenom='';}
 ?>
 
-<!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
