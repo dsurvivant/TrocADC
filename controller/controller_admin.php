@@ -49,6 +49,7 @@ function viewGestionsite($id='')
 	$agents = ListeAgents();
 	$journees = ListeJournees(); 
 	$roulements = ListeRoulements();
+	$residences = ListeResidences();
 
 	$titrepage = "Gestion";
 	require('view/public/view_gestionsite.php');

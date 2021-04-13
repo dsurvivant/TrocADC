@@ -326,6 +326,16 @@
 	    return $journee;
 	}
 
+// FONCTIONS RESIDENCES
+
+	function ListeResidences()
+	{
+		global $bdd;
+
+		$manager = new ResidenceManager($bdd);
+		return $manager->getListResidencesId();
+	}
+
 // FONCTIONS ROULEMENTS
 
 	//retourne un tableau contenant les objets roulements

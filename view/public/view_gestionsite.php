@@ -10,6 +10,11 @@ if(isset($_GET['idroulement'])) {$idroulement = $_GET['idroulement'];}
 //selection de la ligne journee
 if (isset($_GET['idjournee'])) {$idjournee=$_GET['idjournee'];}
 	else { $idjournee='';}
+//selection de la ligne residence
+if (isset($_GET['idresidence'])) {$idresidence=$_GET['idresidence'];}
+	else { $idresidence='';}
+//up
+$idup = 2;
 
 
 //choix de l'onglet actif
@@ -24,6 +29,9 @@ if(isset($_GET['onglet']))
 			break;
 		case 'roulements':
 			$onglet = 3;
+			break;
+		case 'residences':
+			$onglet = 4;
 			break;		
 		default:
 			$onglet = 1;
@@ -50,12 +58,13 @@ ob_start();
 		  <a class="nav-item nav-link <?php if($onglet==1){ echo "active";} ?>" href="#listeagents" data-toggle="pill">Agents</a>
 		  <a class="nav-item nav-link <?php if($onglet==2){ echo "active";} ?>" href="#listejournees" data-toggle="pill">Journées</a>
 		  <a class="nav-item nav-link <?php if($onglet==3){ echo "active";} ?>" href="#listeroulements" data-toggle="pill">Roulements</a>
+		  <a class="nav-item nav-link <?php if($onglet==4){ echo "active";} ?>" href="#listeresidences" data-toggle="pill">Résidences</a>
 		</nav>
 
 
 	<!-- LES PANNEAUX -->
 
-		<div class="tab-content">
+	<div class="tab-content">
 		<!-- PANNEAU 1 - AGENTS - -->
 			<div class="tab-pane fade <?php if($onglet==1){ echo "active show";} ?> mt-2" id="listeagents">
 				<!-- liste des agents -->
@@ -174,9 +183,6 @@ ob_start();
 													</a>
 												</td>
 											</tr>
-											<tr class="confirmdeleteday">
-												<td colspan="7" class="text-center d-none" ><button class="btn btn-danger py-1">Confirmer la suppression</button></td>
-											</tr>
 									<?php } endforeach; ?>
 								</tbody>
 							</table>
@@ -212,7 +218,59 @@ ob_start();
 					</tbody>
 				</table>
 			</div>
-		</div>
+		
+		<!-- PANNEAU 4 - RESIDENCES - -->
+			<div class="tab-pane fade <?php if($onglet==4){ echo "active show";} ?> mt-2" id="listeresidences">
+				<form action="" class="container">
+					<div class="row">
+						<div class="col-md-4 border p-2">
+							<!-- liste UP -->
+							<div class="input-group">
+								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
+			                    <select id="selectionup" class="form-control" name="noup" disabled>
+			                        <option value="">UP Paris Est</option> 
+			                    </select>
+							</div>
+
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAjoutJournee" data-backdrop="static">Ajouter</button>
+						</div>
+
+						<div class="col-md-8 border p-2">
+							<table id="tablejournees" class="table table-collapse table-hover">
+								<thead class="thead-light" >
+									<tr>
+										<th id="enteteid" class="d-none d-sm-table-cell border text-center p-1">id</th>
+										<th id="entetejournee" class=" border text-center p-1">Journee</th>
+										<th class="d-none d-sm-table-cell border text-center p-1"></th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<?php
+										foreach ($residences as $residence):
+											//surbrilance ligne
+											if($residence->getId()==$idresidence) { $surbrillance = "class=bg-warning";}
+											else { $surbrillance=''; }
+											//affichage des résidences de l'up choisi
+											if($residence->getIdup() == $idup) {
+											?>
+											<tr <?= $surbrillance ?> >
+												<td class="idresidence d-none d-sm-table-cell border text-center p-1"><?= $residence->getId(); ?></td>
+												<td class="nameresidence border text-center p-1"><?= $residence->getNomresidence(); ?></td>
+												<td class="d-none d-sm-table-cell border text-center p-1">
+													<a id="deleteday" href="index.php?page=gestionsite&onglet=journees&deleteday&idjournee=<?= $journee->getId(); ?>">
+													<img src="public/images/icones/drop.png" alt="supprimer journée" title="supprimer" width="20px">
+													</a>
+												</td>
+											</tr>
+									<?php } endforeach; ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</form>
+			</div>
+	</div>
 </div>
 
 <?php 
