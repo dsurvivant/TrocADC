@@ -300,6 +300,18 @@
 	 * @param  [type] $id [description]
 	 * @return [type]       retourne true et instancie la journee si existe sinon false
 	 */
+	
+	function supprimerJournee($idjournee)
+	{
+		global $bdd;
+
+		 //instanciation de la journee
+	    $journee = new Journee(['id'=>$idjournee]);
+	    $manager = new JourneesManager($bdd);
+
+	 	$manager->delete($journee);
+	}
+
 	function findIdJournee($id)
 	{
 		global $bdd;

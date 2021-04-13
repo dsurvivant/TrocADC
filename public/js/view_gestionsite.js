@@ -1,7 +1,8 @@
 /**
- *	 AJOUTER JOURNNEE
- *   - vérification des champs non vide
- *   - vérification format duree et mis en forme auto des durees
+ *	- AJOUTER JOURNNEE
+ *  - Supprimer journee
+ *  - double click sur ligne agent ==> fiche agent
+ *  - click sur entetes: journee, id
  */
 $(function()
 {
@@ -10,7 +11,7 @@ $(function()
 		$('#btncloseajoutjournnee').click();
 	});
 
-	//champs non vide
+	//AJOUTE UNE JOURNEE
 	$('#formajouterjournee #ajouterjournee').click(function(e) {
 		e.preventDefault();
 		
@@ -22,7 +23,7 @@ $(function()
 			
 			if($(this).val().trim()=='')
 			{ 
-				$(this ).css("border", "solid 1px red");
+				$(this ).css("border", "solid 1px #e55039");
 				error = true;
 			}
 			else {  $(this ).css("border", "solid 1px #ced4da");}
@@ -30,6 +31,22 @@ $(function()
 
 		//soumission formulaire
 		if (error == false) { $('#formajouterjournee').submit(); }		
+	});
+
+	//SUPRIMER UNE JOURNEE
+	$('#gestionsite #deleteday').click(function(e) {
+		e.preventDefault();
+		reponse = confirm("Confirmer la suppression de journée " + $(this).closest('tr').find('.nameday').html());
+
+		//suppression
+		if(reponse) 
+		{ 
+			roulement = $('#selectionroulement').val();
+			idjournee =  $(this).closest('tr').find('.idday').html();
+
+			adresse= "index.php?page=gestionsite&onglet=journees&deleteday&idroulement=" + roulement + "&idjournee=" + idjournee;
+			window.location.replace(adresse);
+		}
 	});
 
 	/***

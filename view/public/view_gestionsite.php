@@ -148,6 +148,7 @@ ob_start();
 										<th class="d-none d-sm-table-cell border text-center p-1">Lieu PS</th>
 										<th class="d-none d-sm-table-cell border text-center p-1">Heure FS</th>
 										<th class="d-none d-sm-table-cell border text-center p-1">Lieu FS</th>
+										<th class="d-none d-sm-table-cell border text-center p-1"></th>
 									</tr>
 								</thead>
 
@@ -161,12 +162,20 @@ ob_start();
 											if($journee->getIdroulement() == $idroulement) {
 											?>
 											<tr <?= $surbrillance ?> >
-												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getId(); ?></td>
-												<td class=" border text-center p-1"><?= $journee->getNomjournee(); ?></td>
+												<td class="idday d-none d-sm-table-cell border text-center p-1"><?= $journee->getId(); ?></td>
+												<td class="nameday border text-center p-1"><?= $journee->getNomjournee(); ?></td>
 												<td class=" border text-center p-1"><?= $journee->getHeureps(); ?></td>
 												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getLieups(); ?></td>
 												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getHeurefs(); ?></td>
 												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getLieufs(); ?></td>
+												<td class="d-none d-sm-table-cell border text-center p-1">
+													<a id="deleteday" href="index.php?page=gestionsite&onglet=journees&deleteday&idjournee=<?= $journee->getId(); ?>">
+													<img src="public/images/icones/drop.png" alt="supprimer journée" title="supprimer" width="20px">
+													</a>
+												</td>
+											</tr>
+											<tr class="confirmdeleteday">
+												<td colspan="7" class="text-center d-none" ><button class="btn btn-danger py-1">Confirmer la suppression</button></td>
 											</tr>
 									<?php } endforeach; ?>
 								</tbody>

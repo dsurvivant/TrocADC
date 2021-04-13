@@ -26,6 +26,14 @@ class JourneesManager
 		return $idJournee;
 	}
 
+	public function delete(Journee $journee)
+	{
+		$q = $this->_db->prepare('DELETE FROM journees WHERE id=:id');
+
+		$q->bindValue(':id', $journee->getId());
+		$q-> execute();
+	}
+
 	public function getListJournee()
 	{
 

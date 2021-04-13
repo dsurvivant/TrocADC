@@ -37,6 +37,14 @@ function viewAjouterjournee()
  */
 function viewGestionsite($id='')
 {
+	//suppression d'une journee roulement
+	if(isset($_GET['deleteday']) and isset($_GET['idjournee']))
+	{
+		$idjournee = sanitizeString(trim($_GET['idjournee']));
+		supprimerJournee($idjournee);
+		$_SESSION['message']="Journée supprimée !";
+	}
+
 	//récupération des listes agents, journees, roulements si administrateur
 	$agents = ListeAgents();
 	$journees = ListeJournees(); 
