@@ -1,6 +1,7 @@
 /**
  *	- AJOUTER JOURNNEE
  *  - Supprimer journee
+ *  - Supprimer une rédidence
  *  - double click sur ligne agent ==> fiche agent
  *  - click sur entetes: journee, id
  */
@@ -44,7 +45,22 @@ $(function()
 			roulement = $('#selectionroulement').val();
 			idjournee =  $(this).closest('tr').find('.idday').html();
 
-			adresse= "index.php?page=gestionsite&onglet=journees&deleteday&idroulement=" + roulement + "&idjournee=" + idjournee;
+			adresse= "index.php?page=gestionsite&deleteday&idroulement=" + roulement + "&idjournee=" + idjournee;
+			window.location.replace(adresse);
+		}
+	});
+
+	//SUPRIMER UNE RESIDENCE
+	$('#gestionsite #deleteresidence').click(function(e) {
+		e.preventDefault();
+		reponse = confirm("Confirmer la suppression de la résidence de  " + $(this).closest('tr').find('.nameresidence').html());
+
+		//suppression
+		if(reponse) 
+		{ 
+			idresidence =  $(this).closest('tr').find('.idresidence').html();
+
+			adresse= "index.php?page=gestionsite&deleteresidence&idresidence=" + idresidence;
 			window.location.replace(adresse);
 		}
 	});

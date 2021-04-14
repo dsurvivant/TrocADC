@@ -6,6 +6,10 @@
 	session_start();
 
 	require ('model/model.php');
+	require ('model/model_agents.php');
+	require ('model/model_propositions.php');
+	require ('model/model_residences.php');
+	require ('model/model_roulements.php');
 	require ('model/fonctions.php');
 	require ('controller/controller_connexion.php');
 	require ('controller/controller_main.php');
@@ -80,27 +84,6 @@
 			 				menu('');
 			 				//viewgestionsite();
 			 				viewGestionsite();
-			 			}
-			 			else 
-			 			{ 
-			 				menu('Calendrier');
-			 				viewmain(); 
-			 			}
-			 		}
-			 		else 
-			 		{
-			 			menu('Calendrier');
-			 		 	viewmain();
-			 		}
-			 		break;
-			 	case 'ajouterjournee':
-			 		if(isset($_SESSION['droits']))
-			 		{
-			 			if($_SESSION['droits']==1)
-			 			{ 
-			 				menu('');
-			 				//viewgestionsite();
-			 				viewAjouterjournee();
 			 			}
 			 			else 
 			 			{ 

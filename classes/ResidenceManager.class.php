@@ -16,9 +16,8 @@ class ResidenceManager
 	 */
 	public function add(Residence $residence) //retourne l'id de l'agent créé automatiquement par sql
 	{
-		$q = $this->_db->prepare('INSERT INTO residences(id, nomresidence, idup) VALUES (:id, :nomresidence, :idup)');
+		$q = $this->_db->prepare('INSERT INTO residences(nomresidence, idup) VALUES (:nomresidence, :idup)');
 
-		$q->bindValue(':id', $residence->getId());
 		$q->bindValue(':nomresidence', $residence->getNomresidence());
 		$q->bindValue(':idup', $residence->getIdup());
 		
@@ -47,7 +46,7 @@ class ResidenceManager
 	{
 		$q = $this->_db->prepare('DELETE FROM residences WHERE id=:id');
 
-		$q->bindValue(':id', $residences->getId());
+		$q->bindValue(':id', $residence->getId());
 		$q-> execute();
 	}
 

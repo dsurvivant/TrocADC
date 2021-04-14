@@ -54,7 +54,7 @@ class JourneesManager
     *	si trouvé, instancie la journee et retourne true
     *	sinon retourne false 
     */    
-    public function findIdJournee(JOURNEE $journee)
+    public function findJourneeById(JOURNEE $journee)
    	{
         $q = $this->_db->prepare('SELECT * FROM journees WHERE id=:id');
         $q->bindValue(':id', $journee->getId());

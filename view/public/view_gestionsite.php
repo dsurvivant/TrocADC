@@ -5,22 +5,19 @@
  */
 
 //roulement par défaut
-if(isset($_GET['idroulement'])) {$idroulement = $_GET['idroulement'];}
-  	else { $idroulement = $_SESSION['idroulement'];}
+if(!isset($idroulement)) {$idroulement = $_SESSION['idroulement'];}
 //selection de la ligne journee
-if (isset($_GET['idjournee'])) {$idjournee=$_GET['idjournee'];}
-	else { $idjournee='';}
+if (!isset($idjournee)) {$idjournee='';}
 //selection de la ligne residence
-if (isset($_GET['idresidence'])) {$idresidence=$_GET['idresidence'];}
-	else { $idresidence='';}
+if (!isset($idresidence)) {$idresidence='';}
 //up
 $idup = 2;
 
 
 //choix de l'onglet actif
-if(isset($_GET['onglet'])) 
+if(isset($onglet)) 
 { 
-	switch ($_GET['onglet']) {
+	switch ($onglet) {
 		case 'agents':
 			$onglet = 1;
 			break;
@@ -32,13 +29,13 @@ if(isset($_GET['onglet']))
 			break;
 		case 'residences':
 			$onglet = 4;
-			break;		
+			break;
 		default:
 			$onglet = 1;
 			break;
 	}
 }
-else { $onglet=1; }
+else { $onglet = 1;}
 
 if (isset($_SESSION['message'])) { $message = $_SESSION['message']; }
 else { $message = ''; }
@@ -178,7 +175,7 @@ ob_start();
 												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getHeurefs(); ?></td>
 												<td class="d-none d-sm-table-cell border text-center p-1"><?= $journee->getLieufs(); ?></td>
 												<td class="d-none d-sm-table-cell border text-center p-1">
-													<a id="deleteday" href="index.php?page=gestionsite&onglet=journees&deleteday&idjournee=<?= $journee->getId(); ?>">
+													<a id="deleteday" href="index.php?page=gestionsites&deleteday&idjournee=<?= $journee->getId(); ?>">
 													<img src="public/images/icones/drop.png" alt="supprimer journée" title="supprimer" width="20px">
 													</a>
 												</td>
@@ -221,18 +218,21 @@ ob_start();
 		
 		<!-- PANNEAU 4 - RESIDENCES - -->
 			<div class="tab-pane fade <?php if($onglet==4){ echo "active show";} ?> mt-2" id="listeresidences">
-				<form action="" class="container">
+				<form  method="post" action="index.php?page=gestionsite" class="container">
 					<div class="row">
 						<div class="col-md-4 border p-2">
 							<!-- liste UP -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
-			                    <select id="selectionup" class="form-control" name="noup" disabled>
-			                        <option value="">UP Paris Est</option> 
+			                    <select id="selectionup" class="form-control" name="noup">
+			                        <option value="2">UP Paris Est</option> 
 			                    </select>
 							</div>
 
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAjoutJournee" data-backdrop="static">Ajouter</button>
+							<div class="pt-3">
+								<input id="newresidence" class="form-control" type="text" name="newresidence" placeholder="ajout d'une residence" required>
+								<input type="submit" class="btn btn-secondary py-1 mt-2 float-right" value="Ajouter">
+							</div>
 						</div>
 
 						<div class="col-md-8 border p-2">
@@ -258,7 +258,7 @@ ob_start();
 												<td class="idresidence d-none d-sm-table-cell border text-center p-1"><?= $residence->getId(); ?></td>
 												<td class="nameresidence border text-center p-1"><?= $residence->getNomresidence(); ?></td>
 												<td class="d-none d-sm-table-cell border text-center p-1">
-													<a id="deleteday" href="index.php?page=gestionsite&onglet=journees&deleteday&idjournee=<?= $journee->getId(); ?>">
+													<a id="deleteresidence" href="index.php?page=gestionsite&deleteresidence&idresidence=<?= $residence->getId(); ?>">
 													<img src="public/images/icones/drop.png" alt="supprimer journée" title="supprimer" width="20px">
 													</a>
 												</td>
@@ -276,6 +276,7 @@ ob_start();
 <?php 
 
 /** FENETRES MODALES */
+	//ajout d'une journée
 	require('view/modals/modal_ajout_journee.php');
 
 $main = ob_get_clean();

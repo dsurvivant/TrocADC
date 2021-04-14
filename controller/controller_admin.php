@@ -6,12 +6,22 @@
  */
 
 /**
- * [viewAjouterjournee ajoute une journee de roulement à la table journee.]
- * Entree - OBLIGATOIRE - : noroulement, nomjournee, heureps, lieups, heurefs, lieufs en POST
- * @return [type] [Retour sur la page gestion de site sur onglet journee (view_gestionsite.php&onglet=journees)]
+ * - Récupère la liste des objets agents dans $agents
+ * - Récupère la liste des objets journees dans $journees
+ * - Récupère la liste des objets roulements dans $roulements
+ * @param  string $id [facultatif: permet de mettre la ligne correspondant à l'id en rouge]
+ * @return affiche la page view_gestionsite.php
  */
-function viewAjouterjournee()
+function viewGestionsite($id='')
 {
+	global $bdd;
+	
+	if (isset($_GET['onglet'])) { $onglet = $_GET['onglet']; }
+	if (isset($_GET['idroulement'])) { $idroulement = $_GET['idroulement']; }
+	if (isset($_GET['idresidence'])) { $idresidence = $_GET['idresidence']; }
+
+	
+	//ajout d'une journée
 	if (isset($_POST['noroulement']) and isset($_POST['nomjournee']) and isset($_POST['heureps']) and isset($_POST['lieups']) and isset($_POST['heurefs']) and isset($_POST['lieufs']))
 	{
 		//sécurisation des champs
@@ -22,32 +32,67 @@ function viewAjouterjournee()
 		$heurefs = sanitizeString($_POST['heurefs']);
 		$lieufs = sanitizeString($_POST['lieufs']);
 
-		$idjournee = Ajouterjournee($noroulement, $nomjournee, $heureps, $heurefs, $lieups, $lieufs);
+		$journee = new Journee([
+								'idroulement'=>$noroulement,
+								'nomjournee'=>$nomjournee,
+								'heureps'=>$heureps,
+								'heurefs'=>$heurefs,
+								'lieups'=>$lieups,
+								'lieufs'=>$lieufs
+								]);
+		$manager = new JourneesManager($bdd);
+		$idjournee = $manager->add($journee);
 
-		header('location:index.php?page=gestionsite&onglet=journees&idroulement=' . $noroulement . "&idjournee=" . $idjournee);
+		$onglet = "journees";
+		$idroulement = $noroulement;
+		$idjournee = $idjournee;
 	}
-}
-
-/**
- * - Récupère la liste des objets agents dans $agents
- * - Récupère la liste des objets journees dans $journees
- * - Récupère la liste des objets roulements dans $roulements
- * @param  string $id [facultatif: permet de mettre la ligne correspondant à l'id en rouge]
- * @return affiche la page view_gestionsite.php
- */
-function viewGestionsite($id='')
-{
 	//suppression d'une journee roulement
-	if(isset($_GET['deleteday']) and isset($_GET['idjournee']))
+	else if(isset($_GET['deleteday']) and isset($_GET['idjournee']))
 	{
 		$idjournee = sanitizeString(trim($_GET['idjournee']));
-		supprimerJournee($idjournee);
-		$_SESSION['message']="Journée supprimée !";
+		 //instanciation de la journee
+	    $journee = new Journee(['id'=>$idjournee]);
+	    $manager = new JourneesManager($bdd);
+
+	 	$manager->delete($journee);
+
+		$onglet = "journees";
+	}
+	//ajout d'une résidence
+	else if (isset($_POST['newresidence']) and isset($_POST['noup']))
+	{
+		$nomresidence = sanitizeString(trim($_POST['newresidence']));
+		$idup = sanitizeString(trim($_POST['noup']));
+
+		$residence = new Residence(['nomresidence'=>$nomresidence, 'idup'=>$idup]);
+
+		$manager = new ResidenceManager($bdd);
+		$idresidence = $manager->add($residence);
+
+		$onglet ="residences";
+		$idresidence = $idresidence;
+	}
+	//suppression d'un résidence
+	else if (isset($_GET['deleteresidence']) and isset($_GET['idresidence'])) 
+	{
+		$idresidence = sanitizeString(trim($_GET['idresidence']));
+
+		//instanciation de la residence
+	    $residence = new Residence(['id'=>$idresidence]);
+	    $manager = new ResidenceManager($bdd);
+
+	 	$manager->delete($residence);
+
+		$onglet = "residences";
 	}
 
 	//récupération des listes agents, journees, roulements si administrateur
 	$agents = ListeAgents();
-	$journees = ListeJournees(); 
+	//liste des journees
+	$manager = new JourneesManager($bdd);
+	$journees = $manager->getListJournee();
+	//liste des roulements 
 	$roulements = ListeRoulements();
 	$residences = ListeResidences();
 

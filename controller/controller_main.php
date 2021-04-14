@@ -81,6 +81,8 @@
 	 */
 	function viewMain()
 	{
+		global $bdd;
+
 		if(isset($_SESSION['nocp']))
 		{
 			if (isset($_GET['choixdate'])) { $datederecherche = $_GET['choixdate']; }
@@ -99,7 +101,10 @@
 				$idjournee = $proposition->getIdjournee();
 
 				//recherche de la journee
-				$journee = findIdJournee($idjournee);
+				$journee = new Journee(['id'=>$idjournee]);
+	    		$manager = new JourneesManager($bdd);
+	   			$manager->findJourneeById($journee);
+
 				//recherche de l'agent correspondant
 				$agent = findId($idagent);
 
@@ -124,11 +129,14 @@
 
 	function viewAjouterProposition()
 	{
+		global $bdd;
+
 		if (isset($_SESSION['nocp']))
 		{
 			//CAS D'UNE PROPOSITION JOURNEE FAC
 			if(isset($_GET['journeefac']))
 			{
+				global $bdd;
 				//AJOUT DE LA JOURNEE FAC DANS LA BDD
 				
 				//sécurisation des champs
@@ -139,7 +147,16 @@
 				$heurefs = sanitizeString($_POST['heurefs']);
 				$lieufs = sanitizeString($_POST['lieufs']);
 
-				$idjournee= Ajouterjournee($noroulement, $nomjournee, $heureps, $heurefs, $lieups, $lieufs);
+				$journee = new Journee([
+								'idroulement'=>$noroulement,
+								'nomjournee'=>$nomjournee,
+								'heureps'=>$heureps,
+								'heurefs'=>$heurefs,
+								'lieups'=>$lieups,
+								'lieufs'=>$lieufs
+								]);
+				$manager = new JourneesManager($bdd);
+				$idjournee = $manager->add($journee);
 
 				//AJOUT DE LA PROPOSITION DANS LA BDD
 				$idresidence = 1;
@@ -182,7 +199,10 @@
 				else 
 				{
 					//récupération des journées de roulement
-					$journees = ListeJournees();
+					$manager = new JourneesManager($bdd);
+					$journees = $manager->getListJournee();
+
+					
 					$roulements = ListeRoulements();
 
 					$titrepage = "Ajout d'une proposition";
@@ -197,6 +217,8 @@
 
 	function viewModifierProposition()
 	{
+		global $bdd;
+
 		if (isset($_SESSION['nocp']))
 		{
 			
@@ -228,11 +250,16 @@
 				
 				//récupération de la proposition
 				$proposition = RechercheProposition($idproposition);
-
+				$id = $proposition->getIdjournee();
 				//récupération journée
-				$journee = findIdJournee($proposition->getIdjournee());
+				$journee = new Journee(['id'=>$id]);
+	    		$manager = new JourneesManager($bdd);
+				$manager->findJourneeById($journee);
+
 				//liste des journées
-				$journees = ListeJournees();
+				$manager = new JourneesManager($bdd);
+				$journees = $manager->getListJournee();
+
 				//récupération roulement, résidence, UP
 				
 				$titrepage = "Modifier une proposition";
@@ -244,6 +271,8 @@
 
 	function viewMespropositions()
 	{
+		global $bdd;
+
 		if (isset($_SESSION['nocp']))
 		{
 			$_SESSION['message']='';
@@ -267,10 +296,13 @@
 			foreach ($listepropositions as $proposition) 
 			{
 				$idagent = $proposition->getIdagent();
-				$idjournee = $proposition->getIdjournee();
+				$id = $proposition->getIdjournee();
 
 				//recherche de la journee
-				$journee = findIdJournee($idjournee);
+				$journee = new Journee(['id'=>$id]);
+	   			$manager = new JourneesManager($bdd);
+				$manager->findJourneeById($journee);
+
 				//recherche de l'agent correspondant
 				$agent = findId($idagent);
 
@@ -292,6 +324,8 @@
 	//récupération des 10 dernieres propositions
 	function Dernierespropositions()
 	{
+		global $bdd;
+
 		if (isset($_SESSION['nocp']))
 		{
 			$_SESSION['message']='';
@@ -309,7 +343,10 @@
 				$idjournee = $proposition->getIdjournee();
 
 				//recherche de la journee
-				$journee = findIdJournee($idjournee);
+				$journee = new Journee(['id'=>$idjournee]);
+	    		$manager = new JourneesManager($bdd);
+			 	$manager->findJourneeById($journee);
+
 				//recherche de l'agent correspondant
 				$agent = findId($idagent);
 

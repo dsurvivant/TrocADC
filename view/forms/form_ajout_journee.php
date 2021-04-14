@@ -22,7 +22,7 @@ else {$page='';}
 
 <div class="text-center text-danger m-2"><?= $error ?></div>
 
-<form id="formajouterjournee" method="post" action="index.php?page=ajouterjournee">
+<form id="formajouterjournee" method="post" action="index.php?page=gestionsite">
    <!--
     <div class="input-group">
         <div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
