@@ -9,7 +9,7 @@ if(!isset($idroulement)) {$idroulement = $_SESSION['idroulement'];}
 //selection de la ligne journee
 if (!isset($idjournee)) {$idjournee='';}
 //selection de la ligne residence
-if (!isset($idresidence)) {$idresidence='';}
+if (!isset($idresidence)) {$idresidence=$_SESSION['idresidence'];}
 //up
 $idup = 2;
 
@@ -145,7 +145,7 @@ ob_start();
 			                    </select>
 							</div>
 
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAjoutJournee" data-backdrop="static">Ajouter</button>
+							<button type="button" class="btn btn-secondary float-right mt-3" data-toggle="modal" data-target="#modalAjoutJournee" data-backdrop="static">Ajouter Journée</button>
 						</div>
 
 						<div class="col-md-8 border p-2">
@@ -194,30 +194,65 @@ ob_start();
 
 		<!-- PANNEAU 3 - ROULEMENTS - -->
 			<div class="tab-pane fade <?php if($onglet==3){ echo "active show";} ?> mt-2" id="listeroulements">
-				<table id="tableroulements" class="table table-collapse table-hover">
-					<thead class="thead-light" >
-						<tr>
-							<th class="d-none d-sm-table-cell border text-center p-1">id</th>
-							<th class=" border text-center p-1">UP</th>
-							<th class=" border text-center p-1">Etablissement</th>
-							<th class=" border text-center p-1">No roulement</th>
-							<th class="d-none d-sm-table-cell border text-center p-1">Résidence</th>
-						</tr>
-					</thead>
+				<form method="post" action="index.php?page=gestionsite" class="container">
+					<div class="row">
+						<div class="col-md-4 border p-2">
+							<!-- liste UP -->
+							<div class="input-group">
+								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
+			                    <select id="selectionup" class="form-control" name="noup">
+			                        <option value="2">UP Paris Est</option> 
+			                    </select>
+							</div>
 
-					<tbody>
-						<?php
-							foreach ($roulements as $roulement):?>
-								<tr>
-									<td class="d-none d-sm-table-cell border p-1"><?= $roulement->getId(); ?></td>
-									<td class=" border p-1">?</td>
-									<td class=" border p-1"><?= $roulement->getEtablissement(); ?></td>
-									<td class=" border p-1"><?= $roulement->getNoroulement(); ?></td>
-									<td class="d-none d-sm-table-cell border p-1">?</td>
-								</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
+							<!-- liste résidence -->
+							<div class="input-group">
+								<div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
+			                    <select id="selectionresidence" class="form-control" name="noresidence">
+			                       <option value="1">Paris Est Transilien</option>
+			                    </select>
+							</div>
+
+							<div class="pt-3">
+								<input id="newroulement" class="form-control" type="text" name="newroulement" placeholder="ajout d'un roulement" required>
+								<input type="submit" class="btn btn-secondary py-1 mt-2 float-right" value="Ajouter">
+							</div>
+						</div>
+
+						<div class="col-md-8 border p-2">
+							<table class="table table-collapse table-hover">
+								<thead class="thead-light" >
+									<tr>
+										<th id="enteteid" class="d-none d-sm-table-cell border text-center p-1">id</th>
+										<th id="entetenoroulement" class=" border text-center p-1">No roulement</th>
+										<th class="d-none d-sm-table-cell border text-center p-1"></th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<?php
+										foreach ($roulements as $roulement):
+											//surbrilance ligne
+											if($roulement->getId()==$idroulement) { $surbrillance = "class=bg-warning";}
+											else { $surbrillance=''; }
+											//affichage des journées du roulement choisi
+											if($roulement->getIdresidence() == $idresidence) {
+											?>
+											<tr <?= $surbrillance ?> >
+												<td class="idroulement d-none d-sm-table-cell border text-center p-1"><?= $roulement->getId(); ?></td>
+												<td class="nameroulement border text-center p-1"><?= $roulement->getNoroulement(); ?></td>
+												<td class="d-none d-sm-table-cell border text-center p-1">
+													<a id="deleteroulement" href="index.php?page=gestionsite&deleteroulement&idroulement=<?= $roulement->getId(); ?>">
+													<img src="public/images/icones/drop.png" alt="supprimer roulement" title="supprimer" width="20px">
+													</a>
+												</td>
+											</tr>
+									<?php } endforeach; ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</form>
 			</div>
 		
 		<!-- PANNEAU 4 - RESIDENCES - -->
@@ -263,7 +298,7 @@ ob_start();
 												<td class="nameresidence border text-center p-1"><?= $residence->getNomresidence(); ?></td>
 												<td class="d-none d-sm-table-cell border text-center p-1">
 													<a id="deleteresidence" href="index.php?page=gestionsite&deleteresidence&idresidence=<?= $residence->getId(); ?>">
-													<img src="public/images/icones/drop.png" alt="supprimer journée" title="supprimer" width="20px">
+													<img src="public/images/icones/drop.png" alt="supprimer résidence" title="supprimer" width="20px">
 													</a>
 												</td>
 											</tr>

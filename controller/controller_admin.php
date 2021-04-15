@@ -48,7 +48,7 @@ function viewGestionsite($id='')
 		$idroulement = $noroulement;
 		$idjournee = $idjournee;
 	}
-	//suppression d'une journee roulement
+	//suppression d'une journee
 	else if(isset($_GET['deleteday']) and isset($_GET['idjournee']))
 	{
 		$idjournee = sanitizeString(trim($_GET['idjournee']));
@@ -60,6 +60,33 @@ function viewGestionsite($id='')
 
 		$onglet = "journees";
 	}
+	//ajout d'un roulement
+	if (isset($_POST['noup']) and isset($_POST['noresidence']) and isset($_POST['newroulement']) )
+	{
+		$noroulement = sanitizeString(trim($_POST['newroulement']));
+		$idresidence = sanitizeString(trim($_POST['noresidence']));
+
+		$roulement = new Roulement(['noroulement'=>$noroulement, 'idresidence'=>$idresidence]);
+
+		$manager = new RoulementsManager($bdd);
+		$idroulement = $manager->add ($roulement);
+
+		$onglet = "roulements";
+	}
+	//suppression d'un roulement
+	else if (isset($_GET['deleteroulement']) and isset($_GET['idroulement']))
+	{
+
+		$idroulement = sanitizeString(trim($_GET['idroulement']));
+
+		//instanciation de la residence
+	    $roulement = new Roulement(['id'=>$idroulement]);
+	    $manager = new RoulementsManager($bdd);
+
+	 	$manager->delete($roulement);
+
+		$onglet = "roulements";
+	}	
 	//ajout d'une résidence
 	else if (isset($_POST['newresidence']) and isset($_POST['noup']))
 	{

@@ -58,7 +58,17 @@
 		        $_SESSION['idroulement'] = $agent->getIdroulement();
 		        $_SESSION['displayname'] = $agent->getDisplayname();
 		        $_SESSION['displaymail'] = $agent->getDisplaymail();
-		    
+
+		        $roulement = new Roulement(['id'=>$_SESSION['idroulement']]);
+		        $manager = new RoulementsManager($bdd);
+		        $manager->findIdResidence($roulement);
+		        $_SESSION['idresidence'] = $roulement->getIdresidence();
+
+		        $residence = new Residence(['id'=>$_SESSION['idresidence']]);
+		        $manager = new ResidenceManager($bdd);
+		        $manager->findIdUp($residence);
+		        $_SESSION['idup'] = $residence->getIdup();
+ 		    
 				return true;
 			}
 		    else { return false; }

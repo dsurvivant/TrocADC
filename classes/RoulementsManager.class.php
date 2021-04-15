@@ -8,11 +8,10 @@ class RoulementsManager
 
 	public function setDb(PDO $db) { $this->_db = $db; }
 
-	public function add(Journee $roulement)
+	public function add(Roulement $roulement)
 	{
-		$q = $this->_db->prepare('INSERT INTO roulements(etablissement, noroulement, idresidence) VALUES (:etablissement, :noroulement, :idresidence)');
+		$q = $this->_db->prepare('INSERT INTO roulements(noroulement, idresidence) VALUES (:noroulement, :idresidence)');
 
-		$q->bindValue(':etablissement', $roulement->getEtablissement());
 		$q->bindValue(':noroulement', $roulement->getNoroulement());
 		$q->bindValue(':idresidence', $roulement->getIdresidence());
 		
@@ -21,6 +20,14 @@ class RoulementsManager
 		$bdd = $this->_db;
 		$idRoulement = $bdd->lastInsertId();
 		return $idRoulement;
+	}
+
+	public function delete(Roulement $roulement)
+	{
+		$q = $this->_db->prepare('DELETE FROM roulements WHERE id=:id');
+
+		$q->bindValue(':id', $roulement->getId());
+		$q-> execute();
 	}
 
 	public function getListRoulements()
@@ -36,6 +43,26 @@ class RoulementsManager
 		}
 
 		return $roulements;
+	}
+
+	/**
+	 * INSTANCIE OBJET ROULEMENT A PARTIR DE L ID ROULEMENT
+	 */
+	public function findIdResidence(Roulement $roulement)
+	{
+		$q = $this->_db->prepare('SELECT * FROM roulements WHERE id=:id');
+        $q->bindValue(':id', $roulement->getId());
+        $q->execute();
+            
+        if($donnees = $q->fetch())
+        {
+        	$roulement->hydrate($donnees);  
+        	return true;
+        }
+        else
+        {
+        	return false;
+        }
 	}
 }
 ?>

@@ -107,4 +107,24 @@ class ResidenceManager
         }
     }
 
+    /**
+	 * INSTANCIE OBJET RESIDENCE A PARTIR DE L ID RESIDENCE
+	 */
+	public function findIdUp(Residence  $residence)
+	{
+		$q = $this->_db->prepare('SELECT * FROM residences WHERE id=:id');
+        $q->bindValue(':id', $residence->getId());
+        $q->execute();
+            
+        if($donnees = $q->fetch())
+        {
+        	$residence->hydrate($donnees);  
+        	return true;
+        }
+        else
+        {
+        	return false;
+        }
+	}
+
 }

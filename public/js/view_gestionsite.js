@@ -50,6 +50,21 @@ $(function()
 		}
 	});
 
+	//SUPRIMER UN ROULEMENT
+	$('#gestionsite #deleteroulement').click(function(e) {
+		e.preventDefault();
+		reponse = confirm("Confirmer la suppression du roulement  " + $(this).closest('tr').find('.nameroulement').html());
+
+		//suppression
+		if(reponse) 
+		{ 
+			idroulement =  $(this).closest('tr').find('.idroulement').html();
+
+			adresse= "index.php?page=gestionsite&deleteroulement&idroulement=" + idroulement;
+			window.location.replace(adresse);
+		}
+	});
+
 	//SUPRIMER UNE RESIDENCE
 	$('#gestionsite #deleteresidence').click(function(e) {
 		e.preventDefault();

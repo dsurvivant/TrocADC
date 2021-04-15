@@ -3,7 +3,6 @@
 class Roulement
 {
 	private $_id;
-	private $_etablissement;
 	private $_noroulement;
     private $_idresidence;
 
@@ -30,16 +29,14 @@ class Roulement
      * GETTEURS
      */
     public function getId() { return $this->_id;}
-    public function getEtablissement() { return $this->_etablissement;}
     public function getNoroulement() { return $this->_noroulement;}
-    public function geIdresidence() { return $this->_idresidence;}
+    public function getIdresidence() { return $this->_idresidence;}
 
     /**
      * SETTEURS
      */
 
     public function setId($id) { $this->_id = $id; }
-    public function setEtablissement($etablissement) { $this->_etablissement = $etablissement; }
     public function setNoroulement($noroulement) { $this->_noroulement = $noroulement; }
     public function setIdresidence($idresidence) { $this->_idresidence = $idresidence; }
 }
