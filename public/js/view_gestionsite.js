@@ -65,6 +65,21 @@ $(function()
 		}
 	});
 
+	//SUPRIMER UNE UP
+	$('#gestionsite #deleteup').click(function(e) {
+		e.preventDefault();
+		reponse = confirm("Confirmer la suppression de l'up de  " + $(this).closest('tr').find('.nameup').html());
+
+		//suppression
+		if(reponse) 
+		{ 
+			idup =  $(this).closest('tr').find('.idup').html();
+
+			adresse= "index.php?page=gestionsite&deleteup&idup=" + idup;
+			window.location.replace(adresse);
+		}
+	});
+
 	/***
 	/** FICHE AGENT
 	/***	**/

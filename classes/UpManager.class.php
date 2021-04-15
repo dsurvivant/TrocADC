@@ -16,9 +16,8 @@ class UpManager
 	 */
 	public function add(Up $up) //retourne l'id de l'agent créé automatiquement par sql
 	{
-		$q = $this->_db->prepare('INSERT INTO up(id, nomup) VALUES (:id, :nomup)');
+		$q = $this->_db->prepare('INSERT INTO up(nomup) VALUES (:nomup)');
 
-		$q->bindValue(':id', $up->getId());
 		$q->bindValue(':nomup', $up->getNomup());
 		
 		$q->execute();

@@ -30,6 +30,9 @@ if(isset($onglet))
 		case 'residences':
 			$onglet = 4;
 			break;
+		case 'up':
+			$onglet = 5;
+			break;
 		default:
 			$onglet = 1;
 			break;
@@ -56,6 +59,7 @@ ob_start();
 		  <a class="nav-item nav-link <?php if($onglet==2){ echo "active";} ?>" href="#listejournees" data-toggle="pill">Journées</a>
 		  <a class="nav-item nav-link <?php if($onglet==3){ echo "active";} ?>" href="#listeroulements" data-toggle="pill">Roulements</a>
 		  <a class="nav-item nav-link <?php if($onglet==4){ echo "active";} ?>" href="#listeresidences" data-toggle="pill">Résidences</a>
+		  <a class="nav-item nav-link <?php if($onglet==5){ echo "active";} ?>" href="#listeup" data-toggle="pill">UP</a>
 		</nav>
 
 
@@ -145,7 +149,7 @@ ob_start();
 						</div>
 
 						<div class="col-md-8 border p-2">
-							<table id="tablejournees" class="table table-collapse table-hover">
+							<table class="table table-collapse table-hover">
 								<thead class="thead-light" >
 									<tr>
 										<th id="enteteid" class="d-none d-sm-table-cell border text-center p-1">id</th>
@@ -236,7 +240,7 @@ ob_start();
 						</div>
 
 						<div class="col-md-8 border p-2">
-							<table id="tablejournees" class="table table-collapse table-hover">
+							<table class="table table-collapse table-hover">
 								<thead class="thead-light" >
 									<tr>
 										<th id="enteteid" class="d-none d-sm-table-cell border text-center p-1">id</th>
@@ -264,6 +268,51 @@ ob_start();
 												</td>
 											</tr>
 									<?php } endforeach; ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</form>
+			</div>
+	
+		<!-- PANNEAU 5 - UP - -->
+			<div class="tab-pane fade <?php if($onglet==5){ echo "active show";} ?> mt-2" id="listeup">
+				<form  method="post" action="index.php?page=gestionsite" class="container">
+					<div class="row">
+						<div class="col-md-4 border p-2">
+							<div class="pt-3">
+								<input id="newup" class="form-control" type="text" name="newup" placeholder="ajout up" required>
+								<input type="submit" class="btn btn-secondary py-1 mt-2 float-right" value="Ajouter">
+							</div>
+						</div>
+
+						<div class="col-md-8 border p-2">
+							<table class="table table-collapse table-hover">
+								<thead class="thead-light" >
+									<tr>
+										<th id="enteteid" class="d-none d-sm-table-cell border text-center p-1">id</th>
+										<th id="enteteup" class=" border text-center p-1">UP</th>
+										<th class="d-none d-sm-table-cell border text-center p-1"></th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<?php
+										foreach ($ups as $up):
+											//surbrilance ligne
+											if($up->getId()==$idup) { $surbrillance = "class=bg-warning";}
+											else { $surbrillance=''; }
+											?>
+											<tr <?= $surbrillance ?> >
+												<td class="idup d-none d-sm-table-cell border text-center p-1"><?= $up->getId(); ?></td>
+												<td class="nameup border text-center p-1"><?= $up->getNomup(); ?></td>
+												<td class="d-none d-sm-table-cell border text-center p-1">
+													<a id="deleteup" href="index.php?page=gestionsite&deleteup&idup=<?= $up->getId(); ?>">
+													<img src="public/images/icones/drop.png" alt="supprimer journée" title="supprimer" width="20px">
+													</a>
+												</td>
+											</tr>
+									<?php  endforeach; ?>
 								</tbody>
 							</table>
 						</div>

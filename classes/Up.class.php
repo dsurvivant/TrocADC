@@ -31,7 +31,7 @@
          * GETTEURS
          */
         public function getId(){return $this->_id;}
-        public function getNomup(){return $this->_Nomup;}
+        public function getNomup(){return $this->_nomup;}
         
 
         /**

@@ -19,6 +19,7 @@ function viewGestionsite($id='')
 	if (isset($_GET['onglet'])) { $onglet = $_GET['onglet']; }
 	if (isset($_GET['idroulement'])) { $idroulement = $_GET['idroulement']; }
 	if (isset($_GET['idresidence'])) { $idresidence = $_GET['idresidence']; }
+	if (isset($_GET['idup'])) { $idup = $_GET['idup']; }
 
 	
 	//ajout d'une journée
@@ -71,7 +72,6 @@ function viewGestionsite($id='')
 		$idresidence = $manager->add($residence);
 
 		$onglet ="residences";
-		$idresidence = $idresidence;
 	}
 	//suppression d'un résidence
 	else if (isset($_GET['deleteresidence']) and isset($_GET['idresidence'])) 
@@ -86,6 +86,30 @@ function viewGestionsite($id='')
 
 		$onglet = "residences";
 	}
+	//ajout d'une up
+	else if(isset($_POST['newup']))
+	{
+		$nomup = sanitizeString(trim($_POST['newup']));
+		//instanciation de l'up
+		$up = new Up(['nomup'=>$nomup]);
+		$manager = new UpManager($bdd);
+
+		$idup = $manager->add($up);
+		$onglet = "up";
+	}
+	//suppression up
+	else if (isset($_GET['deleteup']) and isset($_GET['idup']) ) 
+	{
+		$idup = sanitizeString(trim($_GET['idup']));
+
+		//instanciation de l'up
+		$up = new Up(['id'=>$idup]);
+		$manager = new UpManager($bdd);
+
+		$manager->delete($up);
+
+		$onglet = "up";
+	}
 
 	//récupération des listes agents, journees, roulements si administrateur
 	$agents = ListeAgents();
@@ -95,6 +119,9 @@ function viewGestionsite($id='')
 	//liste des roulements 
 	$roulements = ListeRoulements();
 	$residences = ListeResidences();
+	//liste des up
+	$manager = new UpManager($bdd);
+	$ups = $manager->getListUpId();
 
 	$titrepage = "Gestion";
 	require('view/public/view_gestionsite.php');
