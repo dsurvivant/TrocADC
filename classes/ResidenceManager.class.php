@@ -84,6 +84,23 @@ class ResidenceManager
 		return $residences;
 	}
 
+	//liste des residences classés pour une up précise
+	//retourne un tableau contenant les objets résidences
+	public function getListResidencesWithUp(Residence $residence)
+	{
+		$residences = [];
+
+		$q = $this->_db->prepare('SELECT * FROM residences WHERE idup=:idup');
+		$q->bindValue(':idup', $residence->getIdup());
+        $q->execute();
+		
+		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$residences[] = new Residence($donnees);
+		}
+		return $residences;
+	}
+
 	
     /**
     *	RECHERCHER d'une résidence A PARTIR De l'id

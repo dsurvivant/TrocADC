@@ -16,11 +16,32 @@ function viewGestionsite($id='')
 {
 	global $bdd;
 	
-	if (isset($_GET['onglet'])) { $onglet = $_GET['onglet']; }
-	if (isset($_GET['idroulement'])) { $idroulement = $_GET['idroulement']; }
-	if (isset($_GET['idresidence'])) { $idresidence = $_GET['idresidence']; }
-	if (isset($_GET['idup'])) { $idup = $_GET['idup']; }
+	//options d'affichages (onglet,journee,residence roulement)
+		//defaut
+		$idjournee = '';
+		$idroulement = $_SESSION['idroulement'];
+		$idresidence=$_SESSION['idresidence'];
+		$idup=$_SESSION['idup'];
+		//changement
+		if (isset($_GET['onglet'])) { $onglet = $_GET['onglet']; }
+		if (isset($_GET['idroulement'])) { $idroulement = $_GET['idroulement']; }
+		if (isset($_GET['idresidence'])) { $idresidence = $_GET['idresidence']; }
+		if (isset($_GET['idup'])) 
+			{ 
+				$idup = $_GET['idup'];	
+				if (!isset($_GET['idresidence']))
+				{
+					//résidence par défaut
+					$residence = new Residence(['idup'=>$_GET['idup']]);
+					$manager = new ResidenceManager($bdd);
+					$residences = $manager->getListResidencesWithUp($residence);
 
+					if(!empty($residences)){$idresidence = $residences[0]->getId(); }
+				}
+			}
+		
+	//onglet actif
+		
 	
 	//ajout d'une journée
 	if (isset($_POST['noroulement']) and isset($_POST['nomjournee']) and isset($_POST['heureps']) and isset($_POST['lieups']) and isset($_POST['heurefs']) and isset($_POST['lieufs']))
@@ -63,6 +84,7 @@ function viewGestionsite($id='')
 	//ajout d'un roulement
 	if (isset($_POST['noup']) and isset($_POST['noresidence']) and isset($_POST['newroulement']) )
 	{
+		$idup = $_POST['noup'];
 		$noroulement = sanitizeString(trim($_POST['newroulement']));
 		$idresidence = sanitizeString(trim($_POST['noresidence']));
 
@@ -145,7 +167,9 @@ function viewGestionsite($id='')
 	$journees = $manager->getListJournee();
 	//liste des roulements 
 	$roulements = ListeRoulements();
-	$residences = ListeResidences();
+	//liste des résidences
+	$manager = new ResidenceManager($bdd);
+	$residences = $manager->getListResidencesId();
 	//liste des up
 	$manager = new UpManager($bdd);
 	$ups = $manager->getListUpId();

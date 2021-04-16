@@ -1,99 +1,107 @@
 /**
  *	- AJOUTER JOURNNEE
  *  - Supprimer journee
+ *  - Supprimer un roulement
  *  - Supprimer une rédidence
+ *  - Supprimer une UP
  *  - double click sur ligne agent ==> fiche agent
+ *  - Gestion des select
  *  - click sur entetes: journee, id
  */
 $(function()
 {
-	$('#formajouterjournee #annulerajoutjournee').click(function(e){
-		e.preventDefault();
-		$('#btncloseajoutjournnee').click();
-	});
+	/***
+	/** Ajouts/suppressions
+	/***	**/
+		$('#formajouterjournee #annulerajoutjournee').click(function(e){
+			e.preventDefault();
+			$('#btncloseajoutjournnee').click();
+		});
 
-	//AJOUTE UNE JOURNEE
-	$('#formajouterjournee #ajouterjournee').click(function(e) {
-		e.preventDefault();
-		
-		var error = false;
-
-		//controle des champs
-		$('#formajouterjournee input').each(function()
-		{
+		//AJOUTE UNE JOURNEE
+		$('#formajouterjournee #ajouterjournee').click(function(e) {
+			e.preventDefault();
 			
-			if($(this).val().trim()=='')
+			var error = false;
+
+			//controle des champs
+			$('#formajouterjournee input').each(function()
+			{
+				
+				if($(this).val().trim()=='')
+				{ 
+					$(this ).css("border", "solid 1px #e55039");
+					error = true;
+				}
+				else {  $(this ).css("border", "solid 1px #ced4da");}
+			}) 
+
+			//soumission formulaire
+			if (error == false) { $('#formajouterjournee').submit(); }		
+		});
+
+		//SUPRIMER UNE JOURNEE
+		$('#gestionsite #deleteday').click(function(e) {
+			e.preventDefault();
+			reponse = confirm("Confirmer la suppression de journée " + $(this).closest('tr').find('.nameday').html());
+
+			//suppression
+			if(reponse) 
 			{ 
-				$(this ).css("border", "solid 1px #e55039");
-				error = true;
+				roulement = $('#selectionroulement').val();
+				idjournee =  $(this).closest('tr').find('.idday').html();
+
+				adresse= "index.php?page=gestionsite&deleteday&idroulement=" + roulement + "&idjournee=" + idjournee;
+				window.location.replace(adresse);
 			}
-			else {  $(this ).css("border", "solid 1px #ced4da");}
-		}) 
+		});
 
-		//soumission formulaire
-		if (error == false) { $('#formajouterjournee').submit(); }		
-	});
+		//SUPRIMER UN ROULEMENT
+		$('#gestionsite #deleteroulement').click(function(e) {
+			e.preventDefault();
+			reponse = confirm("Confirmer la suppression du roulement  " + $(this).closest('tr').find('.nameroulement').html());
 
-	//SUPRIMER UNE JOURNEE
-	$('#gestionsite #deleteday').click(function(e) {
-		e.preventDefault();
-		reponse = confirm("Confirmer la suppression de journée " + $(this).closest('tr').find('.nameday').html());
+			//suppression
+			if(reponse) 
+			{ 
+				idroulement =  $(this).closest('tr').find('.idroulement').html();
+				idup=$('#selectionUpOngletroulements').val(); 
+				idresidence = $('#selectionResidenceOngletroulements').val();
+				adresse= "index.php?page=gestionsite&deleteroulement&idup=" + idup + "&idroulement=" + idroulement + "&idresidence=" + idresidence;
+				window.location.replace(adresse);
+			}
+		});
 
-		//suppression
-		if(reponse) 
-		{ 
-			roulement = $('#selectionroulement').val();
-			idjournee =  $(this).closest('tr').find('.idday').html();
+		//SUPRIMER UNE RESIDENCE
+		$('#gestionsite #deleteresidence').click(function(e) {
+			e.preventDefault();
+			reponse = confirm("Confirmer la suppression de la résidence de  " + $(this).closest('tr').find('.nameresidence').html());
 
-			adresse= "index.php?page=gestionsite&deleteday&idroulement=" + roulement + "&idjournee=" + idjournee;
-			window.location.replace(adresse);
-		}
-	});
+			//suppression
+			if(reponse) 
+			{ 
+				idresidence =  $(this).closest('tr').find('.idresidence').html();
+				idup = $('#selectionUpOngletresidences').val();
 
-	//SUPRIMER UN ROULEMENT
-	$('#gestionsite #deleteroulement').click(function(e) {
-		e.preventDefault();
-		reponse = confirm("Confirmer la suppression du roulement  " + $(this).closest('tr').find('.nameroulement').html());
+				adresse= "index.php?page=gestionsite&deleteresidence&idresidence=" + idresidence + "&idup=" + idup;
+				window.location.replace(adresse);
+			}
+		});
 
-		//suppression
-		if(reponse) 
-		{ 
-			idroulement =  $(this).closest('tr').find('.idroulement').html();
+		//SUPRIMER UNE UP
+		$('#gestionsite #deleteup').click(function(e) {
+			e.preventDefault();
+			reponse = confirm("Confirmer la suppression de l'up de  " + $(this).closest('tr').find('.nameup').html());
 
-			adresse= "index.php?page=gestionsite&deleteroulement&idroulement=" + idroulement;
-			window.location.replace(adresse);
-		}
-	});
+			//suppression
+			if(reponse) 
+			{ 
+				idup =  $(this).closest('tr').find('.idup').html();
 
-	//SUPRIMER UNE RESIDENCE
-	$('#gestionsite #deleteresidence').click(function(e) {
-		e.preventDefault();
-		reponse = confirm("Confirmer la suppression de la résidence de  " + $(this).closest('tr').find('.nameresidence').html());
-
-		//suppression
-		if(reponse) 
-		{ 
-			idresidence =  $(this).closest('tr').find('.idresidence').html();
-
-			adresse= "index.php?page=gestionsite&deleteresidence&idresidence=" + idresidence;
-			window.location.replace(adresse);
-		}
-	});
-
-	//SUPRIMER UNE UP
-	$('#gestionsite #deleteup').click(function(e) {
-		e.preventDefault();
-		reponse = confirm("Confirmer la suppression de l'up de  " + $(this).closest('tr').find('.nameup').html());
-
-		//suppression
-		if(reponse) 
-		{ 
-			idup =  $(this).closest('tr').find('.idup').html();
-
-			adresse= "index.php?page=gestionsite&deleteup&idup=" + idup;
-			window.location.replace(adresse);
-		}
-	});
+				adresse= "index.php?page=gestionsite&deleteup&idup=" + idup;
+				window.location.replace(adresse);
+			}
+		});
 
 	/***
 	/** FICHE AGENT
@@ -108,11 +116,33 @@ $(function()
 	/***
 	/** GESTION DES SELECT
 	/***  */
-	$('#gestionsite #selectionroulement').change(function()
-	{
-		noroulement = $(this).val();
-		window.location.replace('index.php?page=gestionsite&onglet=journees&idroulement=' + noroulement);
-	});
+
+		//select up des différents onglets
+			$('#gestionsite #selectionUpOngletresidences').change(function()
+			{
+				idup = $(this).val();
+				window.location.replace('index.php?page=gestionsite&onglet=residences&idup=' + idup);
+			});
+
+			$('#gestionsite #selectionUpOngletroulements').change(function()
+			{
+				idup = $(this).val();
+				window.location.replace('index.php?page=gestionsite&onglet=roulements&idup=' + idup);
+			});
+
+		//select residence
+			$('#gestionsite #selectionResidenceOngletroulements').change(function()
+			{
+				idup = $('#selectionUpOngletroulements').val();
+				idresidence = $(this).val();
+				window.location.replace('index.php?page=gestionsite&onglet=roulements&idup=' + idup + '&idresidence=' + idresidence);
+			});
+		//select roulement
+		$('#gestionsite #selectionroulement').change(function()
+		{
+			noroulement = $(this).val();
+			window.location.replace('index.php?page=gestionsite&onglet=journees&idroulement=' + noroulement);
+		});
 
 	/***
 	/** CLIC SUR ENTETE

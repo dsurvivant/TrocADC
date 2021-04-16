@@ -1,17 +1,14 @@
 <?php
 
 /**
- * @param   $idroulement contient la référence roulement affiché par défaut
+ * @param   $idroulement contient le roulement choisi
+ *          $idjournee contient la journée choisi
+ *          $idresidence contient la residence choisi
+ *          $idup contient l'up choisit
+ *
+ * 			$onglet contient l'onglet actif
+ * 			objets: $agents, $journees, $roulements, $ups, $residences
  */
-
-//roulement par défaut
-if(!isset($idroulement)) {$idroulement = $_SESSION['idroulement'];}
-//selection de la ligne journee
-if (!isset($idjournee)) {$idjournee='';}
-//selection de la ligne residence
-if (!isset($idresidence)) {$idresidence=$_SESSION['idresidence'];}
-//up
-$idup = 2;
 
 
 //choix de l'onglet actif
@@ -44,9 +41,10 @@ if (isset($_SESSION['message'])) { $message = $_SESSION['message']; }
 else { $message = ''; }
 ob_start();
 ?>
+<?php echo "up: " . $idup . "<br>";
+echo "residence: " . $idresidence; ?>
 
 <div id="gestionsite" class="container">
-	<?= $id; ?>
 	
 	<h2 class="col-12 jumbotron p-2 text-center lead">Gestion du site</h2>
 
@@ -119,15 +117,20 @@ ob_start();
 							<!-- liste UP -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
-			                    <select id="selectionup" class="form-control" name="noup" disabled>
-			                        <option value="">UP Paris Est</option> 
+			                    <select id="selectionup" class="form-control" name="noup">
+			                        <?php foreach ($ups as $up):
+					                    if($up->getId()==$idup){$selected="selected";}
+					                    else {$selected='';}
+					                    ?>
+			                        	<option value="<?= $up->getId(); ?>" <?= $selected ?>> <?= $up->getnomup(); ?> </option>
+			                        <?php endforeach; ?> 
 			                    </select>
 							</div>
 
 							<!-- liste résidence -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
-			                    <select id="selectionresidence" class="form-control" name="noresidence" disabled>
+			                    <select id="selectionresidence" class="form-control" name="noresidence">
 			                       <option value="">Paris Est Transilien</option>
 			                    </select>
 							</div>
@@ -200,16 +203,28 @@ ob_start();
 							<!-- liste UP -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
-			                    <select id="selectionup" class="form-control" name="noup">
-			                        <option value="2">UP Paris Est</option> 
+			                    <select id="selectionUpOngletroulements" class="form-control" name="noup">
+			                    	<?php foreach ($ups as $up):
+					                    if($up->getId()==$idup){$selected="selected";}
+					                    else {$selected='';}
+					                    ?>
+			                        	<option value="<?= $up->getId(); ?>" <?= $selected ?>> <?= $up->getnomup(); ?> </option>
+			                        <?php endforeach; ?> 
 			                    </select>
 							</div>
 
 							<!-- liste résidence -->
+
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
-			                    <select id="selectionresidence" class="form-control" name="noresidence">
-			                       <option value="1">Paris Est Transilien</option>
+			                    <select id="selectionResidenceOngletroulements" class="form-control" name="noresidence">
+			                       <?php foreach ($residences as $residence):
+			                       		if($residence->getIdup()==$idup): //uniquement les résidences de l'up
+						                    if($residence->getId()==$idresidence){$selected="selected";}
+						                    else {$selected='';}
+						                    ?>
+				                       		<option value="<?= $residence->getId() ?>" <?= $selected ?> > <?= $residence->getNomresidence() ?> </option>
+				                       	<?php endif; endforeach; ?>
 			                    </select>
 							</div>
 
@@ -235,14 +250,14 @@ ob_start();
 											//surbrilance ligne
 											if($roulement->getId()==$idroulement) { $surbrillance = "class=bg-warning";}
 											else { $surbrillance=''; }
-											//affichage des journées du roulement choisi
+											//affichage des roulements de la résidence choisi
 											if($roulement->getIdresidence() == $idresidence) {
 											?>
 											<tr <?= $surbrillance ?> >
 												<td class="idroulement d-none d-sm-table-cell border text-center p-1"><?= $roulement->getId(); ?></td>
 												<td class="nameroulement border text-center p-1"><?= $roulement->getNoroulement(); ?></td>
 												<td class="d-none d-sm-table-cell border text-center p-1">
-													<a id="deleteroulement" href="index.php?page=gestionsite&deleteroulement&idroulement=<?= $roulement->getId(); ?>">
+													<a id="deleteroulement" href="index.php?page=gestionsite&deleteroulement&idup=<?=$idup?>&idroulement=<?= $roulement->getId(); ?>">
 													<img src="public/images/icones/drop.png" alt="supprimer roulement" title="supprimer" width="20px">
 													</a>
 												</td>
@@ -263,8 +278,13 @@ ob_start();
 							<!-- liste UP -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
-			                    <select id="selectionup" class="form-control" name="noup">
-			                        <option value="2">UP Paris Est</option> 
+			                    <select id="selectionUpOngletresidences" class="form-control" name="noup">
+			                    	<?php foreach ($ups as $up):
+					                    if($up->getId()==$idup){$selected="selected";}
+					                    else {$selected='';}
+					                    ?>
+			                        	<option value="<?= $up->getId(); ?>" <?= $selected ?>> <?= $up->getnomup(); ?> </option>
+			                        <?php endforeach; ?>
 			                    </select>
 							</div>
 
