@@ -202,8 +202,8 @@
 					$manager = new JourneesManager($bdd);
 					$journees = $manager->getListJournee();
 
-					
-					$roulements = ListeRoulements();
+					$manager = new RoulementsManager($bdd);
+					$roulements = $manager->getListRoulements();
 
 					$titrepage = "Ajout d'une proposition";
 					require('view/public/view_ajout_proposition.php');

@@ -6,6 +6,8 @@
  /*         ==> $page = gestionsite
  /*     - Dans la partie ajout d'une proposition pour ajouter une journée fac dans une proposition
  /*         ==> $page = ajout_proposition
+ /*
+ /*     @param $idroulement : roulement affiché ds le select
   */
  /* 
   */

@@ -45,6 +45,22 @@ class RoulementsManager
 		return $roulements;
 	}
 
+	//liste des roulements classés pour une résidence précise
+	//retourne un tableau contenant les objets roulements
+	public function getListRoulementWithResidence(Roulement $roulement)
+	{
+		$roulements = [];
+
+		$q = $this->_db->prepare('SELECT * FROM roulements WHERE idresidence=:idresidence');
+		$q->bindValue(':idresidence', $roulement->getIdresidence());
+        $q->execute();
+		
+		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$roulements[] = new Roulement($donnees);
+		}
+		return $roulements;
+	}
 	/**
 	 * INSTANCIE OBJET ROULEMENT A PARTIR DE L ID ROULEMENT
 	 */

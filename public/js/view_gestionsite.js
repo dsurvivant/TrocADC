@@ -116,33 +116,53 @@ $(function()
 	/***
 	/** GESTION DES SELECT
 	/***  */
-
-		//select up des différents onglets
-			$('#gestionsite #selectionUpOngletresidences').change(function()
+		//ONGLET JOURNEES
+			//up
+			$('#gestionsite #selectionupongletjournees').change(function()
 			{
 				idup = $(this).val();
-				window.location.replace('index.php?page=gestionsite&onglet=residences&idup=' + idup);
+				window.location.replace('index.php?page=gestionsite&onglet=journees&idup=' + idup);
 			});
 
+			//residence
+			$('#gestionsite #selectionresidenceongletjournees').change(function()
+			{
+				idup = $('#selectionupongletjournees').val();
+				idresidence = $(this).val();
+				window.location.replace('index.php?page=gestionsite&onglet=journees&idup=' + idup + '&idresidence=' + idresidence);
+			});
+
+			//roulement
+			$('#gestionsite #selectionroulementongletjournees').change(function()
+			{
+				idup = $('#selectionupongletjournees').val();
+				idresidence = $('#selectionresidenceongletjournees').val();
+				noroulement = $(this).val();
+				window.location.replace('index.php?page=gestionsite&onglet=journees&idup=' + idup + '&idresidence=' + idresidence + '&idroulement=' + noroulement);
+			});
+		
+		//ONGLET ROULEMENTS
+			//up
 			$('#gestionsite #selectionUpOngletroulements').change(function()
 			{
 				idup = $(this).val();
 				window.location.replace('index.php?page=gestionsite&onglet=roulements&idup=' + idup);
 			});
-
-		//select residence
+			//residences
 			$('#gestionsite #selectionResidenceOngletroulements').change(function()
 			{
 				idup = $('#selectionUpOngletroulements').val();
 				idresidence = $(this).val();
 				window.location.replace('index.php?page=gestionsite&onglet=roulements&idup=' + idup + '&idresidence=' + idresidence);
 			});
-		//select roulement
-		$('#gestionsite #selectionroulement').change(function()
-		{
-			noroulement = $(this).val();
-			window.location.replace('index.php?page=gestionsite&onglet=journees&idroulement=' + noroulement);
-		});
+		
+		//ONGLET RESIDENCES
+			//up
+			$('#gestionsite #selectionUpOngletresidences').change(function()
+			{
+				idup = $(this).val();
+				window.location.replace('index.php?page=gestionsite&onglet=residences&idup=' + idup);
+			});
 
 	/***
 	/** CLIC SUR ENTETE

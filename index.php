@@ -8,7 +8,6 @@
 	require ('model/model.php');
 	require ('model/model_agents.php');
 	require ('model/model_propositions.php');
-	require ('model/model_roulements.php');
 	require ('model/fonctions.php');
 	require ('controller/controller_connexion.php');
 	require ('controller/controller_main.php');

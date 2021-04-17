@@ -25,27 +25,55 @@ function viewGestionsite($id='')
 		//changement
 		if (isset($_GET['onglet'])) { $onglet = $_GET['onglet']; }
 		if (isset($_GET['idroulement'])) { $idroulement = $_GET['idroulement']; }
-		if (isset($_GET['idresidence'])) { $idresidence = $_GET['idresidence']; }
+		
 		if (isset($_GET['idup'])) 
 			{ 
-				$idup = $_GET['idup'];	
-				if (!isset($_GET['idresidence']))
+				$idup = $_GET['idup'];
+				if (isset($_GET['idresidence'])) 
+				{ 
+					$idresidence = $_GET['idresidence']; 
+					//roulement par défaut
+					if (!isset($_GET['idroulement']))
+					{
+						$roulement = new Roulement(['idresidence'=>$idresidence]);
+						$manager = new RoulementsManager($bdd);
+						$roulements = $manager->getListRoulementWithResidence($roulement);
+						if(!empty($roulements)){ $idroulement=$roulements[0]->getId();}
+						else {$idroulement='';}
+					}
+				}	
+				else
 				{
 					//résidence par défaut
 					$residence = new Residence(['idup'=>$_GET['idup']]);
 					$manager = new ResidenceManager($bdd);
 					$residences = $manager->getListResidencesWithUp($residence);
 
-					if(!empty($residences)){$idresidence = $residences[0]->getId(); }
+					if(!empty($residences))
+					{
+						$idresidence = $residences[0]->getId(); 
+						
+						//roulement par défaut
+						$roulement = new Roulement(['idresidence'=>$idresidence]);
+						$manager = new RoulementsManager($bdd);
+						$roulements = $manager->getListRoulementWithResidence($roulement);
+						$idroulement=$roulements[0]->getId();
+					}
+					else
+					{
+						$idresidence = '';
+						$idroulement = '';
+					}
+
+					
 				}
 			}
-		
-	//onglet actif
-		
 	
 	//ajout d'une journée
 	if (isset($_POST['noroulement']) and isset($_POST['nomjournee']) and isset($_POST['heureps']) and isset($_POST['lieups']) and isset($_POST['heurefs']) and isset($_POST['lieufs']))
 	{
+		dd($_POST);
+		exit;
 		//sécurisation des champs
 		$noroulement = sanitizeString(trim($_POST['noroulement']));
 		$nomjournee = sanitizeString(trim($_POST['nomjournee']));
@@ -165,8 +193,9 @@ function viewGestionsite($id='')
 	//liste des journees
 	$manager = new JourneesManager($bdd);
 	$journees = $manager->getListJournee();
-	//liste des roulements 
-	$roulements = ListeRoulements();
+	//liste des roulements
+	$manager = new RoulementsManager($bdd);
+	$roulements = $manager->getListRoulements(); 
 	//liste des résidences
 	$manager = new ResidenceManager($bdd);
 	$residences = $manager->getListResidencesId();

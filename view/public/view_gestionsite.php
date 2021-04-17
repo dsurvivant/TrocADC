@@ -42,7 +42,9 @@ else { $message = ''; }
 ob_start();
 ?>
 <?php echo "up: " . $idup . "<br>";
-echo "residence: " . $idresidence; ?>
+echo "residence: " . $idresidence . "<br>"; 
+echo "roulement: " . $idroulement;
+?>
 
 <div id="gestionsite" class="container">
 	
@@ -117,7 +119,7 @@ echo "residence: " . $idresidence; ?>
 							<!-- liste UP -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
-			                    <select id="selectionup" class="form-control" name="noup">
+			                    <select id="selectionupongletjournees" class="form-control" name="noup">
 			                        <?php foreach ($ups as $up):
 					                    if($up->getId()==$idup){$selected="selected";}
 					                    else {$selected='';}
@@ -130,21 +132,28 @@ echo "residence: " . $idresidence; ?>
 							<!-- liste résidence -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
-			                    <select id="selectionresidence" class="form-control" name="noresidence">
-			                       <option value="">Paris Est Transilien</option>
+			                    <select id="selectionresidenceongletjournees" class="form-control" name="noresidence">
+			                       <?php foreach ($residences as $residence):
+			                       		if($residence->getIdup()==$idup): //uniquement les résidences de l'up
+						                    if($residence->getId()==$idresidence){$selected="selected";}
+						                    else {$selected='';}
+						                    ?>
+				                       		<option value="<?= $residence->getId() ?>" <?= $selected ?> > <?= $residence->getNomresidence() ?> </option>
+				                       	<?php endif; endforeach; ?>
 			                    </select>
 							</div>
 
 							<!-- liste roulement -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
-			                    <select id="selectionroulement" class="form-control" name="noroulement">
+			                    <select id="selectionroulementongletjournees" class="form-control" name="noroulement">
 			                        <?php foreach ($roulements as $roulement):
-					                    if($roulement->getId()==$idroulement){$selected="selected";}
-					                    else {$selected='';}
-					                    ?>
+						                if($roulement->getIdresidence()==$idresidence): //uniquement les roulements de la résidence
+						                    if($roulement->getId()==$idroulement){$selected="selected";}
+						                    else {$selected='';}
+						                    ?>
 					                    <option value="<?= $roulement->getId(); ?>" <?= $selected ?> ><?= $roulement->getNoroulement(); ?></option> 
-					                <?php endforeach; ?>
+					                <?php endif; endforeach; ?>
 			                    </select>
 							</div>
 
@@ -239,7 +248,7 @@ echo "residence: " . $idresidence; ?>
 								<thead class="thead-light" >
 									<tr>
 										<th id="enteteid" class="d-none d-sm-table-cell border text-center p-1">id</th>
-										<th id="entetenoroulement" class=" border text-center p-1">No roulement</th>
+										<th id="entetenoroulement" class=" border text-center p-1">Roulement</th>
 										<th class="d-none d-sm-table-cell border text-center p-1"></th>
 									</tr>
 								</thead>
@@ -299,7 +308,7 @@ echo "residence: " . $idresidence; ?>
 								<thead class="thead-light" >
 									<tr>
 										<th id="enteteid" class="d-none d-sm-table-cell border text-center p-1">id</th>
-										<th id="entetejournee" class=" border text-center p-1">Journee</th>
+										<th id="entetejournee" class=" border text-center p-1">Résidence</th>
 										<th class="d-none d-sm-table-cell border text-center p-1"></th>
 									</tr>
 								</thead>
