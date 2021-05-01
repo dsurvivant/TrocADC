@@ -12,7 +12,7 @@
  /* 
   */
 
- if(isset($_SESSION['message']))
+ if(isset($_SESSION['message ']))
     {$error = $_SESSION['message'];}
   else
     {$error='';}
@@ -25,24 +25,40 @@ else {$page='';}
 <div class="text-center text-danger m-2"><?= $error ?></div>
 
 <form id="formajouterjournee" method="post" action="index.php?page=gestionsite">
-   <!--
+
+    <!-- liste UP -->
     <div class="input-group">
-        <div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
-        <input type="text" class="form-control mb-2" id="up" value="1" maxlength="11" name="idup" readonly>  
+        <div class="input-group-prepend mb-2"><span class="input-group-text d-none">UP</span></div>
+        <select id="selectionupongletjournees" class="form-control d-none" name="noup">
+            <?php foreach ($ups as $up):
+            if($up->getId()==$idup){$selected="selected";}
+            else {$selected='';}
+            ?>
+            <option value="<?= $up->getId(); ?>" <?= $selected ?>> <?= $up->getnomup(); ?> </option>
+            <?php endforeach; ?> 
+        </select>
     </div>
 
+    <!-- liste résidence -->
     <div class="input-group">
-        <div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
-        <input type="text" class="form-control mb-2" id="residence" name="idresidence" maxlength="11" value="1" readonly>
+        <div class="input-group-prepend mb-2"><span class="input-group-text d-none">Résidence</span></div>
+        <select id="selectionresidenceongletjournees" class="form-control d-none" name="noresidence">
+            <?php foreach ($residences as $residence):
+            if($residence->getIdup()==$idup): //uniquement les résidences de l'up
+            if($residence->getId()==$idresidence){$selected="selected";}
+            else {$selected='';}
+            ?>
+            <option value="<?= $residence->getId() ?>" <?= $selected ?> > <?= $residence->getNomresidence() ?> </option>
+            <?php endif; endforeach; ?>
+        </select>
     </div>
-    -->
-    
+
     <div class="input-group">
         <?php 
         //cas d'un ajout dans la partie admin
             if( $page=="gestionsite" ){ ?>
-                <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
-                    <select id="selectionroulement" class="form-control" name="noroulement">
+                <div class="input-group-prepend mb-2"><span class="input-group-text d-none">Roulement</span></div>
+                    <select id="selectionroulement" class="form-control d-none" name="noroulement">
                         <?php foreach ($roulements as $roulement):
                             if($roulement->getId()==$idroulement){$selected="selected";}
                             else {$selected='';}

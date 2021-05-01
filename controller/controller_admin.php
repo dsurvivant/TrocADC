@@ -26,10 +26,10 @@ function viewGestionsite($id='')
 		if (isset($_GET['onglet'])) { $onglet = $_GET['onglet']; }
 		if (isset($_GET['idroulement'])) { $idroulement = $_GET['idroulement']; }
 		
-		if (isset($_GET['idup'])) 
+		if ( (isset($_GET['idup']))  and (!isset($_GET['deleteup'])) ) 
 			{ 
 				$idup = $_GET['idup'];
-				if (isset($_GET['idresidence'])) 
+				if ( isset($_GET['idresidence']) )  
 				{ 
 					$idresidence = $_GET['idresidence']; 
 					//roulement par défaut
@@ -64,17 +64,15 @@ function viewGestionsite($id='')
 						$idresidence = '';
 						$idroulement = '';
 					}
-
-					
 				}
 			}
 	
 	//ajout d'une journée
-	if (isset($_POST['noroulement']) and isset($_POST['nomjournee']) and isset($_POST['heureps']) and isset($_POST['lieups']) and isset($_POST['heurefs']) and isset($_POST['lieufs']))
+	if (isset($_POST['noup']) and isset($_POST['noresidence']) and  isset($_POST['noroulement']) and isset($_POST['nomjournee']) and isset($_POST['heureps']) and isset($_POST['lieups']) and isset($_POST['heurefs']) and isset($_POST['lieufs']))
 	{
-		dd($_POST);
-		exit;
 		//sécurisation des champs
+		$idup = sanitizeString(trim($_POST['noup'])) ;
+		$idresidence = sanitizeString(trim($_POST['noresidence'])) ;
 		$noroulement = sanitizeString(trim($_POST['noroulement']));
 		$nomjournee = sanitizeString(trim($_POST['nomjournee']));
 		$heureps = sanitizeString(trim($_POST['heureps']));
@@ -96,6 +94,7 @@ function viewGestionsite($id='')
 		$onglet = "journees";
 		$idroulement = $noroulement;
 		$idjournee = $idjournee;
+
 	}
 	//suppression d'une journee
 	else if(isset($_GET['deleteday']) and isset($_GET['idjournee']))
@@ -204,6 +203,8 @@ function viewGestionsite($id='')
 	$ups = $manager->getListUpId();
 
 	$titrepage = "Gestion";
+
+	//header("location:index.php?page=gestionsite");
 	require('view/public/view_gestionsite.php');
 }
 

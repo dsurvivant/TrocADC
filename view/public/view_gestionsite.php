@@ -10,7 +10,6 @@
  * 			objets: $agents, $journees, $roulements, $ups, $residences
  */
 
-
 //choix de l'onglet actif
 if(isset($onglet)) 
 { 
@@ -40,10 +39,6 @@ else { $onglet = 1;}
 if (isset($_SESSION['message'])) { $message = $_SESSION['message']; }
 else { $message = ''; }
 ob_start();
-?>
-<?php echo "up: " . $idup . "<br>";
-echo "residence: " . $idresidence . "<br>"; 
-echo "roulement: " . $idroulement;
 ?>
 
 <div id="gestionsite" class="container">
