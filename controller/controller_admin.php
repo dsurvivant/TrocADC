@@ -57,7 +57,10 @@ function viewGestionsite($id='')
 						$roulement = new Roulement(['idresidence'=>$idresidence]);
 						$manager = new RoulementsManager($bdd);
 						$roulements = $manager->getListRoulementWithResidence($roulement);
-						$idroulement=$roulements[0]->getId();
+						
+						if(!empty($roulements)) { $idroulement=$roulements[0]->getId();}
+						else {$idroulement = '';}
+						
 					}
 					else
 					{
@@ -70,10 +73,7 @@ function viewGestionsite($id='')
 	//ajout d'une journée
 	if (isset($_POST['noup']) and isset($_POST['noresidence']) and  isset($_POST['noroulement']) and isset($_POST['nomjournee']) and isset($_POST['heureps']) and isset($_POST['lieups']) and isset($_POST['heurefs']) and isset($_POST['lieufs']))
 	{
-<<<<<<< HEAD
-		
-=======
->>>>>>> dd99e5a72f6d442a0ca546f9d5ba0473ac41e9c2
+
 		//sécurisation des champs
 		$idup = sanitizeString(trim($_POST['noup'])) ;
 		$idresidence = sanitizeString(trim($_POST['noresidence'])) ;
