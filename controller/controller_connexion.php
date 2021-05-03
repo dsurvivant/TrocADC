@@ -36,10 +36,24 @@
 
 	function viewInscription()
 	{
+		global $bdd;
+		//récupération des UP, résidences, roulements
+		//liste des up
+		$manager = new UpManager($bdd);
+		$ups = $manager->getListUpId();
+		//liste des roulements
+		$manager = new RoulementsManager($bdd);
+		$roulements = $manager->getListRoulements(); 
+		//liste des résidences
+		$manager = new ResidenceManager($bdd);
+		$residences = $manager->getListResidencesId();
+
 		$_SESSION['message']='';
 		
-		if (isset($_POST['nocp']) and isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['telephone']) and isset($_POST['email']) and isset($_POST['password']) and isset($_POST['confirmpassword'])) 
+		if (isset($_POST['noroulement']) and isset($_POST['nocp']) and isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['telephone']) and isset($_POST['email']) and isset($_POST['password']) and isset($_POST['confirmpassword'])) 
 		{
+			dd($_POST);
+			exit;
 			//securisation
 			$nocp = sanitizeString(trim($_POST['nocp']));
 			$nom = sanitizeString(trim($_POST['nom']));
@@ -48,7 +62,7 @@
 			$email = sanitizeString(trim($_POST['email']));
 			$password = sanitizeString(trim($_POST['password']));
 			$confirmpassword =sanitizeString($_POST['confirmpassword']);
-			$idroulement =1;
+			$idroulement = sanitizeString($_POST['noroulement']);
 			//
 			$droits = 0;
 			$cle = md5(microtime(TRUE)*10000);

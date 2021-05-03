@@ -6,6 +6,16 @@
  * Utilisé pour l'inscription ou la modification d'un agent
  */
 
+//Valeur Select up
+if (isset($_GET['idup'])) {$idup = $_GET['idup'];}
+else {$idup = '';}
+
+if (isset($_GET['idresidence'])) { $idresidence = $_GET['idresidence'];}
+else { $idresidence = '';}
+
+if (isset($_GET['idroulement'])) { $idroulement = $_GET['idroulement'];}
+else { $idroulement = '';}
+
 if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;} 
 
   if ( $_SESSION['droits']==0 ) { $page = 'inscription';}
@@ -27,53 +37,100 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
       <hr>
       <div class="row text-danger text-center p-1"><h3 id="message_form_agent" class="col"><?= $_SESSION['message']; ?></h3></div>
       
-      <form class="row pt-2 mb-4" id="formagent" method="post" action="index.php?page=<?= $page ?>" > 
-        <section  class = "col-sm-6 m-1">
+      <form id="formagent" class="row pt-2 mb-4"  method="post" action="index.php?page=<?= $page ?>" > 
+        <section  class = "col m-1">
+          
+          <!-- liste UP -->
+              <div class="input-group">
+                <div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
+                  <select id="selectionupinscription" class="form-control" name="noup">
+                      <option value="vide" >  </option>
+                      <?php foreach ($ups as $up):
+                      if($up->getId()==$idup){$selected="selected";}
+                      else {$selected='';}
+                      ?>
+                      <option value="<?= $up->getId(); ?>" <?= $selected ?>> <?= $up->getnomup(); ?> </option>
+                      <?php endforeach; ?> 
+                  </select>
+              </div>
+
+              <!-- liste résidence -->
+              <div class="input-group">
+                <div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
+                    <select id="selectionresidenceinscription" class="form-control" name="noresidence">
+                      <option value="vide" >  </option>
+                      <?php foreach ($residences as $residence):
+                      if($residence->getIdup()==$idup): //uniquement les résidences de l'up
+                      if($residence->getId()==$idresidence){$selected="selected";}
+                      else {$selected='';}
+                      ?>
+                      <option value="<?= $residence->getId() ?>" <?= $selected ?> > <?= $residence->getNomresidence() ?> </option>
+                      <?php endif; endforeach; ?>
+                    </select>
+              </div>
+
+              <!-- liste roulement -->
+              <div class="input-group">
+                <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
+                <select id="selectionroulementinscription" class="form-control" name="noroulement">
+                    <?php foreach ($roulements as $roulement):
+                    if($roulement->getIdresidence()==$idresidence): //uniquement les roulements de la résidence
+                    if($roulement->getId()==$idroulement){$selected="selected";}
+                      else {$selected='';}
+                                ?>
+                    <option value="<?= $roulement->getId(); ?>" <?= $selected ?> ><?= $roulement->getNoroulement(); ?></option> 
+                    <?php endif; endforeach; ?>
+                </select>
+              </div>
+          <!------------------>
+          <!------------------>
+          <!------------------>
           <div class="input-group mb-2">
-            <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">No cp</span></div>
+            <div class="input-group-prepend"><span class="input-group-text text-secondary">No cp</span></div>
             <input id="input_nocp" type="text" class="form-control verifmodif" name="nocp" value="<?= $nocp ?>"<?php if($page=='ficheagent'){ echo "readonly"; } ?>>
           </div>
             
           <div class="input-group mb-2">
-            <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Nom</span></div>
+            <div class="input-group-prepend"><span class="input-group-text text-secondary">Nom</span></div>
             <input id="input_nom" type="text" class="form-control verifmodif" name="nom" value="<?= $nom ?>">
           </div>
            
           <div class="input-group mb-2">
-            <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Prenom</span></div>
+            <div class="input-group-prepend"><span class="input-group-text text-secondary">Prenom</span></div>
             <input id="input_prenom" type="text" class="form-control verifmodif" name="prenom" value="<?= $prenom ?>">
           </div>
             
           <div class="input-group mb-2">
-              <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Tel</span></div>
+              <div class="input-group-prepend"><span class="input-group-text text-secondary">Tel</span></div>
               <input id="input_telephone" type="text" class="form-control verifmodif" name="telephone" value="<?= $telephone ?>">
               <p class="help text-danger m-0 text-center">Numéro de téléphone non valable</p>
           </div>
 
           <div class="input-group mb-2">
-            <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Email</span></div>
+            <div class="input-group-prepend"><span class="input-group-text text-secondary">Email</span></div>
             <input id="input_email" type="text" class="form-control verifmodif" name="email" value="<?= $email ?>">
               <p class="help text-danger m-0 text-center">Format email non valable</p>
           </div>
 
           <div class="input-group mb-2">
-            <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Mot de passe</span></div>
+            <div class="input-group-prepend"><span class="input-group-text text-secondary">Mot de passe</span></div>
             <input id="input_password" type="password" class="form-control" name="password" value="">
           </div>
 
           <div class="input-group mb-2">
-            <div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Confirmer MDP</span></div>
+            <div class="input-group-prepend"><span class="input-group-text text-secondary">Confirmer MDP</span></div>
             <input id="input_confirmpassword" type="password" class="form-control" name="confirmpassword" value="">
             <p class="help text-danger m-0 text-center">Les mots de passe ne sont pas identiques</p>
           </div>
         </section>
 
-        <section  class = "col-sm m-1">
-              <?php
-              /** ADMINISTRATION */
-              if ( isset($_GET['id'])) { $id = $_GET['id']; }
-              if ($_SESSION['droits']==1)
-              {?>
+        <?php
+        /** ADMINISTRATION */
+        if ( isset($_GET['id'])) { $id = $_GET['id']; }
+        if ($_SESSION['droits']==1)
+        {?>
+        <section  class = "col m-1">
+              
                 <div class="form-group col m-2 p-3">
                   <label>Id: <?= $id ?></label> <br>
 
@@ -88,9 +145,10 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
                   <label class="form-check-label" for="check_actif">Actif</label>
 
                 </div>
-              <?php
-              }?>
+              
         </section>
+        <?php
+        }?>
       </form>
 
       <section class="row">
