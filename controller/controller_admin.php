@@ -72,8 +72,7 @@ function viewGestionsite($id='')
 	//ajout d'une journée
 	if (isset($_POST['noroulement']) and isset($_POST['nomjournee']) and isset($_POST['heureps']) and isset($_POST['lieups']) and isset($_POST['heurefs']) and isset($_POST['lieufs']))
 	{
-		dd($_POST);
-		exit;
+		
 		//sécurisation des champs
 		$noroulement = sanitizeString(trim($_POST['noroulement']));
 		$nomjournee = sanitizeString(trim($_POST['nomjournee']));
