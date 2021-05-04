@@ -16,13 +16,18 @@ if (isset($_SESSION['nocp']))
 	else {$displaymail='';}
 	/**$residence = $_SESSION['idresidence'];**/
 
+	$mois = array('Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
 	ob_start();
 	//***********************************************************************
 ?>
 <div id="containerParametres" class="container">
 		
 	<section class="row mt-3 text-center">
-		<span class="col p-3 border border-rounded border-secondary text-secondary h4 shadow"><?= $nom . " " . $prenom ?></span>
+		<div class="col p-3 border border-rounded border-secondary text-secondary shadow">
+			<span class="h4" ><?= $nom . " " . $prenom ?></span>
+			<br>
+			<span>Inscrit depuis le <?= date('j', $dateinscription) . " " . $mois[date('n', $dateinscription)-1] . " " . date('Y', $dateinscription); ?></span>
+		</div>
 	</section>
 
 	<!-- bloc de messages -->
@@ -72,10 +77,6 @@ if (isset($_SESSION['nocp']))
 						</div>
 						<br>
 
-						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Inscrit depuis</span></div>
-							<input type="text" class="form-control" id="dateinscription" name="dateinscription" readonly value="<?= date('j-m-Y', $dateinscription); ?>" >
-						</div>
 					</form>
 				</div>
 
