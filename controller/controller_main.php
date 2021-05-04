@@ -5,6 +5,8 @@
 
 	function viewParametres()
 	{
+		global $bdd;
+
 		$_SESSION['message']='';
 		//modification des infos sur la page parametres (retour form)
 			if( isset($_POST['telephone']) and isset($_POST['email']) )
@@ -57,6 +59,16 @@
 			$_SESSION['displaymail']=$_POST['checkmail'];
 		}
 
+		//liste des up
+		$manager = new UpManager($bdd);
+		$ups = $manager->getListUpId();
+		//liste des résidences
+		$manager = new ResidenceManager($bdd);
+		$residences = $manager->getListResidencesId();
+		//liste des roulements
+		$manager = new RoulementsManager($bdd);
+		$roulements = $manager->getListRoulements();
+		
 		$titrepage = "Paramètres";
 		require('view/public/view_parametres.php');
 	}

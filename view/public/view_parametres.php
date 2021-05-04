@@ -9,6 +9,8 @@ if (isset($_SESSION['nocp']))
 	$droits = $_SESSION['droits'];
 	$password = $_SESSION['password'];
 	$dateinscription = $_SESSION['dateinscription'];
+	$idup = $_SESSION['idup'];
+	$idresidence = $_SESSION['idresidence'];
 	$idroulement = $_SESSION['idroulement'];
 	if($_SESSION['displayname']==1){$displayname="checked";}
 	else {$displayname='';}
@@ -46,36 +48,65 @@ if (isset($_SESSION['nocp']))
 				<div class="card-body">
 					<form id="formMesInfos" method="post" action="index.php?page=parametres">
 						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">No CP</span></div>
+							<div class="input-group-prepend"><span class="input-group-text text-secondary">No CP</span></div>
 							<input type="text" class="form-control" id="nocp" name="nocp" readonly value="<?= $nocp ?>" >
 						</div>
 						<br>
 
 						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Tel</span></div>
+							<div class="input-group-prepend"><span class="input-group-text text-secondary">Tel</span></div>
 							<input type="text" class="form-control" maxlength="14" id="telephone" name="telephone" value="<?= $telephone ?>" >
 							<span class="col-12 help text-danger text-center"></span>
 						</div>
 						<br>
 
 						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Email</span></div>
+							<div class="input-group-prepend"><span class="input-group-text text-secondary">Email</span></div>
 							<input type="mail" class="form-control" id="email" name="email"  value="<?= $email ?>" >
 							<span class="col-12 help text-danger text-center"></span>
 						</div>
 							<br>
 
-						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Roulement</span></div>
-							<input type="text" class="form-control" maxlength="5" id="roulement" name="idroulement" value="171" readonly >
-						</div>
-						<br>
+						<!-- liste UP -->
+							<div class="input-group">
+								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
+			                    <select id="selectionupongletjournees" class="form-control" name="noup">
+			                        <?php foreach ($ups as $up):
+					                    if($up->getId()==$idup){$selected="selected";}
+					                    else {$selected='';}
+					                    ?>
+			                        	<option value="<?= $up->getId(); ?>" <?= $selected ?>> <?= $up->getnomup(); ?> </option>
+			                        <?php endforeach; ?> 
+			                    </select>
+							</div>
 
-						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Résidence</span></div>
-							<input type="text" class="form-control" maxlength="30" id="residence" name="residence" value="Paris Est" readonly>
-						</div>
-						<br>
+						<!-- liste résidence -->
+							<div class="input-group">
+								<div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
+			                    <select id="selectionresidenceongletjournees" class="form-control" name="noresidence">
+			                       <?php foreach ($residences as $residence):
+			                       		if($residence->getIdup()==$idup): //uniquement les résidences de l'up
+						                    if($residence->getId()==$idresidence){$selected="selected";}
+						                    else {$selected='';}
+						                    ?>
+				                       		<option value="<?= $residence->getId() ?>" <?= $selected ?> > <?= $residence->getNomresidence() ?> </option>
+				                       	<?php endif; endforeach; ?>
+			                    </select>
+							</div>
+
+						<!-- liste roulement -->
+							<div class="input-group">
+								<div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
+			                    <select id="selectionroulementongletjournees" class="form-control" name="noroulement">
+			                        <?php foreach ($roulements as $roulement):
+						                if($roulement->getIdresidence()==$idresidence): //uniquement les roulements de la résidence
+						                    if($roulement->getId()==$idroulement){$selected="selected";}
+						                    else {$selected='';}
+						                    ?>
+					                    <option value="<?= $roulement->getId(); ?>" <?= $selected ?> ><?= $roulement->getNoroulement(); ?></option> 
+					                <?php endif; endforeach; ?>
+			                    </select>
+							</div>
 
 					</form>
 				</div>
@@ -94,19 +125,19 @@ if (isset($_SESSION['nocp']))
 				<div class="card-body">
 					<form id="formModifPassword" method="post" action="index.php?page=parametres">
 						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">MDP Actuel</span></div>
+							<div class="input-group-prepend"><span class="input-group-text text-secondary">MDP Actuel</span></div>
 							<input type="password" class="form-control" id="password" name="password" >
 						</div>
 						<br>
 
 						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text text-insecondaryfo bg-white">Nouveau MDP</span></div>
+							<div class="input-group-prepend"><span class="input-group-text text-secondary ">Nouveau MDP</span></div>
 							<input type="password" class="form-control" id="newpassword" name="newpassword">
 						</div>
 						<br>
 
 						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text text-secondary bg-white">Confirmer MDP</span></div>
+							<div class="input-group-prepend"><span class="input-group-text text-secondary">Confirmer MDP</span></div>
 							<input type="password" class="form-control" id="confirmpassword" name="confirmpassword">
 						</div>
 					</form>
@@ -143,6 +174,7 @@ if (isset($_SESSION['nocp']))
 </div>
 
 	<?php
+	dd($_SESSION);
 	//************************************************************************
 	$main = ob_get_clean(); 
 
