@@ -52,8 +52,6 @@
 		
 		if (isset($_POST['noroulement']) and isset($_POST['nocp']) and isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['telephone']) and isset($_POST['email']) and isset($_POST['password']) and isset($_POST['confirmpassword'])) 
 		{
-			dd($_POST);
-			exit;
 			//securisation
 			$nocp = sanitizeString(trim($_POST['nocp']));
 			$nom = sanitizeString(trim($_POST['nom']));

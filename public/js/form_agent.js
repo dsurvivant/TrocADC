@@ -211,15 +211,51 @@ $(function(){
 		$('#formagent #selectionupinscription').change(function()
 		{
 			idup = $(this).val();
-			window.location.replace('index.php?page=inscription&idup=' + idup);
+
+			//remplissage du select Résidence
+			$.ajax({
+				url: 'public/js/ajax/findresidences.php',
+				type: 'POST',
+				dataType: 'html',
+				data: {idup: idup},
+			})
+			.done(function(data) {
+				$('#ajaxresidence').html(data);
+			})
+			.always(function() {
+				//on remplit le seclect roulement
+				idresidence = $('#selectionresidenceinscription').val();
+				$.ajax({
+				url: 'public/js/ajax/findroulements.php',
+				type: 'POST',
+				dataType: 'html',
+				data: {idresidence: idresidence},
+				})
+				.done(function(data) {
+					console.log("success");
+					$('#ajaxroulement').html(data);
+				})
+			});
 		});
 
 		//select residence
-		$('#formagent #selectionresidenceinscription').change(function()
+		$('#formagent').on('change', '#selectionresidenceinscription', function()
 		{
-			idup = $('#formagent #selectionupinscription').val();
 			idresidence = $(this).val();
-			window.location.replace('index.php?page=inscription&idup=' + idup + "&idresidence=" + idresidence);
+			console.log(idresidence);
+			
+			//remplissage du select Roulement
+			$.ajax({
+				url: 'public/js/ajax/findroulements.php',
+				type: 'POST',
+				dataType: 'html',
+				data: {idresidence: idresidence},
+			})
+			.done(function(data) {
+				console.log("success");
+				$('#ajaxroulement').html(data);
+			})
 		});
+		
 
 }) // jquery

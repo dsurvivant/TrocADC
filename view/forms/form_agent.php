@@ -6,12 +6,6 @@
  * Utilisé pour l'inscription ou la modification d'un agent
  */
 
-//Valeur Select up
-if (isset($_GET['idup'])) {$idup = $_GET['idup'];}
-else {$idup = '';}
-
-if (isset($_GET['idresidence'])) { $idresidence = $_GET['idresidence'];}
-else { $idresidence = '';}
 
 if (isset($_GET['idroulement'])) { $idroulement = $_GET['idroulement'];}
 else { $idroulement = '';}
@@ -21,7 +15,7 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
   if ( $_SESSION['droits']==0 ) { $page = 'inscription';}
   else { $page = 'ficheagent';}
 ?>
-  <div class="container">
+  <div id="ficheagent" class="container">
 
       <hr>
 
@@ -41,50 +35,30 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
         <section  class = "col m-1">
           
           <!-- liste UP -->
-              <div class="input-group">
-                <div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
-                  <select id="selectionupinscription" class="form-control" name="noup">
-                      <option value="vide" >  </option>
-                      <?php foreach ($ups as $up):
-                      if($up->getId()==$idup){$selected="selected";}
-                      else {$selected='';}
-                      ?>
-                      <option value="<?= $up->getId(); ?>" <?= $selected ?>> <?= $up->getnomup(); ?> </option>
-                      <?php endforeach; ?> 
-                  </select>
-              </div>
-
-              <!-- liste résidence -->
-              <div class="input-group">
-                <div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
-                    <select id="selectionresidenceinscription" class="form-control" name="noresidence">
-                      <option value="vide" >  </option>
-                      <?php foreach ($residences as $residence):
-                      if($residence->getIdup()==$idup): //uniquement les résidences de l'up
-                      if($residence->getId()==$idresidence){$selected="selected";}
-                      else {$selected='';}
-                      ?>
-                      <option value="<?= $residence->getId() ?>" <?= $selected ?> > <?= $residence->getNomresidence() ?> </option>
-                      <?php endif; endforeach; ?>
-                    </select>
-              </div>
-
-              <!-- liste roulement -->
-              <div class="input-group">
-                <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
-                <select id="selectionroulementinscription" class="form-control" name="noroulement">
-                    <?php foreach ($roulements as $roulement):
-                    if($roulement->getIdresidence()==$idresidence): //uniquement les roulements de la résidence
-                    if($roulement->getId()==$idroulement){$selected="selected";}
-                      else {$selected='';}
-                                ?>
-                    <option value="<?= $roulement->getId(); ?>" <?= $selected ?> ><?= $roulement->getNoroulement(); ?></option> 
-                    <?php endif; endforeach; ?>
+            <div class="input-group">
+              <div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
+                <select id="selectionupinscription" class="form-control" name="noup">
+                  <option value="vide" >  </option>
+                  <?php foreach ($ups as $up):?>
+                  <option value="<?= $up->getId(); ?>"> <?= $up->getnomup(); ?> </option>
+                  <?php endforeach; ?> 
                 </select>
-              </div>
-          <!------------------>
-          <!------------------>
-          <!------------------>
+            </div>
+
+          <!-- liste résidence -->
+            <div id="ajaxresidence" class="input-group">
+              <div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
+              <select id="selectionresidenceinscription" class="form-control" name="noresidence">
+              </select>
+            </div>
+
+          <!-- liste roulement -->
+            <div id="ajaxroulement" class="input-group">
+              <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
+              <select id="selectionroulementinscription" class="form-control" name="noroulement">
+              </select>
+            </div>
+         
           <div class="input-group mb-2">
             <div class="input-group-prepend"><span class="input-group-text text-secondary">No cp</span></div>
             <input id="input_nocp" type="text" class="form-control verifmodif" name="nocp" value="<?= $nocp ?>"<?php if($page=='ficheagent'){ echo "readonly"; } ?>>
