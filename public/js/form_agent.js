@@ -30,10 +30,10 @@ $(function(){
 			var confirmpassword = $('#input_confirmpassword').val().trim();
 
 			//select vide
-			console.log($('#formagent #selectionupinscription').val());
-			if ( $('#formagent #selectionupinscription').val() =='vide' ) 
+			console.log($('#formagent #selectionup').val());
+			if ( $('#formagent #selectionup').val() =='vide' ) 
 			{
-				$('#formagent #selectionupinscription').css("border", "solid 1px red");
+				$('#formagent #selectionup').css("border", "solid 1px red");
 					$('#message_form_agent').html("Merci de sélectionner une UP");
 					erreur = true;
 				}
@@ -208,7 +208,7 @@ $(function(){
 	 * SELECT
 	 */
 		//select up
-		$('#formagent #selectionupinscription').change(function()
+		$('#formagent #selectionup').change(function()
 		{
 			idup = $(this).val();
 
@@ -224,7 +224,7 @@ $(function(){
 			})
 			.always(function() {
 				//on remplit le seclect roulement
-				idresidence = $('#selectionresidenceinscription').val();
+				idresidence = $('#selectionresidence').val();
 				$.ajax({
 				url: 'public/js/ajax/findroulements.php',
 				type: 'POST',
@@ -239,7 +239,7 @@ $(function(){
 		});
 
 		//select residence
-		$('#formagent').on('change', '#selectionresidenceinscription', function()
+		$('#formagent').on('change', '#selectionresidence', function()
 		{
 			idresidence = $(this).val();
 			console.log(idresidence);

@@ -35,7 +35,7 @@ else { $idresidence ='';}
 //
 	?>
 		<div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
-        <select id="selectionroulementinscription" class="form-control" name="noroulement">
+        <select id="selectionroulement" class="form-control" name="noroulement">
         	<?php foreach ($roulements as $roulement):?>
             	<option value="<?= $roulement->getId(); ?>" ><?= $roulement->getNoroulement(); ?></option> 
             <?php endforeach; ?>

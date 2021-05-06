@@ -37,7 +37,7 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
           <!-- liste UP -->
             <div class="input-group">
               <div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
-                <select id="selectionupinscription" class="form-control" name="noup">
+                <select id="selectionup" class="form-control" name="noup">
                   <option value="vide" >  </option>
                   <?php foreach ($ups as $up):?>
                   <option value="<?= $up->getId(); ?>"> <?= $up->getnomup(); ?> </option>
@@ -48,14 +48,14 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
           <!-- liste résidence -->
             <div id="ajaxresidence" class="input-group">
               <div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
-              <select id="selectionresidenceinscription" class="form-control" name="noresidence">
+              <select id="selectionresidence" class="form-control" name="noresidence">
               </select>
             </div>
 
           <!-- liste roulement -->
             <div id="ajaxroulement" class="input-group">
               <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
-              <select id="selectionroulementinscription" class="form-control" name="noroulement">
+              <select id="selectionroulement" class="form-control" name="noroulement">
               </select>
             </div>
          

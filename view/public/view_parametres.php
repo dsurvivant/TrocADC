@@ -70,7 +70,7 @@ if (isset($_SESSION['nocp']))
 						<!-- liste UP -->
 							<div class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
-			                    <select id="selectionupongletjournees" class="form-control" name="noup">
+			                    <select id="selectionup" class="form-control" name="noup">
 			                        <?php foreach ($ups as $up):
 					                    if($up->getId()==$idup){$selected="selected";}
 					                    else {$selected='';}
@@ -79,11 +79,12 @@ if (isset($_SESSION['nocp']))
 			                        <?php endforeach; ?> 
 			                    </select>
 							</div>
+							<br>
 
 						<!-- liste résidence -->
-							<div class="input-group">
+							<div id="ajaxresidence" class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
-			                    <select id="selectionresidenceongletjournees" class="form-control" name="noresidence">
+			                    <select id="selectionresidence" class="form-control" name="noresidence">
 			                       <?php foreach ($residences as $residence):
 			                       		if($residence->getIdup()==$idup): //uniquement les résidences de l'up
 						                    if($residence->getId()==$idresidence){$selected="selected";}
@@ -93,11 +94,12 @@ if (isset($_SESSION['nocp']))
 				                       	<?php endif; endforeach; ?>
 			                    </select>
 							</div>
+							<br>
 
 						<!-- liste roulement -->
-							<div class="input-group">
+							<div id="ajaxroulement" class="input-group">
 								<div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
-			                    <select id="selectionroulementongletjournees" class="form-control" name="noroulement">
+			                    <select id="selectionroulement" class="form-control" name="noroulement">
 			                        <?php foreach ($roulements as $roulement):
 						                if($roulement->getIdresidence()==$idresidence): //uniquement les roulements de la résidence
 						                    if($roulement->getId()==$idroulement){$selected="selected";}
@@ -107,6 +109,7 @@ if (isset($_SESSION['nocp']))
 					                <?php endif; endforeach; ?>
 			                    </select>
 							</div>
+							<br>
 
 					</form>
 				</div>
