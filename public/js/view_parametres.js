@@ -56,7 +56,7 @@ $(function(){
 		/**
 		/* SELECT UP / Résidence /Roulement
 		/****/
-		$('#selectionup').change(function()
+		$('#formMesInfos').on('change', '#selectionup', function()
 		{
 			idup = $(this).val();
 
@@ -89,15 +89,23 @@ $(function(){
 		});
 
 
-		$('#selectionresidence').change(function()
+		$('#formMesInfos').on('change', '#selectionresidence', function()
 		{
-			alert("changement residence");
+			idresidence = $(this).val();
+			
+			//remplissage du select Roulement
+			$.ajax({
+				url: 'public/js/ajax/findroulements.php',
+				type: 'POST',
+				dataType: 'html',
+				data: {idresidence: idresidence},
+			})
+			.done(function(data) {
+				console.log("success");
+				$('#ajaxroulement').html(data);
+			})
 		});
 
-		$('#selectionroulement').change(function()
-		{
-			alert("changement roulement");
-		});
 	/***
 	/** CADRE MOT DE PASSE
 	/**

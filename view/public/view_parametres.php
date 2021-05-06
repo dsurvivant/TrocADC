@@ -21,7 +21,9 @@ if (isset($_SESSION['nocp']))
 	$mois = array('Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
 	ob_start();
 	//***********************************************************************
+
 ?>
+
 <div id="containerParametres" class="container">
 		
 	<section class="row mt-3 text-center">
@@ -177,8 +179,6 @@ if (isset($_SESSION['nocp']))
 </div>
 
 	<?php
-	dd($_SESSION);
-	//************************************************************************
 	$main = ob_get_clean(); 
 
 

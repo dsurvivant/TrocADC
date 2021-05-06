@@ -9,14 +9,21 @@
 
 		$_SESSION['message']='';
 		//modification des infos sur la page parametres (retour form)
-			if( isset($_POST['telephone']) and isset($_POST['email']) )
+			if( isset($_POST['telephone']) and isset($_POST['email']) and isset($_POST['noroulement']) and isset($_POST['noresidence']) and isset($_POST['noup']) )
 			{	
 				$telephone =sanitizeString(trim($_POST['telephone']));
 				$email=sanitizeString(trim($_POST['email']));
-				$idroulement= 1;
+				$idup = sanitizeString(trim($_POST['noup']));
+				$idresidence = sanitizeString(trim($_POST['noresidence']));
+				$idroulement= sanitizeString(trim($_POST['noroulement']));
 		
 				$message = modifInfosProfil($telephone, $email, $idroulement);
 				$_SESSION['message']= $message;
+
+				//mis à jour parametres session de l'utilisateur
+				$_SESSION['idup'] = $idup;
+				$_SESSION['idresidence'] = $idresidence;
+				$_SESSION['idroulement'] = $idroulement;
 			}
 
 		//modification du mot de passe (retour form)
