@@ -61,7 +61,7 @@
 
 		        $roulement = new Roulement(['id'=>$_SESSION['idroulement']]);
 		        $manager = new RoulementsManager($bdd);
-		        $manager->findIdResidence($roulement);
+		        $manager->findIdRoulement($roulement);
 		        $_SESSION['idresidence'] = $roulement->getIdresidence();
 
 		        $residence = new Residence(['id'=>$_SESSION['idresidence']]);

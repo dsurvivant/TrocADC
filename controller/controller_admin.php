@@ -220,6 +220,19 @@ function viewGestionsite($id='')
  */
 function viewFicheAgent()
 	{
+		global $bdd;
+
+		//récupération des UP, résidences, roulements
+		//liste des up
+		$manager = new UpManager($bdd);
+		$ups = $manager->getListUpId();
+		//liste des roulements
+		$manager = new RoulementsManager($bdd);
+		$roulements = $manager->getListRoulements(); 
+		//liste des résidences
+		$manager = new ResidenceManager($bdd);
+		$residences = $manager->getListResidencesId();
+
 		$nom=$prenom=$nocp=$telephone=$email=$roulement=$residence=$droits=$dateinscription='';
 		$actif=0;
 	/******* FICHE AGENT *******/
@@ -237,6 +250,18 @@ function viewFicheAgent()
 			$actif = $agent->getActif();
 			$idroulement = $agent->getIdroulement();
 
+			//recherche de la residence
+			$roulement = new Roulement(['id'=>$idroulement]);
+			$manager = new RoulementsManager($bdd);
+			$manager->findIdRoulement($roulement);
+		    $idresidence = $roulement->getIdresidence();
+
+		    //recherche de l'up
+		    $residence = new Residence(['id'=>$idresidence]);
+		    $manager = new ResidenceManager($bdd);
+		    $manager->findResidenceById($residence);
+		    $idup = $residence->getIdup();
+
 			//affichage formulaire de l'agent
 			$titrepage = "Informations Agent";
 			require('view/public/view_form_agent.php');
@@ -251,7 +276,9 @@ function viewFicheAgent()
 			$email = sanitizeString(trim($_POST['email']));
 			$nocp = sanitizeString(trim($_POST['nocp']));
 			$droits = sanitizeString(trim($_POST['droits']));
-			$idroulement = 1;
+			$idup = sanitizeString(trim($_POST['noup']));
+			$idresidence = sanitizeString(trim($_POST['noresidence']));
+			$idroulement = sanitizeString(trim($_POST['noroulement']));
 			
 			//récupération objet agent concerné
 			$agent = returnAgent($nocp);
@@ -302,6 +329,15 @@ function viewFicheAgent()
 						'idroulement'=>$idroulement
 					]);
 				ModifierAgent($agent);
+
+				//cas particulier ou la modif se fait sur l'agent déjà connecté
+				//il faut remmettre les variables de session à jour
+				if( $nocp == $_SESSION['nocp'] )
+				{
+					$_SESSION['idup'] = $idup;
+					$_SESSION['idresidence'] = $idresidence;
+					$_SESSION['idroulement'] = $idroulement;
+				}
 				$_SESSION['message']="Modification effectuée avec succes";
 
 				viewGestionsite($id);

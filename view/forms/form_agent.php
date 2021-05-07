@@ -15,7 +15,10 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
   if ( $_SESSION['droits']==0 ) { $page = 'inscription';}
   else { $page = 'ficheagent';}
 
-if (isset($_SESSION['idresidence']))  
+if (!isset($idup)) { $idup = ''; }
+if (!isset($idresidence)) {$idresidence = ''; }
+if (!isset($idroulement))  { $idroulement = ''; }
+
 ?>
   <div id="ficheagent" class="container">
 
@@ -41,8 +44,11 @@ if (isset($_SESSION['idresidence']))
               <div class="input-group-prepend mb-2"><span class="input-group-text">UP</span></div>
                 <select id="selectionup" class="form-control" name="noup">
                   <option value="vide" >  </option>
-                  <?php foreach ($ups as $up):?>
-                  <option value="<?= $up->getId(); ?>"> <?= $up->getnomup(); ?> </option>
+                  <?php foreach ($ups as $up):
+                    if($up->getId()==$idup){$selected="selected";}
+                    else {$selected='';}
+                  ?>
+                    <option value="<?= $up->getId(); ?>" <?= $selected ?>> <?= $up->getnomup(); ?> </option>
                   <?php endforeach; ?> 
                 </select>
             </div>
@@ -51,6 +57,13 @@ if (isset($_SESSION['idresidence']))
             <div id="ajaxresidence" class="input-group">
               <div class="input-group-prepend mb-2"><span class="input-group-text">Résidence</span></div>
               <select id="selectionresidence" class="form-control" name="noresidence">
+                <?php foreach ($residences as $residence):
+                                if($residence->getIdup()==$idup): //uniquement les résidences de l'up
+                                if($residence->getId()==$idresidence){$selected="selected";}
+                                else {$selected='';}
+                                ?>
+                                  <option value="<?= $residence->getId() ?>" <?= $selected ?> > <?= $residence->getNomresidence() ?> </option>
+                                <?php endif; endforeach; ?>
               </select>
             </div>
 
@@ -58,6 +71,13 @@ if (isset($_SESSION['idresidence']))
             <div id="ajaxroulement" class="input-group">
               <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
               <select id="selectionroulement" class="form-control" name="noroulement">
+                <?php foreach ($roulements as $roulement):
+                            if($roulement->getIdresidence()==$idresidence): //uniquement les roulements de la résidence
+                                if($roulement->getId()==$idroulement){$selected="selected";}
+                                else {$selected='';}
+                                ?>
+                              <option value="<?= $roulement->getId(); ?>" <?= $selected ?> ><?= $roulement->getNoroulement(); ?></option> 
+                          <?php endif; endforeach; ?>
               </select>
             </div>
          
@@ -162,6 +182,3 @@ if (isset($_SESSION['idresidence']))
 
         </section>
   </div>
-
-<?php
-dd($_SESSION);
