@@ -4,7 +4,7 @@
  *
  * fichier ajax qui permet de trouver les roulements en fonctins de l'id résidence
  *
- * Retourne le select html contenant les roulements
+ * Retourne le select format html contenant les roulements
  */
 require("../../../model/config.php");
 require("../../../classes/Roulement.class.php");
