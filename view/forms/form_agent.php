@@ -14,6 +14,8 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
 
   if ( $_SESSION['droits']==0 ) { $page = 'inscription';}
   else { $page = 'ficheagent';}
+
+if (isset($_SESSION['idresidence']))  
 ?>
   <div id="ficheagent" class="container">
 
@@ -160,3 +162,6 @@ if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;}
 
         </section>
   </div>
+
+<?php
+dd($_SESSION);

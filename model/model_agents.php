@@ -52,7 +52,7 @@
 		        $_SESSION['email'] = $agent->getEmail();
 		        $_SESSION['nocp'] = $agent->getNocp();
 		        $_SESSION['droits'] = $agent->getDroits();
-		        $_SESSION['password'] = $agent->getMotdepasse();
+		        //$_SESSION['password'] = $agent->getMotdepasse();
 		        $_SESSION['dateinscription'] = $agent->getDateinscription();
 		        $_SESSION['actif'] = $agent->getActif();
 		        $_SESSION['idroulement'] = $agent->getIdroulement();

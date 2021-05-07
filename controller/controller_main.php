@@ -29,11 +29,18 @@
 		//modification du mot de passe (retour form)
 			if( isset($_POST['password']) and isset($_POST['newpassword']) and isset($_POST['confirmpassword']))
 			{
+				//instanciation de l'agent afin de pouvoir récupérer le mdp actuel
+				$agent = new Agent(['nocp'=>$_SESSION['nocp']]);
+	    		$manager = new AgentsManager($bdd);
+	    		$manager->findNocpAgent($agent);
+	    		
+
 				$password = sanitizeString(trim($_POST['password']));
 				$newpassword = sanitizeString(trim($_POST['newpassword']));
 				$confirmpassword = sanitizeString(trim($_POST['confirmpassword']));
 
-				if(cryptagemotdepasse($password) == $_SESSION['password'])
+				//
+				if(cryptagemotdepasse($password) == $agent->getMotdepasse())
 				{
 					if ($newpassword == $confirmpassword)
 					{
