@@ -70,5 +70,23 @@ class JourneesManager
         	return false;
         }
     }
+
+    /**
+    *	LISTE DES JOURNEES D UN ROULEMENT
+    **/
+    public function getListJourneessWithRoulement(Journee $journee)
+	{
+		$journees = [];
+
+		$q = $this->_db->prepare('SELECT * FROM journees WHERE idroulement=:idroulement');
+		$q->bindValue(':idroulement', $journee->getIdroulement());
+        $q->execute();
+		
+		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$journees[] = new Journee($donnees);
+		}
+		return $journees;
+	}
 }
 ?>

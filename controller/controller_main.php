@@ -149,7 +149,7 @@
 	function viewAjouterProposition()
 	{
 		global $bdd;
-
+		
 		if (isset($_SESSION['nocp']))
 		{
 			//CAS D'UNE PROPOSITION JOURNEE FAC
@@ -217,13 +217,23 @@
 				//AFFICHAGE FORMULAIRE AJOUT DE PROPOSITION
 				else 
 				{
-					//récupération des journées de roulement
+					//récupération des UP, résidences, roulements
+					//liste des up
+					//$manager = new UpManager($bdd);
+					//$ups = $manager->getListUpId();
+					//liste des roulements
+					$manager = new RoulementsManager($bdd);
+					$roulements = $manager->getListRoulements(); 
+					//liste des résidences
+					$manager = new ResidenceManager($bdd);
+					$residences = $manager->getListResidencesId();
+
+					//liste des journées de roulement
 					$manager = new JourneesManager($bdd);
 					$journees = $manager->getListJournee();
 
-					$manager = new RoulementsManager($bdd);
-					$roulements = $manager->getListRoulements();
-
+					//valeur des selects
+					
 					$titrepage = "Ajout d'une proposition";
 					require('view/public/view_ajout_proposition.php');
 				}

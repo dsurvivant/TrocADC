@@ -8,8 +8,9 @@ if (isset($_GET['jour']))
 
  	$currentmonth = date('n', $currentdate) -1;
 
-  	if(isset($_GET['idroulement'])) {$idroulement = $_GET['idroulement'];}
-  	else { $idroulement = $_SESSION['idroulement'];}
+ 	$idup = $_SESSION['idup']; // uniquement l'up de l'agent
+	$idresidence = $_SESSION['idresidence']; //par défaut
+  	$idroulement = $_SESSION['idroulement']; //par défaut
 ?>
 	
 	<div class="container" id="ajoutproposition">
