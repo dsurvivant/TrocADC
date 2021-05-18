@@ -36,7 +36,7 @@
             
             <div id="ajaxroulement" class="input-group">
                 <div class="input-group-prepend mb-2"><span class="input-group-text">Roulement</span></div>
-                <select id="selectionroulement" class="form-control" name="idroulement">
+                <select id="selectionroulement" class="form-control" name="noroulement">
                     <?php foreach ($roulements as $roulement):
                     if($roulement->getIdresidence()==$idresidence): //uniquement les roulements de la résidence
                     if($roulement->getId()==$idroulement){$selected="selected";}

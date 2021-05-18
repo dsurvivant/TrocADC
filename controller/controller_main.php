@@ -201,13 +201,13 @@
 			if(isset($_GET['jour'])) //date de proposition obligatoire
 			{
 				//CAS D'UNE PROPOSITION AVEC JOURNEE EN ROULEMENT
-				if(isset($_POST['idroulement']) and isset($_POST['commentaires']) and isset($_POST['idjournee']) ) // validation du formulaire d'ajout de proposition
+				if(isset($_POST['noroulement']) and isset($_POST['commentaires']) and isset($_POST['idjournee']) ) // validation du formulaire d'ajout de proposition
 				{
 
 					//sécurisation des champs
 					//$idresidence = sanitizeString(trim($_POST['idresidence']));
-					$idresidence = 1;
-					$noroulement = sanitizeString(trim($_POST['idroulement']));
+					//$idresidence = 1;
+					//$noroulement = sanitizeString(trim($_POST['idroulement']));
 					$commentaires = sanitizeString(trim($_POST['commentaires']));
 					$idjournee = sanitizeString(trim($_POST['idjournee']));
 					$idagent = $_SESSION['id'];
