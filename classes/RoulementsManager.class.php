@@ -64,7 +64,7 @@ class RoulementsManager
 	/**
 	 * INSTANCIE OBJET ROULEMENT A PARTIR DE L ID ROULEMENT
 	 */
-	public function findIdResidence(Roulement $roulement)
+	public function findIdRoulement(Roulement $roulement)
 	{
 		$q = $this->_db->prepare('SELECT * FROM roulements WHERE id=:id');
         $q->bindValue(':id', $roulement->getId());

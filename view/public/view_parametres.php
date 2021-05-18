@@ -7,7 +7,7 @@ if (isset($_SESSION['nocp']))
 	$telephone = $_SESSION['telephone'];
 	$email = $_SESSION['email'];
 	$droits = $_SESSION['droits'];
-	$password = $_SESSION['password'];
+	//$password = $_SESSION['password'];
 	$dateinscription = $_SESSION['dateinscription'];
 	$idup = $_SESSION['idup'];
 	$idresidence = $_SESSION['idresidence'];
