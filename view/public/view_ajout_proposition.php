@@ -14,7 +14,7 @@ if (isset($_GET['jour']))
 ?>
 	
 	<div class="container" id="ajoutproposition">
-		 <div class="row text-center"><h4 class="col"><?= date('j', $currentdate). " " . $mois[$currentmonth] . " " . date('Y', $currentdate) ?></h4></div>
+		<div class="row text-center"><h4 class="col"><?="Ajout d'une proposition le " .  date('j', $currentdate). " " . $mois[$currentmonth] . " " . date('Y', $currentdate) ?></h4></div>
       	<!-- champ caché pour js -->
       	<div id="currentdate" class="d-none"><?= $currentdate ?></div>
   

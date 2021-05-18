@@ -39,12 +39,6 @@ $(function()
 
 	//SELECT
 
-	$('#formproposition #selectionroulement').change(function(event) {
-		noroulement = $(this).val();
-		date = $('#currentdate').text();
-		window.location.replace('index.php?page=ajout_proposition&jour=' + date +"&idroulement=" + noroulement);
-	});
-
 	//select residence => liste des roulements de la résidence
 		$('#formproposition').on('change', '#selectionresidence', function()
 		{

@@ -70,7 +70,4 @@
         <a id="btn_connexion" href="index.php?page=calendrier" class="btn btn-primary">Annuler</a>
     </div>  
 </form>
-
-<?php
-dd($_SESSION);
         
