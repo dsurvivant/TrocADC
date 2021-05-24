@@ -88,13 +88,27 @@ class PropositionsManager
         else { return false;}
 
 	}
-
-	//liste des propositions classées par id
+ 
+	//liste des propositions classées par id asc
 	public function getListPropositionsById()
 	{
 		$propositions = [];
 
 		$q = $this->_db->query('SELECT * FROM propositions ORDER BY id ASC');
+
+		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$propositions[] = new Proposition($donnees);
+		}
+		return $propositions;
+	}
+
+	//liste des propositions classées par id desc
+	public function getListPropositionsByIdDesc()
+	{
+		$propositions = [];
+
+		$q = $this->_db->query('SELECT * FROM propositions ORDER BY id DESC');
 
 		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
 		{

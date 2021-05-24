@@ -360,6 +360,9 @@
 	//récupération des 10 dernieres propositions
 	function Dernierespropositions()
 	{
+		if(isset($_SESSION['idup'])) { $idup=$_SESSION['idup'];}
+		else{$idup='';}
+
 		global $bdd;
 
 		if (isset($_SESSION['nocp']))
@@ -367,8 +370,21 @@
 			$_SESSION['message']='';
 			
 			$tabDernieresPropositions = [];
-			//RECUPERATION DES 10 dernieres propositions
-			$listeDernieresPropositions = ListeDernieresPropositions();
+				
+			//RECUPERATION DES 10 dernieres propositions de l'up de l'agent
+				$manager = new PropositionsManager($bdd);
+				//recupération tout d'abord de toutes les propositions classés par arrivée du plus
+				//récent au moins récent
+				$propositions = $manager->getListPropositionsByIdDesc();
+				//
+				foreach ($propositions as $proposition) 
+				{
+					$idagent = $proposition->getIdagent();
+					//recherce de l'up de l'agent
+					
+				}
+				exit;
+			
 			//RECUPERATION DES JOURNEES LIEES AUX PROPOSITIONS
 
 			$i=0;

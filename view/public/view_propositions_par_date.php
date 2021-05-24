@@ -1,5 +1,4 @@
 <?php
-
 if(!isset($datederecherche)){ $datederecherche = time();}
 if(!isset($tabpropositions)){$tabpropositions = [];}
 
