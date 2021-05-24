@@ -370,44 +370,55 @@
 			$_SESSION['message']='';
 			
 			$tabDernieresPropositions = [];
+			$listeDernieresPropositions = [];
 				
 			//RECUPERATION DES 10 dernieres propositions de l'up de l'agent
 				$manager = new PropositionsManager($bdd);
 				//recupération tout d'abord de toutes les propositions classés par arrivée du plus
 				//récent au moins récent
 				$propositions = $manager->getListPropositionsByIdDesc();
-				//
+			
+				//on garde les 10 premieres propositions de l'up de l'agent
+				$i=0;
 				foreach ($propositions as $proposition) 
 				{
-					$idagent = $proposition->getIdagent();
-					//recherce de l'up de l'agent
-					
+					//RECHERCHE DE L UP DE L AGENT
+						//instanciation de la journee
+							$idjournee = $proposition->getIdjournee();
+							$journee = new Journee(['id'=>$idjournee]);
+		    				$manager = new JourneesManager($bdd);
+				 			$manager->findJourneeById($journee);
+						//instanciation du roulement
+							$idroulement = $journee->getIdroulement();
+							$roulement = new Roulement(['id'=>$idroulement]);
+							$manager = new RoulementsManager($bdd);
+							$manager->findIdRoulement($roulement);
+						//instanciation de la residence
+							$idresidence = $roulement->getIdresidence();
+							$residence = new Residence(['id'=>$idresidence]);
+						    $manager = new ResidenceManager($bdd);
+						    $manager->findResidenceById($residence);
+						//recuperation de l'up
+						    $idupagent = $residence->getIdup();
+						//instanciation de l'agent
+						    $idagent = $proposition->getIdagent();
+						    $agent = new Agent(['id'=>$idagent]);
+						    $manager = new AgentsManager($bdd);
+						    $manager->findIdAgent($agent);
+
+						
+					//RECUPERATION DE LA PROPOSITION SI APPARTIENT A L UP
+
+					if ($idup == $idupagent)
+					{
+						//ajout au tableau
+						$tabDernieresPropositions[$i][0] = $proposition;
+						$tabDernieresPropositions[$i][1] = $journee;
+						$tabDernieresPropositions[$i][2] = $agent;
+						$i++;
+						if ($i==10) { break; }
+					}
 				}
-				exit;
-			
-			//RECUPERATION DES JOURNEES LIEES AUX PROPOSITIONS
-
-			$i=0;
-			//association pour chaque proposition à l'agent et le roulement
-			foreach ($listeDernieresPropositions as $proposition) 
-			{
-				$idagent = $proposition->getIdagent();
-				$idjournee = $proposition->getIdjournee();
-
-				//recherche de la journee
-				$journee = new Journee(['id'=>$idjournee]);
-	    		$manager = new JourneesManager($bdd);
-			 	$manager->findJourneeById($journee);
-
-				//recherche de l'agent correspondant
-				$agent = findId($idagent);
-
-				//ajout au tableau
-				$tabDernieresPropositions[$i][0] = $proposition;
-				$tabDernieresPropositions[$i][1] = $journee;
-				$tabDernieresPropositions[$i][2] = $agent;
-				$i++;
-			}
 			return $tabDernieresPropositions;;
 		}
 		else
