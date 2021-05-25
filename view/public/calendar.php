@@ -1,6 +1,9 @@
 <?php 
 if (isset($_SESSION['nocp']))
 {
+	if(isset($_SESSION['idup'])) { $idup=$_SESSION['idup'];}
+		else{$idup='';}
+
 	//choix de la date affichée au calendrier
 	if (isset($_GET['choixdate'])) 
 		{ 
@@ -80,15 +83,32 @@ if (isset($_SESSION['nocp']))
 
 							<a href="index.php?page=calendrier&choixdate=<?= $time ?>" class="day col p-0 border text-center <?= $surligne ?>" id="<?= $time ?>">
 								<?php echo $d . "<br>"; 
-								//récupération du nb de propositions du jour
-								$propositions = ListePropositions();
-								$i=0;
-								foreach ($propositions as $proposition) 
-								{
-									if($proposition->getDateproposition() == date('Y-m-d', $time)){ $i++;}
-								}
-								if($i!=0) { echo "<span class='badge badge-danger'>" . $i . "</span>"; }
-								else {echo '<br>';}?>
+								
+								//VIGNETTE NOMBRE DE PROPOSITIONS
+									$propositions = ListePropositions();
+									$i=0;
+									foreach ($propositions as $proposition) 
+									{
+										//instanciation $agent, $journee, $residence, $roulement
+										//Recupération des objets 'journee','roulement','residence','agent' lié à la proposition
+										//$elements tableau contenant ($agent, $journee, $residence, $roulement)
+											$elements = recupInfosProposition($proposition);
+											//$agent = $elements[0]; PAS UTILIE ICI
+											//$journee = $elements[1]; PAS UTILIE ICI
+											$residence = $elements[2];
+											//$roulement = $elements[3]; PAS UTILIE ICI
+
+										//recuperation de l'up de l'agent faisant la proposition
+											$idupagent = $residence->getIdup();
+
+										//on ne traite que les propositions issues de l'up de l'agent connecté
+										if ($idup == $idupagent)
+										{
+											if($proposition->getDateproposition() == date('Y-m-d', $time)){ $i++;}
+										}
+									}
+									if($i!=0) { echo "<span class='badge badge-danger'>" . $i . "</span>"; }
+									else {echo '<br>';}?>
 							</a>
 															
 										
