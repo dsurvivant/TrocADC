@@ -105,43 +105,4 @@
 		return $proposition;
 	}
 
-	//A partir d'un objet proposition, retourne un tableau $elements contenant 
-	//les objets 'journee','roulement','residence','agent' lié à la proposition
-	//$elements($agent, $journee, $residence, $roulement)
-	function recupInfosProposition($proposition)
-	{
-		global $bdd;
-		
-		$elements = array();
-
-		//instanciation de la journee
-			$idjournee = $proposition->getIdjournee();
-			$journee = new Journee(['id'=>$idjournee]);
-		    $manager = new JourneesManager($bdd);
-			$manager->findJourneeById($journee);
-		//instanciation du roulement
-			$idroulement = $journee->getIdroulement();
-			$roulement = new Roulement(['id'=>$idroulement]);
-			$manager = new RoulementsManager($bdd);
-			$manager->findIdRoulement($roulement);
-		//instanciation de la residence
-			$idresidence = $roulement->getIdresidence();
-			$residence = new Residence(['id'=>$idresidence]);
-			$manager = new ResidenceManager($bdd);
-			$manager->findResidenceById($residence);
-		//instanciation de l'agent
-			$idagent = $proposition->getIdagent();
-			$agent = new Agent(['id'=>$idagent]);
-			$manager = new AgentsManager($bdd);
-			$manager->findIdAgent($agent);
-
-		//remplissage du tableau $elements
-			array_push($elements, $agent);
-			array_push($elements, $journee);
-			array_push($elements, $residence);
-			array_push($elements, $roulement);
-
-		return $elements;
-	}
-
 ?>

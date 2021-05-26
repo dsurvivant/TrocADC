@@ -126,17 +126,20 @@
 			//association pour chaque proposition à l'agent et le roulement
 			foreach ($listepropositions as $proposition) 
 			{
-				//instanciation $agent, $journee, $residence, $roulement
-					//Recupération des objets 'journee','roulement','residence','agent' lié à la proposition
-					//$elements tableau contenant ($agent, $journee, $residence, $roulement)
-					$elements = recupInfosProposition($proposition);
-					$agent = $elements[0];
-					$journee = $elements[1];
-					$residence = $elements[2];
-					$roulement = $elements[3];
+				//instanciation de l'agent
+					$idagent = $proposition->getIdagent();
+					$agent = new Agent(['id'=>$idagent]);
+					$manager = new AgentsManager($bdd);
+					$manager->findIdAgent($agent);
+				//instanciation de la journee
+					$idjournee = $proposition->getIdjournee();
+					$journee = new Journee(['id'=>$idjournee]);
+				    $manager = new JourneesManager($bdd);
+					$manager->findJourneeById($journee);
 
 				//recuperation de l'up de l'agent faisant la proposition
-					$idupagent = $residence->getIdup();
+					$idupagent = $proposition->getIdup();
+
 				//ajout au tableau
 					if ($idup == $idupagent)
 					{
@@ -388,17 +391,19 @@
 				$i=0;
 				foreach ($propositions as $proposition) 
 				{
-					//instanciation $agent, $journee, $residence, $roulement
-						//Recupération des objets 'journee','roulement','residence','agent' lié à la proposition
-						//$elements tableau contenant ($agent, $journee, $residence, $roulement)
-						$elements = recupInfosProposition($proposition);
-						$agent = $elements[0];
-						$journee = $elements[1];
-						$residence = $elements[2];
-						$roulement = $elements[3];
+					//instanciation de l'agent
+						$idagent = $proposition->getIdagent();
+						$agent = new Agent(['id'=>$idagent]);
+						$manager = new AgentsManager($bdd);
+						$manager->findIdAgent($agent);
+					//instanciation de la journee
+						$idjournee = $proposition->getIdjournee();
+						$journee = new Journee(['id'=>$idjournee]);
+					    $manager = new JourneesManager($bdd);
+						$manager->findJourneeById($journee);
 
 					//recuperation de l'up de l'agent faisant la proposition
-					$idupagent = $residence->getIdup();
+						$idupagent = $proposition->getIdup();
 						
 					//RECUPERATION DE LA PROPOSITION SI APPARTIENT A L UP
 

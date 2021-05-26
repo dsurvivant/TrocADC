@@ -89,17 +89,8 @@ if (isset($_SESSION['nocp']))
 									$i=0;
 									foreach ($propositions as $proposition) 
 									{
-										//instanciation $agent, $journee, $residence, $roulement
-										//Recupération des objets 'journee','roulement','residence','agent' lié à la proposition
-										//$elements tableau contenant ($agent, $journee, $residence, $roulement)
-											$elements = recupInfosProposition($proposition);
-											//$agent = $elements[0]; PAS UTILIE ICI
-											//$journee = $elements[1]; PAS UTILIE ICI
-											$residence = $elements[2];
-											//$roulement = $elements[3]; PAS UTILIE ICI
-
 										//recuperation de l'up de l'agent faisant la proposition
-											$idupagent = $residence->getIdup();
+											$idupagent = $proposition->getIdup();
 
 										//on ne traite que les propositions issues de l'up de l'agent connecté
 										if ($idup == $idupagent)

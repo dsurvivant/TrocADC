@@ -16,12 +16,13 @@ class PropositionsManager
 	 */
 	public function add(Proposition $proposition) //retourne l'id de la proposition créée automatiquement par sql
 	{
-		$q = $this->_db->prepare('INSERT INTO propositions(dateproposition, idjournee, idagent, commentaires) VALUES (:dateproposition, :idjournee, :idagent, :commentaires)');
+		$q = $this->_db->prepare('INSERT INTO propositions(dateproposition, idjournee, idagent, commentaires, idup) VALUES (:dateproposition, :idjournee, :idagent, :commentaires, :idup)');
 
 		$q->bindValue(':dateproposition', $proposition->getDateproposition());
 		$q->bindValue(':idjournee', $proposition->getIdjournee());
 		$q->bindValue(':idagent', $proposition->getIdagent());
 		$q->bindValue(':commentaires', $proposition->getCommentaires());
+		$q->bindValue(':idup', $proposition->getIdup());
 		
 		$q->execute();
 

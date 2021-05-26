@@ -10,6 +10,7 @@
 		private $_idagent;
 		private $_commentaires;
 		private $_datecreation;
+		private $_idup;
 
 		public function __construct($donnees)
 		{
@@ -42,6 +43,7 @@
 		public function getIdagent(){return $this->_idagent;}
 		public function getCommentaires(){return $this->_commentaires;}
 		public function getDatecreation(){return $this->_datecreation;}
+		public function getIdup(){return $this->_idup;}
 
 		/**
 		 * SETTEURS
@@ -53,5 +55,6 @@
 		public function setIdagent($idagent){ $this->_idagent = $idagent;}
 		public function setCommentaires($commentaires){ $this->_commentaires = $commentaires;}
 		public function setDatecreation($datecreation){ $this->_datecreation = $datecreation;}
+		public function setIdup($idup){ $this->_idup = $idup;}
 
 	}
