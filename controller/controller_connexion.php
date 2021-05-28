@@ -10,6 +10,8 @@
 
 	function demandeConnexion()
 	{
+		global $bdd;
+
 		//demande de connection
 		if (isset($_POST['nocp']) and isset($_POST['password']))
 		{
@@ -18,6 +20,16 @@
 
 		if (isset($_SESSION['nocp'])) //connecté
 		{
+			//enregistrement historique de connexion
+			if (isset($_SESSION['id'])){$idagent=$_SESSION['id'];}
+			else {$idagent='';}
+			$dateconnexion = date('Y-m-d H:i:s');
+
+			$historiqueconnexion = new Historiqueconnexion(['dateconnexion'=>$dateconnexion,
+															'idagent'=>$idagent]);
+			$manager = new HistoriqueconnexionsManager($bdd);
+			$manager->add($historiqueconnexion);
+
 			//vérifiaction si l'utilisateur est bien activé
 			if($_SESSION['actif']==1) { header('location: index.php?page=calendrier');}
 			else 
