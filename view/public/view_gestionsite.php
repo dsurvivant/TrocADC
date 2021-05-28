@@ -29,6 +29,9 @@ if(isset($onglet))
 		case 'up':
 			$onglet = 5;
 			break;
+		case 'historique':
+			$onglet = 6;
+			break;
 		default:
 			$onglet = 1;
 			break;
@@ -55,6 +58,7 @@ ob_start();
 		  <a class="nav-item nav-link <?php if($onglet==3){ echo "active";} ?>" href="#listeroulements" data-toggle="pill">Roulements</a>
 		  <a class="nav-item nav-link <?php if($onglet==4){ echo "active";} ?>" href="#listeresidences" data-toggle="pill">Résidences</a>
 		  <a class="nav-item nav-link <?php if($onglet==5){ echo "active";} ?>" href="#listeup" data-toggle="pill">UP</a>
+		  <a class="nav-item nav-link <?php if($onglet==6){ echo "active";} ?>" href="#historique" data-toggle="pill">Historique connexion</a>
 		</nav>
 
 
@@ -377,6 +381,29 @@ ob_start();
 						</div>
 					</div>
 				</form>
+			</div>
+		<!-- PANNEAU 5 - HISTORIQUE DE CONNEXION - -->
+			<div class="tab-pane fade <?php if($onglet==6){ echo "active show";} ?> mt-2" id="historique">
+				<table class="table table-bordered text-center">
+			        <thead>
+			        	<tr>
+			            	<th>id</th>
+			            	<th>Agent</th>
+			            	<th>Date de connexion</th>
+			          	</tr>
+			        </thead>
+			        
+			        <tbody>
+
+			        	<?php foreach ($historiqueconnexions as $historiqueconnexion): ?>
+			        	<tr>
+			            	<td><?= $historiqueconnexion->getId(); ?></td>
+			            	<td><?= $historiqueconnexion->getIdagent(); ?></td>
+			            	<td><?= $historiqueconnexion->getDateconnexion(); ?></td>
+			          	</tr>
+			          <?php endforeach; ?>
+			        </tbody>
+			      </table>
 			</div>
 	</div>
 </div>

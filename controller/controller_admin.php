@@ -191,7 +191,7 @@ function viewGestionsite($id='')
 		$onglet = "up";
 	}
 
-	//récupération des listes agents, journees, roulements si administrateur
+	//récupération des listes agents, journees, roulements, historique connexion si administrateur
 	$agents = ListeAgents();
 	//liste des journees
 	$manager = new JourneesManager($bdd);
@@ -205,6 +205,9 @@ function viewGestionsite($id='')
 	//liste des up
 	$manager = new UpManager($bdd);
 	$ups = $manager->getListUpId();
+	//historique de connexion
+	$manager = new HistoriqueconnexionsManager($bdd);
+	$historiqueconnexions = $manager->getListHistoriqueconnexionByDate();
 
 	$titrepage = "Gestion";
 
