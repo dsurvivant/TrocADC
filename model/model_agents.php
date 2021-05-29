@@ -271,14 +271,4 @@
 		$manager->delete($agent);
 	}
 
-	//retourne un tableau contenant les objets Agents
-	function ListeAgents()
-	{
-		global $bdd;
-
-		$manager = new AgentsManager($bdd);
-		return $manager->getListAgentsNomAsc();
-	}
-
-
 ?>

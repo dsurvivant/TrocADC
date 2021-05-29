@@ -395,11 +395,11 @@ ob_start();
 			        
 			        <tbody>
 
-			        	<?php foreach ($historiqueconnexions as $historiqueconnexion): ?>
+			        	<?php foreach ($tabhistoriqueconnexions as $historiqueconnexion): ?>
 			        	<tr>
-			            	<td><?= $historiqueconnexion->getId(); ?></td>
-			            	<td><?= $historiqueconnexion->getIdagent(); ?></td>
-			            	<td><?= $historiqueconnexion->getDateconnexion(); ?></td>
+			            	<td><?= $historiqueconnexion[0] ?></td>
+			            	<td><?= $historiqueconnexion[1] . " " . $historiqueconnexion[2] ?></td>
+			            	<td><?= $historiqueconnexion[3] ?></td>
 			          	</tr>
 			          <?php endforeach; ?>
 			        </tbody>
