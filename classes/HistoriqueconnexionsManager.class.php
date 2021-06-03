@@ -35,11 +35,11 @@ class HistoriqueconnexionsManager
 	}
 
 	/**
-	 * MODULES
+	 * LISTES
 	 */
 	
 	//liste d'historique de connexion par id
-	public function getListHistoriqueconnexion()
+	public function getListHistoriqueconnexionByIdAsc()
 	{
 		$historiqueconnexions = [];
 
@@ -50,6 +50,9 @@ class HistoriqueconnexionsManager
 			$historiqueconnexions[] = new Historiqueconnexion($donnees);
 		}
 		return $historiqueconnexions;
+
+		dd($historiqueconnexions);
+		exit;
 	}
 
 

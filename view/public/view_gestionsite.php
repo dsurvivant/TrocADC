@@ -382,14 +382,15 @@ ob_start();
 					</div>
 				</form>
 			</div>
-		<!-- PANNEAU 5 - HISTORIQUE DE CONNEXION - -->
+		
+		<!-- PANNEAU 6 - HISTORIQUE DE CONNEXION - -->
 			<div class="tab-pane fade <?php if($onglet==6){ echo "active show";} ?> mt-2" id="historique">
-				<table class="table table-bordered text-center">
+				<table class="table table-sm table-bordered text-center table-striped">
 			        <thead>
 			        	<tr>
-			            	<th>id</th>
-			            	<th>Agent</th>
-			            	<th>Date de connexion</th>
+			            	<th><a href="index.php?page=gestionsite&onglet=historique&tri=id">id</a></th>
+			            	<th><a href="index.php?page=gestionsite&onglet=historique&tri=agent">Agent</a></th>
+			            	<th><a href="index.php?page=gestionsite&onglet=historique&tri=date">Date de connexion</a></th>
 			          	</tr>
 			        </thead>
 			        

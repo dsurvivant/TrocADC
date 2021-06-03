@@ -16,13 +16,12 @@ function viewGestionsite($id='')
 {
     global $bdd;
     
-    //options d'affichages (onglet,journee,residence roulement)
-        //defaut
+    //options d'affichages (onglet,journee,residence roulement) par defaut
         $idjournee = '';
         $idroulement = $_SESSION['idroulement'];
         $idresidence=$_SESSION['idresidence'];
         $idup=$_SESSION['idup'];
-        //changement
+    //changement
         if (isset($_GET['onglet'])) { $onglet = $_GET['onglet']; }
         if (isset($_GET['idroulement'])) { $idroulement = $_GET['idroulement']; }
         
@@ -208,7 +207,26 @@ function viewGestionsite($id='')
         $ups = $managerup->getListUpId();
     //historique de connexion
         $managerhistorique = new HistoriqueconnexionsManager($bdd);
-        $historiqueconnexions = $managerhistorique->getListHistoriqueconnexionByDate();
+
+        //choix du tri de l'historique de connexion (par id, agent ou date de connexion)
+        if(isset($_GET['tri'])) { $tri = $_GET['tri'];}
+        else { $tri = 'date';}
+
+        switch ($tri) {
+            case 'id': //tri par id d'historique
+                $historiqueconnexions = $managerhistorique->getListHistoriqueconnexionByIdAsc();
+                break;
+            case 'agent':
+                $historiqueconnexions = $managerhistorique->getListHistoriqueconnexionByIdagent();
+                break;
+            case 'date':
+                $historiqueconnexions = $managerhistorique->getListHistoriqueconnexionByDate();
+                break;
+            default: // par date du plus récent au plus ancien
+                 $historiqueconnexions = $managerhistorique->getListHistoriqueconnexionByDate();
+                break;
+        }
+
         //création d'un tableau détaillé historique de connexion (nom prenom agent en clair à la place de l'idagent)
         $tabhistoriqueconnexions = [];
         $i = 0;
