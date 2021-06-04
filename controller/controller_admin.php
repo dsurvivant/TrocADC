@@ -12,9 +12,11 @@
  * @param  string $id [facultatif: permet de mettre la ligne correspondant à l'id en rouge]
  * @return affiche la page view_gestionsite.php
  */
+
 function viewGestionsite($id='')
 {
     global $bdd;
+    global $tabtri;
     
     //options d'affichages (onglet,journee,residence roulement) par defaut
         $idjournee = '';
@@ -207,27 +209,11 @@ function viewGestionsite($id='')
         $ups = $managerup->getListUpId();
     //historique de connexion
         $managerhistorique = new HistoriqueconnexionsManager($bdd);
+        $historiqueconnexions = $managerhistorique->getListHistoriqueconnexionByDate();
+    //
+    if (!isset($_SESSION['tabTriHistorique'])) { $_SESSION['tabTriHistorique'] = array("id"=>"asc", "nom"=>"asc", "date"=>"asc");}
 
-        //choix du tri de l'historique de connexion (par id, agent ou date de connexion)
-        if(isset($_GET['tri'])) { $tri = $_GET['tri'];}
-        else { $tri = 'date';}
-
-        switch ($tri) {
-            case 'id': //tri par id d'historique
-                $historiqueconnexions = $managerhistorique->getListHistoriqueconnexionByIdAsc();
-                break;
-            case 'agent':
-                $historiqueconnexions = $managerhistorique->getListHistoriqueconnexionByIdagent();
-                break;
-            case 'date':
-                $historiqueconnexions = $managerhistorique->getListHistoriqueconnexionByDate();
-                break;
-            default: // par date du plus récent au plus ancien
-                 $historiqueconnexions = $managerhistorique->getListHistoriqueconnexionByDate();
-                break;
-        }
-
-        //création d'un tableau détaillé historique de connexion (nom prenom agent en clair à la place de l'idagent)
+    //création d'un tableau détaillé historique de connexion (nom prenom agent en clair à la place de l'idagent)
         $tabhistoriqueconnexions = [];
         $i = 0;
         foreach ($historiqueconnexions as $historiqueconnexion)
@@ -240,7 +226,61 @@ function viewGestionsite($id='')
             $nomagent = $agent->getNom();
             $prenomagent = $agent->getPrenom();
 
-            array_push($tabhistoriqueconnexions, array($idconnexion,$prenomagent,$nomagent,$dateconnexion));
+            array_push($tabhistoriqueconnexions, array('id'=>$idconnexion, 'nomagent'=>ucfirst($nomagent) . " " . ucfirst($prenomagent), 'date'=>$dateconnexion));
+        }
+       
+    //choix du tri du tableau $tabhistoriqueconnexions (par id, agent ou date de connexion)
+        if(isset($_GET['tri'])) { $tri = $_GET['tri'];}
+        else { $tri = 'date';}
+
+        switch ($tri) 
+        {
+        //tri par id d'historique
+            case 'id': 
+                $columns = array_column($tabhistoriqueconnexions, 'id');
+                if ( $_SESSION['tabTriHistorique']['id'] == "asc") //tri id par ordre descendant
+                {
+                    $_SESSION['tabTriHistorique']['id'] = "desc";
+                    array_multisort($columns, SORT_DESC, $tabhistoriqueconnexions);
+                }
+                else //tri id par ordre croissant
+                {
+                    $_SESSION['tabTriHistorique']['id'] = "asc";
+                    array_multisort($columns, SORT_ASC, $tabhistoriqueconnexions);
+                }
+                break;
+        //tri par nom d'agent
+            case 'agent':
+                $columns = array_column($tabhistoriqueconnexions, 'nomagent');
+                
+                if ( $_SESSION['tabTriHistorique']['nom'] == "asc") //tri agent par nom decroissant
+                {
+                    $_SESSION['tabTriHistorique']['nom'] = "desc";
+                    array_multisort($columns, SORT_DESC, SORT_STRING, $tabhistoriqueconnexions);
+                }
+                else //tri id par nom croissant
+                {
+                    $_SESSION['tabTriHistorique']['nom'] = "asc";
+                    array_multisort($columns, SORT_ASC, SORT_STRING, $tabhistoriqueconnexions);
+                }
+                break;
+        //tri par date
+            case 'date':
+                $columns = array_column($tabhistoriqueconnexions, 'date');
+                if ( $_SESSION['tabTriHistorique']['date'] == "asc") //tri id par nom decroissant
+                {
+                    $_SESSION['tabTriHistorique']['date'] = "desc";
+                    array_multisort($columns, SORT_DESC, $tabhistoriqueconnexions);
+                }
+                else //tri id par nom croissant
+                {
+                    $_SESSION['tabTriHistorique']['date'] = "asc";
+                    array_multisort($columns, SORT_ASC, $tabhistoriqueconnexions);
+                }
+                break;
+            default: // par date du plus récent au plus ancien
+                 
+                break;
         }
 
     $titrepage = "Gestion";

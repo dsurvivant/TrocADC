@@ -398,9 +398,9 @@ ob_start();
 
 			        	<?php foreach ($tabhistoriqueconnexions as $historiqueconnexion): ?>
 			        	<tr>
-			            	<td><?= $historiqueconnexion[0] ?></td>
-			            	<td><?= $historiqueconnexion[1] . " " . $historiqueconnexion[2] ?></td>
-			            	<td><?= $historiqueconnexion[3] ?></td>
+			            	<td><?= $historiqueconnexion['id'] ?></td>
+			            	<td><?= $historiqueconnexion['nomagent'] ?></td>
+			            	<td><?= $historiqueconnexion['date'] ?></td>
 			          	</tr>
 			          <?php endforeach; ?>
 			        </tbody>

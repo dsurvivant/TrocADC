@@ -68,6 +68,8 @@
 		        $manager = new ResidenceManager($bdd);
 		        $manager->findIdUp($residence);
 		        $_SESSION['idup'] = $residence->getIdup();
+		        // tableau sens de tri des parametres id,nom et date de l'historique de connexion
+				$_SESSION['tabTriHistorique'] = array("id"=>"asc", "nom"=>"asc", "date"=>"asc");
  		    
 				return true;
 			}
