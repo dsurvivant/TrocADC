@@ -396,11 +396,14 @@ ob_start();
 			        
 			        <tbody>
 
-			        	<?php foreach ($tabhistoriqueconnexions as $historiqueconnexion): ?>
+			        	<?php 
+			        		foreach ($tabhistoriqueconnexions as $historiqueconnexion): 
+			        		$dateconnexion = new DateTime($historiqueconnexion['date']);
+			        	?>
 			        	<tr>
 			            	<td><?= $historiqueconnexion['id'] ?></td>
 			            	<td><?= $historiqueconnexion['nomagent'] ?></td>
-			            	<td><?= $historiqueconnexion['date'] ?></td>
+			            	<td><?= $dateconnexion->format('d-m-Y'); ?></td>
 			          	</tr>
 			          <?php endforeach; ?>
 			        </tbody>
