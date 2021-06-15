@@ -1,29 +1,6 @@
 <?php
 	// FONCTIONS PROPOSITIONS
 
-	function Modifierproposition($idproposition, $idjournee, $commentaires)
-	{
-		global $bdd;
-
-		$proposition = new Proposition(['id'=>$idproposition, 'idjournee'=>$idjournee, 'commentaires'=>$commentaires]);
-		$manager = new PropositionsManager($bdd);
-		$manager->update($proposition);
-	}
-
-	/**
-	 * [Supprimerproposition suppression d'une propostion]
-	 * @param [type] $idproposition [id de la proposition à supprimer]
-	 */
-	function Supprimerproposition($idproposition)
-	{
-		global $bdd;
-
-		//$proposition = new Proposition(['id'=>$idproposition]);
-		$proposition = new Proposition(['id'=>$idproposition]);
-		$manager = new PropositionsManager($bdd);
-		$manager->delete($proposition);
-	}
-
 	/**
 	 * [SupprimerPropositions supprime l'ensemble des propostions d'un agent]
 	 * @param [type] $agent [objet $agent]
@@ -35,40 +12,6 @@
 		$manager->deletePropositions($agent);
 	}
 
-	//retourne un tableau contenant les objets propositions
-	function ListePropositions()
-	{
-		global $bdd;
-
-		$manager = new PropositionsManager($bdd);
-		return $manager->getListPropositionsByDate();
-	}
-
-	//retourne un tableau contenant les objets propositions sur une date données
-	//la date est sous la forme d'un timestamp
-	function ListePropositionsParDate($date)
-	{
-		global $bdd;
-		//recherche des propositions correspondant à la date demandée
-		$proposition = new Proposition(['dateproposition'=>date('Y-m-d', $date)]);
-
-		$manager = new PropositionsManager($bdd);
-		return $manager->findPropositionsOnDate($proposition);
-	}
-
-	//retourne un tableau contenant les objets propositions d'un agent
-	//ENTREE: $idagent: l'id de l'agent
-	//SORTIE: tableau contenant les objets propositions
-	function ListePropositionsParNocp($idagent)
-	{
-		global $bdd;
-		//recherche des propositions correspondant à la date demandée
-		$proposition = new Proposition(['idagent'=>$idagent]);
-
-		$manager = new PropositionsManager($bdd);
-		return $manager->findPropositionsByIdAgent($proposition);
-	}
-
 	//retourne le nombre de propositions sur une date
 	function NbPropositionsOnDate($date)
 	{
@@ -78,16 +21,5 @@
 		$manager = new PropositionsManager($bdd);
 		return $manager->nbPropositionOnDate($proposition);
 	} 
-
-	function RechercheProposition($id)
-	{
-		global $bdd;
-		$proposition = new Proposition(['id'=>$id]);
-
-		$manager = new PropositionsManager($bdd);
-		$manager->findProposition($proposition);
-
-		return $proposition;
-	}
 
 ?>

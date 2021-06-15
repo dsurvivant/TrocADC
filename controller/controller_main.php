@@ -130,7 +130,11 @@
 		//récupération des propositions sur la date choisie
 			$tabpropositions = [];
 			$i=0;
-			$listepropositions = ListePropositionsParDate($datederecherche);
+			//recherche des propositions correspondant à la date demandée
+			$proposition = new Proposition(['dateproposition'=>date('Y-m-d', $datederecherche)]);
+
+			$manager = new PropositionsManager($bdd);
+			$listepropositions = $manager->findPropositionsOnDate($proposition);
 
 			//association pour chaque proposition à l'agent et le roulement
 			foreach ($listepropositions as $proposition) 
@@ -310,7 +314,10 @@
 					
 				//controle des champs
 				if ($commentaires=='') { $commentaires= "Aucun commentaire";}
-				Modifierproposition($idproposition, $idjournee, $commentaires);
+
+				$proposition = new Proposition(['id'=>$idproposition, 'idjournee'=>$idjournee, 'commentaires'=>$commentaires]);
+				$manager = new PropositionsManager($bdd);
+				$manager->update($proposition);
 
 				//$chemin = "index.php?page=calendrier&choixdate=" . $_GET['jour'];
 				header("location:index.php?page=mes propositions&idproposition=" . $idproposition);
@@ -321,7 +328,10 @@
 				$dateproposition = $_GET['dateproposition'];
 				
 				//récupération de la proposition
-				$proposition = RechercheProposition($idproposition);
+				$proposition = new Proposition(['id'=>$idproposition]);
+				$manager = new PropositionsManager($bdd);
+				$manager->findProposition($proposition);
+
 				$id = $proposition->getIdjournee();
 				//récupération journée
 				$journee = new Journee(['id'=>$id]);
@@ -352,7 +362,10 @@
 			if(isset($_GET['supprimer']))
 			{
 				$idproposition = $_GET['supprimer'];
-				Supprimerproposition($idproposition);
+				$proposition = new Proposition(['id'=>$idproposition]);
+				$manager = new PropositionsManager($bdd);
+				$manager->delete($proposition);
+
 				$_SESSION['message']="Proposition supprimée";
 			}
 			
@@ -360,7 +373,12 @@
 			$tabpropositions = [];
 			//RECUPERATION DES PROPOSITIONS DE L'AGENT
 			$idagent = $_SESSION['id']; 
-			$listepropositions = ListePropositionsParNocp($idagent);
+
+			//recherche des propositions correspondant à la date demandée
+			$proposition = new Proposition(['idagent'=>$idagent]);
+
+			$manager = new PropositionsManager($bdd);
+			$listepropositions = $manager->findPropositionsByIdAgent($proposition);
 			//RECUPERATION DES JOURNEES LIEES AUX PROPOSITIONS
 
 			$i=0;

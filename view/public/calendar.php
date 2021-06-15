@@ -85,7 +85,8 @@ if (isset($_SESSION['nocp']))
 								<?php echo $d . "<br>"; 
 								
 								//VIGNETTE NOMBRE DE PROPOSITIONS
-									$propositions = ListePropositions();
+									$manager = new PropositionsManager($bdd);
+									$propositions = $manager->getListPropositionsByDate();
 									$i=0;
 									foreach ($propositions as $proposition) 
 									{
