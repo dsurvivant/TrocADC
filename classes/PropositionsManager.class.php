@@ -118,6 +118,20 @@ class PropositionsManager
 		return $propositions;
 	}
 
+	//liste des propositions classées par id desc et non obsoletes (date non dépassée)
+	public function getListPropositionsByIdDescDateok()
+	{
+		$propositions = [];
+
+		$q = $this->_db->query('SELECT * FROM propositions WHERE dateproposition >= CURRENT_DATE() ORDER BY id DESC');
+
+		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$propositions[] = new Proposition($donnees);
+		}
+		return $propositions;
+	}
+
 
 	//liste des propositions classées par date
 	public function getListPropositionsByDate()

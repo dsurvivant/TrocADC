@@ -1,21 +1,6 @@
 <?php
 	// FONCTIONS PROPOSITIONS
 
-	function Ajouterproposition($dateproposition, $idjournee, $idagent, $commentaires)
-	{
-		global $bdd;
-		
-		$proposition = new Proposition([
-								'dateproposition'=>$dateproposition,
-								'idjournee'=>$idjournee,
-								'idagent'=>$idagent,
-								'commentaires'=>$commentaires
-								]);
-		
-		$manager = new PropositionsManager($bdd);
-		$idproposition = $manager->add($proposition);
-	}
-
 	function Modifierproposition($idproposition, $idjournee, $commentaires)
 	{
 		global $bdd;

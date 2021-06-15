@@ -1,6 +1,15 @@
 <?php
 	/**
 	 * créé par jmt janvier 2021
+	 * 
+	 * les fonctions: 
+	 * 		- viewParametres()
+	 * 		- viewMain()
+	 * 		- viewAjouterProposition()
+	 * 		- viewModifierProposition()
+	 * 		- viewMespropositions()
+	 * 		- Dernierespropositions() ==>10 dernieres propositions (non obsoletes)
+	 * 		- menu() => determine les options du menu déroulants
 	 */
 
 	function viewParametres()
@@ -197,12 +206,20 @@
 				$idresidence = 1;
 				$commentaires = sanitizeString(trim($_POST['commentaires']));
 				$idagent = $_SESSION['id'];
+				$idup = $_SESSION['idup'];
 				$dateconcernee = date('Y-m-d', $_GET['jour']);
 
 				//controle des champs
 				if ($commentaires=='') { $commentaires= "Aucun commentaire";}
-				Ajouterproposition($dateconcernee, $idjournee, $idagent, $commentaires);
-
+				$proposition = new Proposition([
+								'dateproposition'=>$dateconcernee,
+								'idjournee'=>$idjournee,
+								'idagent'=>$idagent,
+								'commentaires'=>$commentaires,
+								'idup'=>$idup
+								]);
+				$manager = new PropositionsManager($bdd);
+				$idproposition = $manager->add($proposition);
 				$chemin = "index.php?page=calendrier&choixdate=" . $_GET['jour'];
 				header('location:' . $chemin);
 			}
@@ -220,12 +237,22 @@
 					$commentaires = sanitizeString(trim($_POST['commentaires']));
 					$idjournee = sanitizeString(trim($_POST['idjournee']));
 					$idagent = $_SESSION['id'];
+					$idup = $_SESSION['idup'];
 
 					$dateconcernee = date('Y-m-d', $_GET['jour']);
 					
 					//controle des champs
 					if ($commentaires=='') { $commentaires= "Aucun commentaire";}
-					Ajouterproposition($dateconcernee, $idjournee, $idagent, $commentaires);
+					$proposition = new Proposition([
+								'dateproposition'=>$dateconcernee,
+								'idjournee'=>$idjournee,
+								'idagent'=>$idagent,
+								'commentaires'=>$commentaires,
+								'idup'=>$idup
+								]);
+					$manager = new PropositionsManager($bdd);
+					
+					$idproposition = $manager->add($proposition);
 
 					$chemin = "index.php?page=calendrier&choixdate=" . $_GET['jour'];
 					header('location:' . $chemin);
@@ -374,7 +401,7 @@
 
 		global $bdd;
 
-		if (isset($_SESSION['nocp']))
+		if (isset($_SESSION['nocp'])) //si connecté
 		{
 			$_SESSION['message']='';
 			
@@ -384,8 +411,8 @@
 			//RECUPERATION DES 10 dernieres propositions de l'up de l'agent
 				$manager = new PropositionsManager($bdd);
 				//recupération tout d'abord de toutes les propositions classés par arrivée du plus
-				//récent au moins récent
-				$propositions = $manager->getListPropositionsByIdDesc();
+				//récent au moins récent et dont la date n'est pas obsolète
+				$propositions = $manager->getListPropositionsByIdDescDateok();
 			
 				//on garde les 10 premieres propositions de l'up de l'agent
 				$i=0;
