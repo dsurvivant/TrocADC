@@ -5,6 +5,12 @@
 		<h4 class="col bg-dark text-white p-2 text-center" > Mes propositions</h4>
 	</div>
 
+	<div id="filtreMesPropositions" class="row border p-2">
+		<span class="mr-2">Afficher Propositions passées</span>
+		<span class="filtrepropositions border px-1 <?php if(isset($_GET['actives'])){ echo "bg-dark text-white";} ?> ">Oui</span>
+		<span class="filtrepropositions border px-1 <?php if(!isset($_GET['actives'])){ echo "bg-dark text-white";} ?> ">Non</span>
+	</div>
+
 	<div class="row">
 		<h5 class="col text-danger text-center"><?= $_SESSION['message']; ?></h5>
 	</div>
@@ -18,7 +24,7 @@
 		<div class="col p-0 border text-center">Proposée le</div>
 	</div>
 
-	<div style="overflow: auto;">
+	<!--<div style="overflow: auto;">-->
 	<?php
 	//rappel: tabpropositions[[$proposition,$journee,$agent]]
 	$nbproposition = count($tabpropositions);
@@ -35,13 +41,14 @@
 		$fs = $fs->format('G:i');
 	?>
 
-		<div class="row proposition" >
+			<div class="row proposition" >
 			<div class="col p-0  border text-center"><?= $journee->getNomjournee(); ?></div>
 			<div class="col p-0  border text-center"><?= $ps; ?></div>
 			<div class="col p-0  border text-center"><?= $journee->getLieups(); ?></div>
 			<div class="col p-0  border text-center"><?= $fs ?></div>
 			<div class="col p-0  border text-center"><?= $journee->getLieufs(); ?></div>
-			<div class="col p-0  border text-center"><?= $dateproposition->format('d-m-Y'); ?></div>
+			<div class="col p-0  border text-center"><?= $dateproposition->format('d-m-Y'); ?> <img class="m-1" src="public/images/icones/loupe1.png" alt="loupe" width="16px">
+			</div>
 		</div>
 
 		<div class="row infosproposition">
@@ -60,9 +67,6 @@
 	<?php 
 	endfor;?>	
 </div>
-
-</div>
-
 
 <?php $main = ob_get_clean();
 

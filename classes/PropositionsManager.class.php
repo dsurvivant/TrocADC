@@ -177,12 +177,28 @@ class PropositionsManager
 		return $listepropositions;
     }
 
-    //retourne une liste d'objet propositions sur une date donnee
+    //retourne une liste d'objet propositions d'un agent (toutes les propositions de l'agent)
     public function findPropositionsByIdAgent(Proposition $proposition)
    	{
    		$listepropositions= [];
        
         $q = $this->_db->prepare('SELECT * FROM propositions WHERE idagent=:idagent');
+        $q->bindValue(':idagent', $proposition->getIdagent());
+        $q->execute();
+            
+        while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$listepropositions[] = new Proposition($donnees);
+		}
+		return $listepropositions;
+    }
+
+    //retourne une liste d'objet propositions non obsolètes d'un agent 
+    public function findPropositionsByIdAgentActives(Proposition $proposition)
+   	{
+   		$listepropositions= [];
+       
+        $q = $this->_db->prepare('SELECT * FROM propositions WHERE (idagent=:idagent) AND (dateproposition >= NOW()) ');
         $q->bindValue(':idagent', $proposition->getIdagent());
         $q->execute();
             

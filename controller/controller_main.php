@@ -355,6 +355,10 @@
 	{
 		global $bdd;
 
+		//parametres de filtres propositions obsoletes
+		if(isset($_GET['actives'])) {$actives=1;}
+			else{$actives=0;}
+
 		if (isset($_SESSION['nocp']))
 		{
 			$_SESSION['message']='';
@@ -374,11 +378,15 @@
 			//RECUPERATION DES PROPOSITIONS DE L'AGENT
 			$idagent = $_SESSION['id']; 
 
-			//recherche des propositions correspondant à la date demandée
+			//
 			$proposition = new Proposition(['idagent'=>$idagent]);
 
 			$manager = new PropositionsManager($bdd);
-			$listepropositions = $manager->findPropositionsByIdAgent($proposition);
+
+			if ($actives) {$listepropositions = $manager->findPropositionsByIdAgentActives($proposition);}
+			else {$listepropositions = $manager->findPropositionsByIdAgent($proposition);}
+			
+			
 			//RECUPERATION DES JOURNEES LIEES AUX PROPOSITIONS
 
 			$i=0;
