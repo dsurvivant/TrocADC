@@ -383,8 +383,9 @@
 
 			$manager = new PropositionsManager($bdd);
 
-			if ($actives) {$listepropositions = $manager->findPropositionsByIdAgentActives($proposition);}
-			else {$listepropositions = $manager->findPropositionsByIdAgent($proposition);}
+			if ($actives) {$listepropositions =  $manager->findPropositionsByIdAgent($proposition);}
+			//else {$listepropositions = $manager->findPropositionsByIdAgent($proposition);}
+			else {$listepropositions = $manager->findPropositionsByIdAgentActives($proposition);}
 			
 			
 			//RECUPERATION DES JOURNEES LIEES AUX PROPOSITIONS
