@@ -8,7 +8,6 @@
 
 
 if (isset($_GET['idroulement'])) { $idroulement = $_GET['idroulement'];}
-else { $idroulement = '';}
 
 if (!isset($_SESSION['droits'])) { $_SESSION['droits']=0;} 
 
