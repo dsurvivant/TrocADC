@@ -25,13 +25,7 @@ if (!isset($idroulement))  { $idroulement = ''; }
       <hr>
 
       <div class="row text-center text-monospace"><h2 class="col"><?= $titrepage; ?></h2></div>
-      <!-------------------message limitation au 171 --------------------------->
-      <div class="row">
-        <div class="col-12 text-danger text-center">
-          ATTENTION APPLIWEB EN TEST. <br> 
-          SEULES LES INSCRIPTIONS DU 171 SERONT PRISES EN COMPTE. <br>
-        </div>
-      </div>
+      
       <!------------------------------------------------------------------------>
       <hr>
       <div class="row text-danger text-center p-1"><h3 id="message_form_agent" class="col"><?= $_SESSION['message']; ?></h3></div>
