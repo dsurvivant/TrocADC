@@ -196,7 +196,11 @@ $(function(){
 						filtreroulement: idroulement,
 						checkroulement: checkroulement,
 					}
+			})
+			.done(function(data) {
+				console.log(data);
 			});
+
 		});
 
 

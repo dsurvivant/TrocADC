@@ -68,28 +68,51 @@
 				}		
 			}
 
-		//modification case à cocher "Afficher nom et prénom"
+		//modification case à cocher "Afficher nom et prénom" APPEL AJAX
 			if (isset($_POST['filtrename']))
 			{
-				global $bdd;
 				$manager = new AgentsManager($bdd);
 				$manager->updateDisplayName($_POST['checkname'], $_SESSION['nocp']);
 				$_SESSION['displayname']=$_POST['checkname'];
+				exit;
 			}
 
-		//modification case à cocher "Afficher mail"
+		//modification case à cocher "Afficher mail" APPEL AJAX
 			if (isset($_POST['filtremail']))
 			{
-				global $bdd;
 				$manager = new AgentsManager($bdd);
 				$manager->updateDisplayMail($_POST['checkmail'],$_SESSION['nocp']);
 				$_SESSION['displaymail']=$_POST['checkmail'];
+				exit;
 			}
 
-		//modification roulements souhaités
+		//modification roulements souhaités APPEL AJAX
 			if (isset($_POST['filtreroulement']))
 			{
-				
+				$noroulement = trim($_POST['filtreroulement']);
+				$checkroulement = trim($_POST['checkroulement']);
+				$noagent = $_SESSION['id'];
+
+				$manager = new RoulementsderechercheManager($bdd);
+				if ($checkroulement) //on rajoute le rlt
+				{
+					$rltrecherche = new Roulementsderecherche(
+                    [
+                        'idagent'=>$noagent,
+                        'idroulement'=>$noroulement
+                    ]);
+            		$manager->add($rltrecherche);
+				}
+				else //on retire le roulement
+				{
+					$rltrecherche = new Roulementsderecherche(
+                    [
+                        'idagent'=>$noagent,
+                        'idroulement'=>$noroulement
+                    ]);
+            		$manager->delete($rltrecherche);
+				}
+				exit;
 			}
 
 		//liste des up
