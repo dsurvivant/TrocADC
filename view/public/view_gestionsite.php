@@ -32,6 +32,9 @@ if(isset($onglet))
 		case 'historique':
 			$onglet = 6;
 			break;
+		case 'autres':
+			$onglet = 7;
+			break;
 		default:
 			$onglet = 1;
 			break;
@@ -59,6 +62,7 @@ ob_start();
 		  <a class="nav-item nav-link <?php if($onglet==4){ echo "active";} ?>" href="#listeresidences" data-toggle="pill">Résidences</a>
 		  <a class="nav-item nav-link <?php if($onglet==5){ echo "active";} ?>" href="#listeup" data-toggle="pill">UP</a>
 		  <a class="nav-item nav-link <?php if($onglet==6){ echo "active";} ?>" href="#historique" data-toggle="pill">Historique connexion</a>
+		  <a class="nav-item nav-link <?php if($onglet==7){ echo "active";} ?>" href="#autres" data-toggle="pill">Autres</a>
 		</nav>
 
 
@@ -408,6 +412,19 @@ ob_start();
 			          <?php endforeach; ?>
 			        </tbody>
 			      </table>
+			</div>
+		<!-- PANNEAU 7 - Autres - -->
+			<div class="tab-pane fade <?php if($onglet==7){ echo "active show";} ?> mt-2" id="autres">
+				<p class="h4">Roulements de recherches des agents</p>
+					<hr>
+					<form id="forminitroulements" class="mt-2">
+						<input type="submit" name="Initialisation" value="Initialisation">
+					</form>
+					<p class="lead">
+					Attention ce bouton réinitialise les roulements de recherche. <br>
+					 Il sélectionne pour chaque agent uniquement son roulement d'attache.
+					</p>
+					<hr>
 			</div>
 	</div>
 </div>

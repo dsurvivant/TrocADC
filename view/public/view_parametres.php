@@ -1,4 +1,5 @@
 <?php 
+
 if (isset($_SESSION['nocp']))
 {		
 	$nom = $_SESSION['nom'];
@@ -156,24 +157,78 @@ if (isset($_SESSION['nocp']))
 			</section>
 	</div>
 
-
+	<!--------------------------->
+	<!--	FILTRES			   -->
+	<!--------------------------->
 	<div class="row">
 		<section  class = "col-12 border border-secondary p-2 m-1">
 				<div class="card-header text-center bg-secondary text-white mb-3">Filtres</div>
 
-				<div class="card-body">
-					 <form id="formfiltres" method="post">
-					    <div class="form-check">
-					    	<input form="formfiltres" id="inputname" name="inputname" class="form-check-input" type="checkbox" value="on" <?= $displayname ?>>
-					    	<label class="form-check-label" for="inputname">Nom et Prénom visible</label>
-					    </div>
+				<div class="card-body border">
+					 <div class="container-fluid">
+					 	<div class="row justify-content-around">
+							<div class="col-12 col-md-5 border p-0 mt-1">
+								<div class="h4 bg-secondary text-white text-center pb-1">Divers</div>
 
-					    <div class="form-check">
-					    	<input form="formfiltres" id="inputmail" name="inputmail" class="form-check-input" type="checkbox" value="on" <?= $displaymail ?>>
-					    	<label class="form-check-label" for="inputmail">Email visible</label>
-					    </div>
-				    </form>
+								<form id="formfiltres" method="post" class="p-1">
+								    <div class="form-check ">
+								    	<input form="formfiltres" id="inputname" name="inputname" class="form-check-input" type="checkbox" value="on" <?= $displayname ?>>
+								    	<label class="form-check-label" for="inputname">Nom et Prénom visible</label>
+								    </div>
+
+								    <div class="form-check">
+								    	<input form="formfiltres" id="inputmail" name="inputmail" class="form-check-input" type="checkbox" value="on" <?= $displaymail ?>>
+								    	<label class="form-check-label" for="inputmail">Email visible</label>
+								    </div>
+							    </form>
+
+
+							    <div class="lead px-1 mt-3">Eléments que je souhaite laisser visibles aux autres</div>
+							</div>
+
+						    <div class="col-12 col-md-6 border p-0 mt-1">
+						    	<div class="h4 bg-secondary text-white text-center pb-1">Roulements souhaités </div>
+
+							    <form id="formfiltresRoulements" method="post" class="p-1">
+								    <?php
+								    	?><div class="container"><div class="row justify-content-around"><?php
+									    	foreach ($residences as $residence)
+									    	{
+									    		if ($residence->getIdup()==$idup)
+									    		{
+										    		?><div class="border col col-md-3 p-0 ml-1 mt-2"><?php
+										    			//affiche la résidence
+										    			echo "<p class='text-center border-bottom bg-dark text-white'>" . $residence->getNomresidence() . "</p>";
+
+											    		?><div class="text-center"><?php
+											    			foreach($roulements as $roulement)
+											    			{
+											    				if ($roulement->getIdresidence()==$residence->getId())
+											    				{
+											    					$idroulement = $roulement->getId();
+											    					?>
+											    						<div class="form-check">
+																	    	<input form="formfiltresRoulements" name="<?= $idroulement; ?>" class="inputroulement form-check-input" type="checkbox">
+																	    	<!-- affiche le roulement -->
+																	    	<label class="form-check-label"><?= $roulement->getNoroulement(); ?></label>
+																	    </div>
+											    					<?php
+											    					//echo $roulement->getNoroulement() . "<br>";
+											    				}
+											    			}
+										    		?></div></div><?php
+									    		}
+									    	}
+									    ?></div></div><?php
+								    ?>
+							    </form>
+
+							    <div class="lead px-1 mt-3">Seuls les propositions des roulements sélectionnés apparaitront</div>
+							</div>
+						</div>
+					</div>
 				</div>
+
 		</section>
 	</div>
 </div>
@@ -185,4 +240,8 @@ if (isset($_SESSION['nocp']))
 	$titre = "trocADC - Paramètres";
 	require('view/public/template_main.php');
 }
+	
+
+dd($residences);
+dd($roulements);
 	?>

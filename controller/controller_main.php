@@ -69,28 +69,38 @@
 			}
 
 		//modification case à cocher "Afficher nom et prénom"
-		if (isset($_POST['filtrename']))
-		{
-			AffichageNomAgent($_POST['checkname'], $_SESSION['nocp']);
-			$_SESSION['displayname']=$_POST['checkname'];
-		}
+			if (isset($_POST['filtrename']))
+			{
+				global $bdd;
+				$manager = new AgentsManager($bdd);
+				$manager->updateDisplayName($_POST['checkname'], $_SESSION['nocp']);
+				$_SESSION['displayname']=$_POST['checkname'];
+			}
 
 		//modification case à cocher "Afficher mail"
-		if (isset($_POST['filtremail']))
-		{
-			AffichageMailAgent($_POST['checkmail'], $_SESSION['nocp']);
-			$_SESSION['displaymail']=$_POST['checkmail'];
-		}
+			if (isset($_POST['filtremail']))
+			{
+				global $bdd;
+				$manager = new AgentsManager($bdd);
+				$manager->updateDisplayMail($_POST['checkmail'],$_SESSION['nocp']);
+				$_SESSION['displaymail']=$_POST['checkmail'];
+			}
+
+		//modification roulements souhaités
+			if (isset($_POST['filtreroulement']))
+			{
+				
+			}
 
 		//liste des up
-		$manager = new UpManager($bdd);
-		$ups = $manager->getListUpId();
+			$manager = new UpManager($bdd);
+			$ups = $manager->getListUpId();
 		//liste des résidences
-		$manager = new ResidenceManager($bdd);
-		$residences = $manager->getListResidencesId();
+			$manager = new ResidenceManager($bdd);
+			$residences = $manager->getListResidencesId();
 		//liste des roulements
-		$manager = new RoulementsManager($bdd);
-		$roulements = $manager->getListRoulements();
+			$manager = new RoulementsManager($bdd);
+			$roulements = $manager->getListRoulements();
 		
 		$titrepage = "Paramètres";
 		require('view/public/view_parametres.php');

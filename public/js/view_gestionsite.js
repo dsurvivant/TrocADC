@@ -175,4 +175,28 @@ $(function()
 	$('#gestionsite #enteteid').click(function(event) {
 		alert("en cours");
 	});
+
+	/**
+	 * INITIALISATION DES ROULEMENTS DE RECHERCHE
+	 */
+	$('#forminitroulements').submit(function(e)
+	{
+		e.preventDefault();
+
+		if(confirm("Valider cette opération"))
+		{
+			$.ajax({
+				url: 'index.php?page=gestionsite',
+				type: 'POST',
+				data: {
+						initroulements: 1
+					},
+			})
+			.done(function(data) {
+				alert("Opération terminée");
+				console.log(data);
+			});
+		}
+	});
+
 }); //fin jquery

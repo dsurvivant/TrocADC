@@ -283,6 +283,13 @@ function viewGestionsite($id='')
                 break;
         }
 
+    
+    //REINITIALISATION DES ROULEMENTS DE RECHERCHE
+    if(isset($_POST['initroulements']))
+    {
+        dd($agents);exit;
+    }
+
     $titrepage = "Gestion";
 
     //header("location:index.php?page=gestionsite");

@@ -249,22 +249,6 @@
 		$manager->updateById($agent);
 	}
 
-	//modifie le parametre d'affichage du nom et prenom
-	function AffichageNomAgent($displayname, $nocp)
-	{
-		global $bdd;
-		$manager = new AgentsManager($bdd);
-		$manager->updateDisplayName($displayname, $nocp);
-	}
-
-	//modifie le parametre d'affichage du mail
-	function AffichageMailAgent($displaymail, $nocp)
-	{
-		global $bdd;
-		$manager = new AgentsManager($bdd);
-		$manager->updateDisplayMail($displaymail, $nocp);
-	}
-
 	//suppression de l'agent à partir de l'id
 	function SupprimerAgent($agent)
 	{
