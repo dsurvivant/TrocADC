@@ -16,6 +16,12 @@
 	{
 		global $bdd;
 
+		//RECUPERATION DES ROULEMENTS DE RECHERCHE
+		//résultat dans le tableau tabroulementsderecherche
+			$manager = new RoulementsderechercheManager($bdd);
+			$roulementsderecherche= new Roulementsderecherche(['idagent'=>$_SESSION['id']]);
+			$tabroulementsderecherche = $manager->ListRoulementsDeRecherche($roulementsderecherche);
+
 		$_SESSION['message']='';
 		//modification des infos sur la page parametres (retour form)
 			if( isset($_POST['telephone']) and isset($_POST['email']) and isset($_POST['noroulement']) and isset($_POST['noresidence']) and isset($_POST['noup']) )

@@ -55,4 +55,22 @@ class RoulementsderechercheManager
 		$q = $this->_db->prepare('TRUNCATE TABLE roulementsderecherche');
 		$q-> execute();
 	}
+
+	/**
+	 * LISTE DES ROULEMENTS DE RECHERCHE POUR UN AGENT
+	 */
+	public function ListRoulementsDeRecherche(Roulementsderecherche $roulementsderecherche)
+	{
+		$tabroulementsderecherche = [];
+
+		$q = $this->_db->prepare('SELECT * FROM roulementsderecherche WHERE idagent=:idagent');
+		$q->bindValue(':idagent', $roulementsderecherche->getIdagent());
+		$q-> execute();
+
+		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$tabroulementsderecherche[] = $donnees['idroulement'];
+		}
+		return $tabroulementsderecherche;
+	}
 }

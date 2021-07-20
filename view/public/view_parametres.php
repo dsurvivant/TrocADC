@@ -1,4 +1,12 @@
 <?php 
+/**
+ * PARAMETRES D ENTREES:
+ * 		- $agents: liste des objets Agents
+ * 		- $ups: liste des objets Up
+ * 		- $residences: liste des objets Residences
+ * 		- $roulements: liste des objets Roulements
+ * 		- $tabroulementsderecherche: tableau qui contient les roulements de recherche
+ */
 
 if (isset($_SESSION['nocp']))
 {		
@@ -206,9 +214,13 @@ if (isset($_SESSION['nocp']))
 											    				if ($roulement->getIdresidence()==$residence->getId())
 											    				{
 											    					$idroulement = $roulement->getId();
+											    					//recherche si le roulement est un roulement de recherche par défaut
+											    					if(in_array($idroulement, $tabroulementsderecherche)) {$recherche="checked";}
+											    					else {$recherche="";}
+
 											    					?>
 											    						<div class="form-check">
-																	    	<input form="formfiltresRoulements" name="<?= $idroulement; ?>" class="inputroulement form-check-input" type="checkbox">
+																	    	<input form="formfiltresRoulements" name="<?= $idroulement; ?>" class="inputroulement form-check-input" type="checkbox" <?= $recherche ?>>
 																	    	<!-- affiche le roulement -->
 																	    	<label class="form-check-label"><?= $roulement->getNoroulement(); ?></label>
 																	    </div>
@@ -240,8 +252,5 @@ if (isset($_SESSION['nocp']))
 	$titre = "trocADC - Paramètres";
 	require('view/public/template_main.php');
 }
-	
 
-dd($residences);
-dd($roulements);
-	?>
+?>
