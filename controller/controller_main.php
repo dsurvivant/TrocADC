@@ -166,14 +166,14 @@
 			else { $datederecherche = time(); }
 
 			
-		//récupération des propositions sur la date choisie
-			$tabpropositions = [];
-			$i=0;
+			//récupération des propositions sur la date choisie
+				$tabpropositions = [];
+				$i=0;
 			//recherche des propositions correspondant à la date demandée
-			$proposition = new Proposition(['dateproposition'=>date('Y-m-d', $datederecherche)]);
+				$proposition = new Proposition(['dateproposition'=>date('Y-m-d', $datederecherche)]);
 
-			$manager = new PropositionsManager($bdd);
-			$listepropositions = $manager->findPropositionsOnDate($proposition);
+				$manager = new PropositionsManager($bdd);
+				$listepropositions = $manager->findPropositionsOnDate($proposition);
 
 			//association pour chaque proposition à l'agent et le roulement
 			foreach ($listepropositions as $proposition) 
@@ -202,8 +202,14 @@
 					}
 			}
 
-		//récupération des dernieres propositions
-		$tabDernieresPropositions = Dernierespropositions();
+			//récupération des dernieres propositions
+			$tabDernieresPropositions = Dernierespropositions();
+
+			//RECUPERATION DES ROULEMENTS DE RECHERCHE
+			//résultat dans le tableau tabroulementsderecherche
+			$manager = new RoulementsderechercheManager($bdd);
+			$roulementsderecherche= new Roulementsderecherche(['idagent'=>$_SESSION['id']]);
+			$tabroulementsderecherche = $manager->ListRoulementsDeRecherche($roulementsderecherche);
 
 			$titrepage = "Calendrier";
 			require('view/public/view_main.php');

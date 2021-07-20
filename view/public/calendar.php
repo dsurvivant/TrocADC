@@ -1,4 +1,8 @@
 <?php 
+/**
+ * ENTREE:
+ * 		-tabroulementsderecherche: contient les idroulements de recherche choisit par l'agent.
+ */
 if (isset($_SESSION['nocp']))
 {
 	if(isset($_SESSION['idup'])) { $idup=$_SESSION['idup'];}
@@ -85,18 +89,29 @@ if (isset($_SESSION['nocp']))
 								<?php echo $d . "<br>"; 
 								
 								//VIGNETTE NOMBRE DE PROPOSITIONS
+									//liste des propositions de l'up classés par date asc
 									$manager = new PropositionsManager($bdd);
-									$propositions = $manager->getListPropositionsByDate();
+									//$propositions = $manager->getListPropositionsByDate();
+									$prop = new Proposition(['idup'=>$idup]);
+									$propositions = $manager->getListPropositionsByDateAndUp($prop);
+									
 									$i=0;
 									foreach ($propositions as $proposition) 
 									{
-										//recuperation de l'up de l'agent faisant la proposition
-											$idupagent = $proposition->getIdup();
+										//		
+										if($proposition->getDateproposition() == date('Y-m-d', $time))
+										{ 
+											//recuperation de l'idroulement de la journée proposée
+											$idJournee = $proposition->getIdjournee();
+											$journee = new Journee(['id'=>$idJournee]);
+											$managerjournee = new JourneesManager($bdd);
+											$managerjournee->findJourneeById($journee);
+											$idroulement = $journee->getIdroulement();
 
-										//on ne traite que les propositions issues de l'up de l'agent connecté
-										if ($idup == $idupagent)
-										{
-											if($proposition->getDateproposition() == date('Y-m-d', $time)){ $i++;}
+											//que les roulements de recherche
+											if(in_array($idroulement, $tabroulementsderecherche)) 
+											{//compteur vignette
+											$i++;}
 										}
 									}
 									if($i!=0) { echo "<span class='badge badge-danger'>" . $i . "</span>"; }

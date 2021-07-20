@@ -147,6 +147,23 @@ class PropositionsManager
 		return $propositions;
 	}
 
+	//liste des propositions classées par date pour une up précise
+	public function getListPropositionsByDateAndUp(Proposition $proposition)
+	{
+		$propositions = [];
+
+		$q = $this->_db->prepare('SELECT * FROM propositions WHERE idup=:idup ORDER BY dateproposition ASC');
+
+		$q->bindValue(':idup', $proposition->getIdup());
+        $q->execute();
+
+		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$propositions[] = new Proposition($donnees);
+		}
+		return $propositions;
+	}
+
 	//liste des 10 dernieres propositions
 	public function findDernieresPropositions()
 	{
