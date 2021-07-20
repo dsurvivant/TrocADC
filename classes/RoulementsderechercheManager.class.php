@@ -46,4 +46,13 @@ class RoulementsderechercheManager
 		$q-> execute();
 
 	}
+
+	/**
+	 * FORMATAGE DE LA TABLE (remis à zero de l'auto incrément)
+	 */
+	public function erase()
+	{
+		$q = $this->_db->prepare('TRUNCATE TABLE roulementsderecherche');
+		$q-> execute();
+	}
 }

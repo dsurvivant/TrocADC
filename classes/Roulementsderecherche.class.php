@@ -43,7 +43,7 @@
 		
 		public function setId($id){ $this->_id = $id;}
 		public function setIdagent($idagent){ $this->_idagent = $idagent;}
-		public function setIdroulement($idroulement){ $this->_idroulement = $idRoulement;}
+		public function setIdroulement($idroulement){ $this->_idroulement = $idroulement;}
 		
 
 	}

@@ -284,10 +284,26 @@ function viewGestionsite($id='')
         }
 
     
-    //REINITIALISATION DES ROULEMENTS DE RECHERCHE
+    //REINITIALISATION DES ROULEMENTS DE RECHERCHE (appeler par ajax)
     if(isset($_POST['initroulements']))
     {
-        dd($agents);exit;
+        //remis à zéro de la table roulements de recherche
+        $manager = new RoulementsderechercheManager($bdd);
+        $manager->erase();
+        //affectation par défaut pour chaque agent
+        foreach ($agents as $agent) 
+        {
+            $noagent = $agent->getId();
+            $noroulement = $agent->getIdroulement();
+
+            $rltrecherche = new Roulementsderecherche(
+                    [
+                        'idagent'=>$noagent,
+                        'idroulement'=>$noroulement
+                    ]);
+            $manager->add($rltrecherche);
+        }
+        exit;
     }
 
     $titrepage = "Gestion";

@@ -167,14 +167,14 @@ $(function()
 	/***
 	/** CLIC SUR ENTETE
 	/*** */
-	$('#gestionsite #entetejournee').click(function(event) {
-		alert("en cours");
-	});
+		$('#gestionsite #entetejournee').click(function(event) {
+			alert("en cours");
+		});
 
 
-	$('#gestionsite #enteteid').click(function(event) {
-		alert("en cours");
-	});
+		$('#gestionsite #enteteid').click(function(event) {
+			alert("en cours");
+		});
 
 	/**
 	 * INITIALISATION DES ROULEMENTS DE RECHERCHE
@@ -182,6 +182,7 @@ $(function()
 	$('#forminitroulements').submit(function(e)
 	{
 		e.preventDefault();
+		$('body').css('cursor', 'wait');
 
 		if(confirm("Valider cette opération"))
 		{
@@ -193,8 +194,8 @@ $(function()
 					},
 			})
 			.done(function(data) {
+				$('body').css('cursor', 'default');
 				alert("Opération terminée");
-				console.log(data);
 			});
 		}
 	});
