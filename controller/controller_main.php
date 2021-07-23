@@ -137,21 +137,19 @@
 
 	/**
 	 * ENTREE: $_GET['choixdate'], facultatif, à défaut date du jour
-	 * SORTIE: tableau multidimensionel: tabpropositions[[($proposition,$journee, $agent]], où
-	 * $proposition est un objet Proposition, $journee est un objet
-	 * $agent est un objet Agent
-	 * A une proposition correspond une journee un agent
 	 *
-	 *
-	 * cette fonction affiche la page principale contenant le calendrier et les propositions
-	 *	elle recherche les éléments nécessaires à l'affichage de la page: 
-	 * - Facultatif: la date concernée: fournie par $_GET['choixdate']
-	 * - par défaut, date du jour
-	 * - recherche les propositions du jour concerné
-	 * - recherche pour chaque proposition l'agent et le roulement
+	 * SORTIES:
 	 * 
-	 * Retourne un tableau tabpropositions[[($proposition, $agent, $roulement]] qui contient les
-	 * objets de la recherche
+	 * 	- $listepropositions : objets Propositions du jour et de l'up de l'agent
+	 * 	- $tabpropositions : multidimensionnel
+	 * 			[i][0] => Objet Proposotion du jour et de l'up au rang i
+	 * 			[i][1] => Objet Journee correspondant à la proposition
+	 * 			[i][2] => Objet Agent correspondant à la proposition
+	 * 	- $tabDernieresPropositions : idem que tableau $tabpropositions mais contient uniquement les dix dernières propositions de l'up
+	 * 	- $tabroulementsderecherche : contient la liste des roulements de recherche choisit par l'agent connecté => example (171,172,173)
+	 * 	- $tabroulements: Tableau des roulements=>[i]['id']=id du roulement [i]['libelle']=libelle rlt
+	 * 
+	 * Le tout envoyé à 'view/public/view_main.php'
 	 */
 	function viewMain()
 	{
@@ -160,6 +158,7 @@
 		if(isset($_SESSION['idup'])) { $idup=$_SESSION['idup'];}
 		else{$idup='';}
 		
+		//traitement si connecté sinon page de connexion
 		if(isset($_SESSION['nocp']))
 		{
 			if (isset($_GET['choixdate'])) { $datederecherche = $_GET['choixdate']; }
@@ -169,47 +168,54 @@
 			//récupération des propositions sur la date choisie
 				$tabpropositions = [];
 				$i=0;
-			//recherche des propositions correspondant à la date demandée
-				$proposition = new Proposition(['dateproposition'=>date('Y-m-d', $datederecherche)]);
+			//recherche des propositions correspondant à la date demandée et à l'up de l'agent
+				$proposition = new Proposition(['idup'=>$idup,'dateproposition'=>date('Y-m-d', $datederecherche)]);
 
 				$manager = new PropositionsManager($bdd);
-				$listepropositions = $manager->findPropositionsOnDate($proposition);
+				//$listepropositions = $manager->findPropositionsOnDate($proposition);
+				$listepropositions = $manager->findPropositionsOnDateAndUp($proposition);
 
 			//association pour chaque proposition à l'agent et le roulement
-			foreach ($listepropositions as $proposition) 
-			{
-				//instanciation de l'agent
-					$idagent = $proposition->getIdagent();
-					$agent = new Agent(['id'=>$idagent]);
-					$manager = new AgentsManager($bdd);
-					$manager->findIdAgent($agent);
-				//instanciation de la journee
-					$idjournee = $proposition->getIdjournee();
-					$journee = new Journee(['id'=>$idjournee]);
-				    $manager = new JourneesManager($bdd);
-					$manager->findJourneeById($journee);
+				foreach ($listepropositions as $proposition) 
+				{
+					//instanciation de l'agent
+						$idagent = $proposition->getIdagent();
+						$agent = new Agent(['id'=>$idagent]);
+						$manager = new AgentsManager($bdd);
+						$manager->findIdAgent($agent);
+					//instanciation de la journee
+						$idjournee = $proposition->getIdjournee();
+						$journee = new Journee(['id'=>$idjournee]);
+					    $manager = new JourneesManager($bdd);
+						$manager->findJourneeById($journee);
 
-				//recuperation de l'up de l'agent faisant la proposition
-					$idupagent = $proposition->getIdup();
-
-				//ajout au tableau
-					if ($idup == $idupagent)
-					{
+					//ajout au tableau
 						$tabpropositions[$i][0] = $proposition;
 						$tabpropositions[$i][1] = $journee;
 						$tabpropositions[$i][2] = $agent;
 						$i++;
-					}
-			}
+				}
 
-			//récupération des dernieres propositions
-			$tabDernieresPropositions = Dernierespropositions();
+			//récupération des 10 dernieres propositions
+				$tabDernieresPropositions = Dernierespropositions();
 
 			//RECUPERATION DES ROULEMENTS DE RECHERCHE
 			//résultat dans le tableau tabroulementsderecherche
-			$manager = new RoulementsderechercheManager($bdd);
-			$roulementsderecherche= new Roulementsderecherche(['idagent'=>$_SESSION['id']]);
-			$tabroulementsderecherche = $manager->ListRoulementsDeRecherche($roulementsderecherche);
+				$manager = new RoulementsderechercheManager($bdd);
+				$roulementsderecherche= new Roulementsderecherche(['idagent'=>$_SESSION['id']]);
+				$tabroulementsderecherche = $manager->ListRoulementsDeRecherche($roulementsderecherche);
+			
+			//Tableau des roulements $tabroulements=>[i][1]=id du roulement [i][2]=libelle rlt
+				$i=0;
+				$manager= new RoulementsManager($bdd);
+				$roulements = $manager->getListRoulements();
+				foreach ($roulements as $roulement)
+				{
+					//ajout au tableau
+					$tabroulements[$i]['id'] = $roulement->getId();
+					$tabroulements[$i]['libelle'] = $roulement->getNoroulement();
+					$i++;
+				}
 
 			$titrepage = "Calendrier";
 			require('view/public/view_main.php');
@@ -465,7 +471,7 @@
 		}
 	}
 
-	//récupération des 10 dernieres propositions
+	//récupération des 10 dernieres propositions de l'up
 	function Dernierespropositions()
 	{
 		if(isset($_SESSION['idup'])) { $idup=$_SESSION['idup'];}
@@ -473,7 +479,8 @@
 
 		global $bdd;
 
-		if (isset($_SESSION['nocp'])) //si connecté
+		//si connecté sinon page de connexion
+		if (isset($_SESSION['nocp'])) 
 		{
 			$_SESSION['message']='';
 			
@@ -482,9 +489,10 @@
 				
 			//RECUPERATION DES 10 dernieres propositions de l'up de l'agent
 				$manager = new PropositionsManager($bdd);
+				$proposition = new Proposition(['idup'=>$idup]);
 				//recupération tout d'abord de toutes les propositions classés par arrivée du plus
-				//récent au moins récent et dont la date n'est pas obsolète
-				$propositions = $manager->getListPropositionsByIdDescDateok();
+				//récent au moins récent et dont la date n'est pas obsolète sur une up précise
+				$propositions = $manager->getListPropositionsByIdDescDateok($proposition);
 			
 				//on garde les 10 premieres propositions de l'up de l'agent
 				$i=0;
@@ -500,21 +508,16 @@
 						$journee = new Journee(['id'=>$idjournee]);
 					    $manager = new JourneesManager($bdd);
 						$manager->findJourneeById($journee);
-
-					//recuperation de l'up de l'agent faisant la proposition
-						$idupagent = $proposition->getIdup();
 						
 					//RECUPERATION DE LA PROPOSITION SI APPARTIENT A L UP
 
-					if ($idup == $idupagent)
-					{
 						//ajout au tableau
 						$tabDernieresPropositions[$i][0] = $proposition;
 						$tabDernieresPropositions[$i][1] = $journee;
 						$tabDernieresPropositions[$i][2] = $agent;
 						$i++;
 						if ($i==10) { break; }
-					}
+					
 				}
 			return $tabDernieresPropositions;;
 		}

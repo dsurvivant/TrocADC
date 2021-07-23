@@ -118,12 +118,15 @@ class PropositionsManager
 		return $propositions;
 	}
 
-	//liste des propositions classées par id desc et non obsoletes (date non dépassée)
-	public function getListPropositionsByIdDescDateok()
+	//liste des propositions classées par id desc et non obsoletes (date non dépassée) sur une up précise
+	public function getListPropositionsByIdDescDateok(Proposition $proposition)
 	{
 		$propositions = [];
 
-		$q = $this->_db->query('SELECT * FROM propositions WHERE dateproposition >= CURRENT_DATE() ORDER BY id DESC');
+		$q = $this->_db->prepare('SELECT * FROM propositions WHERE idup=:idup AND dateproposition >= CURRENT_DATE() ORDER BY id DESC');
+
+		$q->bindValue(':idup', $proposition->getIdup());
+        $q->execute();
 
 		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
 		{
@@ -184,6 +187,23 @@ class PropositionsManager
    		$listepropositions= [];
        
         $q = $this->_db->prepare('SELECT * FROM propositions WHERE dateproposition=:dateproposition');
+        $q->bindValue(':dateproposition', $proposition->getDateproposition());
+        $q->execute();
+            
+        while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$listepropositions[] = new Proposition($donnees);
+		}
+		return $listepropositions;
+    }
+
+    //retourne une liste d'objet propositions sur une date donnee et une up donné
+    public function findPropositionsOnDateAndUp(Proposition $proposition)
+   	{
+   		$listepropositions= [];
+       
+        $q = $this->_db->prepare('SELECT * FROM propositions WHERE idup=:idup AND dateproposition=:dateproposition');
+        $q->bindValue(':idup', $proposition->getIdup());
         $q->bindValue(':dateproposition', $proposition->getDateproposition());
         $q->execute();
             
