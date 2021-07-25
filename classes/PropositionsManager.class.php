@@ -123,16 +123,25 @@ class PropositionsManager
 	{
 		$propositions = [];
 
-		$q = $this->_db->prepare('SELECT * FROM propositions WHERE idup=:idup AND dateproposition >= CURRENT_DATE() ORDER BY id DESC');
+		//$q = $this->_db->prepare('SELECT * FROM propositions WHERE idup=:idup AND dateproposition >= CURRENT_DATE() ORDER BY id DESC');
+
+		$q = $this->_db->prepare('SELECT dateproposition, commentaires, nomjournee, heureps, heurefs, lieups, lieufs, nom, prenom, telephone, email, displaymail, displayname
+			FROM propositions
+			LEFT JOIN journees ON propositions.idjournee = journees.id
+			LEFT JOIN agents ON propositions.idagent = agents.id
+			LEFT JOIN roulements ON agents.idroulement = roulements.id
+			LEFT JOIN residences ON roulements.idresidence = residences.id
+			LEFT JOIN up ON residences.idup = up.id
+			WHERE propositions.dateproposition >= CURRENT_DATE AND up.id = :idup
+			ORDER BY propositions.id DESC
+			LIMIT 10');
 
 		$q->bindValue(':idup', $proposition->getIdup());
         $q->execute();
 
-		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
-		{
-			$propositions[] = new Proposition($donnees);
-		}
-		return $propositions;
+		$donnees = $q->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $donnees;
 	}
 
 

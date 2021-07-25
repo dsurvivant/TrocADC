@@ -2,8 +2,9 @@
 	/**
 	 * creer par jmt mars 2021
 	 *
-	 * cette page doit avoir en entree le tableau 'tabDernieresPropositions' qui
-	 * contient les 10 dernieres propositions ainsi que la journee et l'agent de chaque proposition
+	 * ENTREE
+	 *  $tabDernieresPropositions : contient les 10 dernieres propositions, à chaque ligne du tableau, 
+	 * 		on a les clés dateproposition, commentaires, nomjournee, heureps, heurefs, lieups, lieufs, nom, prenom, telephone, email, displayname, displaymail
 	 */
 	
 $datedujour = new DateTime("now");
@@ -21,24 +22,16 @@ $datedujour = new DateTime("now");
 	</div>
 
 	<?php
-	//rappel: tabDernieresPropositions[[$proposition,$journee,$agent]]
-	$nbproposition = count($tabDernieresPropositions);
-	for($i=0;$i<$nbproposition;$i++):
-		$proposition = $tabDernieresPropositions[$i][0];
-		$journee = $tabDernieresPropositions[$i][1];
-		$agent = $tabDernieresPropositions[$i][2];
-
-		$dateproposition= new DateTime($proposition->getDateproposition());
-
-	?>
-
+	
+	foreach ($tabDernieresPropositions as $value) 
+	{?>
 		<div class="row proposition" >
-			<div class="col p-0  border text-center"><?= $dateproposition->format('d/m/Y'); ?></div>
-			<div class="col p-0  border text-center"><?= $journee->getNomjournee(); ?></div>
-			<div class="col p-0  border text-center"><?= $journee->getHeureps(); ?></div>
-			<div class="col p-0  border text-center"><?= $journee->getLieups(); ?></div>
-			<div class="col p-0  border text-center"><?= $journee->getHeurefs(); ?></div>
-			<div class="col p-0  border text-center"><?= $journee->getLieufs(); ?> <img class="float-right m-1" src="public/images/icones/loupe1.png" alt="loupe" width="16px"></div>
+			<div class="col p-0  border text-center"><?= $value['dateproposition'] ?></div>
+			<div class="col p-0  border text-center"><?= $value['nomjournee']; ?></div>
+			<div class="col p-0  border text-center"><?= $value['heureps']; ?></div>
+			<div class="col p-0  border text-center"><?= $value['lieups']; ?></div>
+			<div class="col p-0  border text-center"><?= $value['heurefs']; ?></div>
+			<div class="col p-0  border text-center"><?= $value['lieufs']; ?> <img class="float-right m-1" src="public/images/icones/loupe1.png" alt="loupe" width="16px"></div>
 		</div>
 
 		<div class="row detailProposition">
@@ -46,9 +39,9 @@ $datedujour = new DateTime("now");
 				<!-- Coordonnees de l'agent -->
 				<p>
 					<?php 
-						if($agent->getDisplayname() == 1) { echo $agent->getNom() . " " . $agent->getPrenom() . "<br>"; }
-						echo $agent->getTelephone() . "<br>";
-						if($agent->getDisplaymail() == 1) { echo $agent->getEmail() . "<br>"; }
+						if($value['displayname'] == 1) { echo $value['nom'] . " " . $value['prenom'] . "<br>"; }
+						echo $value['telephone'] . "<br>";
+						if($value['displaymail'] == 1) { echo $value['email'] . "<br>"; }
 
 						//findId($id);
 					?>	
@@ -56,10 +49,10 @@ $datedujour = new DateTime("now");
 			</div>
 
 			<div class="m-1 p-2 border bg-danger">
-				<span><?= $proposition->getCommentaires() ?></span>
+				<span><?= $value['commentaires'] ?></span>
 			</div>
-		</div>
-	<?php 
-	endfor;?>
-							
+		</div>			
+	<?php	
+	}
+	?>			
 </div>

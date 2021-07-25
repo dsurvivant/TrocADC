@@ -145,7 +145,8 @@
 	 * 			[i][0] => Objet Proposotion du jour et de l'up au rang i
 	 * 			[i][1] => Objet Journee correspondant à la proposition
 	 * 			[i][2] => Objet Agent correspondant à la proposition
-	 * 	- $tabDernieresPropositions : idem que tableau $tabpropositions mais contient uniquement les dix dernières propositions de l'up
+	 * 	- $tabDernieresPropositions : contient les 10 dernieres propositions, à chaque ligne du tableau, 
+	 * 		on a les clés dateproposition, commentaires, nomjournee, heureps, heurefs, lieups, lieufs, nom, prenom, telephone, email
 	 * 	- $tabroulementsderecherche : contient la liste des roulements de recherche choisit par l'agent connecté => example (171,172,173)
 	 * 	- $tabroulements: Tableau des roulements=>[i]['id']=id du roulement [i]['libelle']=libelle rlt
 	 * 
@@ -471,7 +472,7 @@
 		}
 	}
 
-	//récupération des 10 dernieres propositions de l'up
+	//récupération des 10 dernieres propositions de l'up de l'agent connecté
 	function Dernierespropositions()
 	{
 		if(isset($_SESSION['idup'])) { $idup=$_SESSION['idup'];}
@@ -490,36 +491,12 @@
 			//RECUPERATION DES 10 dernieres propositions de l'up de l'agent
 				$manager = new PropositionsManager($bdd);
 				$proposition = new Proposition(['idup'=>$idup]);
-				//recupération tout d'abord de toutes les propositions classés par arrivée du plus
+				//recupération des 10 dernieres propositions classés par arrivée du plus
 				//récent au moins récent et dont la date n'est pas obsolète sur une up précise
-				$propositions = $manager->getListPropositionsByIdDescDateok($proposition);
-			
-				//on garde les 10 premieres propositions de l'up de l'agent
-				$i=0;
-				foreach ($propositions as $proposition) 
-				{
-					//instanciation de l'agent
-						$idagent = $proposition->getIdagent();
-						$agent = new Agent(['id'=>$idagent]);
-						$manager = new AgentsManager($bdd);
-						$manager->findIdAgent($agent);
-					//instanciation de la journee
-						$idjournee = $proposition->getIdjournee();
-						$journee = new Journee(['id'=>$idjournee]);
-					    $manager = new JourneesManager($bdd);
-						$manager->findJourneeById($journee);
-						
-					//RECUPERATION DE LA PROPOSITION SI APPARTIENT A L UP
-
-						//ajout au tableau
-						$tabDernieresPropositions[$i][0] = $proposition;
-						$tabDernieresPropositions[$i][1] = $journee;
-						$tabDernieresPropositions[$i][2] = $agent;
-						$i++;
-						if ($i==10) { break; }
-					
-				}
-			return $tabDernieresPropositions;;
+				//
+				$dernierespropositions = $manager->getListPropositionsByIdDescDateok($proposition);
+				
+			return $dernierespropositions;
 		}
 		else
 		{
