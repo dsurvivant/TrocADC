@@ -16,13 +16,12 @@ class PropositionsManager
 	 */
 	public function add(Proposition $proposition) //retourne l'id de la proposition créée automatiquement par sql
 	{
-		$q = $this->_db->prepare('INSERT INTO propositions(dateproposition, idjournee, idagent, commentaires, idup) VALUES (:dateproposition, :idjournee, :idagent, :commentaires, :idup)');
+		$q = $this->_db->prepare('INSERT INTO propositions(dateproposition, idjournee, idagent, commentaires, idup) VALUES (:dateproposition, :idjournee, :idagent, :commentaires)');
 
 		$q->bindValue(':dateproposition', $proposition->getDateproposition());
 		$q->bindValue(':idjournee', $proposition->getIdjournee());
 		$q->bindValue(':idagent', $proposition->getIdagent());
 		$q->bindValue(':commentaires', $proposition->getCommentaires());
-		$q->bindValue(':idup', $proposition->getIdup());
 		
 		$q->execute();
 
@@ -127,9 +126,9 @@ class PropositionsManager
 
 		$q = $this->_db->prepare('SELECT dateproposition, commentaires, nomjournee, heureps, heurefs, lieups, lieufs, nom, prenom, telephone, email, displaymail, displayname
 			FROM propositions
-			LEFT JOIN journees ON propositions.idjournee = journees.id
 			LEFT JOIN agents ON propositions.idagent = agents.id
-			LEFT JOIN roulements ON agents.idroulement = roulements.id
+			LEFT JOIN journees ON propositions.idjournee = journees.id
+			LEFT JOIN roulements ON journees.idroulement = roulements.id
 			LEFT JOIN residences ON roulements.idresidence = residences.id
 			LEFT JOIN up ON residences.idup = up.id
 			WHERE propositions.dateproposition >= CURRENT_DATE AND up.id = :idup
@@ -160,20 +159,25 @@ class PropositionsManager
 	}
 
 	//liste des propositions classées par date pour une up précise
-	public function getListPropositionsByDateAndUp(Proposition $proposition)
+	public function getListPropositionsByDateAndUp(Up $up)
 	{
 		$propositions = [];
 
-		$q = $this->_db->prepare('SELECT * FROM propositions WHERE idup=:idup ORDER BY dateproposition ASC');
+		$q = $this->_db->prepare('SELECT dateproposition, idjournee, idroulement
+									FROM propositions
+									LEFT JOIN journees ON propositions.idjournee = journees.id
+									LEFT JOIN roulements ON journees.idroulement = roulements.id
+									LEFT JOIN residences ON roulements.idresidence = residences.id
+									LEFT JOIN up ON residences.idup = up.id
+									WHERE up.id = :idup
+									ORDER BY propositions.dateproposition ASC');
 
-		$q->bindValue(':idup', $proposition->getIdup());
+		$q->bindValue(':idup', $up->getId());
         $q->execute();
 
-		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
-		{
-			$propositions[] = new Proposition($donnees);
-		}
-		return $propositions;
+		$donnees = $q->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $donnees;
 	}
 
 	//liste des 10 dernieres propositions

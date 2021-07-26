@@ -99,23 +99,18 @@ if (isset($_SESSION['nocp']))
 								
 								//VIGNETTE NOMBRE DE PROPOSITIONS
 									//liste des propositions de l'up classés par date asc
-									$manager = new PropositionsManager($bdd);
-									//$propositions = $manager->getListPropositionsByDate();
-									$prop = new Proposition(['idup'=>$idup]);
-									$propositions = $manager->getListPropositionsByDateAndUp($prop);
+									$manager = new PropositionsManager($bdd);//$propositions = $manager->getListPropositionsByDate();
+									$up = new Up(['id'=>$idup]);
+									$resultats = $manager->getListPropositionsByDateAndUp($up);
 									
+
 									$i=0;
-									foreach ($propositions as $proposition) 
+									foreach ($resultats as $resultat) 
 									{
 										//		
-										if($proposition->getDateproposition() == date('Y-m-d', $time))
+										if($resultat['dateproposition'] == date('Y-m-d', $time))
 										{ 
-											//recuperation de l'idroulement de la journée proposée
-											$idJournee = $proposition->getIdjournee();
-											$journee = new Journee(['id'=>$idJournee]);
-											$managerjournee = new JourneesManager($bdd);
-											$managerjournee->findJourneeById($journee);
-											$idroulement = $journee->getIdroulement();
+											$idroulement = $resultat['idroulement'];
 
 											//que les roulements de recherche
 											if(in_array($idroulement, $tabroulementsderecherche)) 

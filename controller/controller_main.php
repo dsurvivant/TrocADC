@@ -262,7 +262,6 @@
 				$idresidence = 1;
 				$commentaires = sanitizeString(trim($_POST['commentaires']));
 				$idagent = $_SESSION['id'];
-				$idup = $_SESSION['idup'];
 				$dateconcernee = date('Y-m-d', $_GET['jour']);
 
 				//controle des champs
@@ -272,7 +271,6 @@
 								'idjournee'=>$idjournee,
 								'idagent'=>$idagent,
 								'commentaires'=>$commentaires,
-								'idup'=>$idup
 								]);
 				$manager = new PropositionsManager($bdd);
 				$idproposition = $manager->add($proposition);
