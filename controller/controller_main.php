@@ -170,11 +170,12 @@
 				$tabpropositions = [];
 				$i=0;
 			//recherche des propositions correspondant à la date demandée et à l'up de l'agent
-				$proposition = new Proposition(['idup'=>$idup,'dateproposition'=>date('Y-m-d', $datederecherche)]);
+				$proposition = new Proposition(['dateproposition'=>date('Y-m-d', $datederecherche)]);
+				$up = new Up(['id'=>$idup]);
 
 				$manager = new PropositionsManager($bdd);
 				//$listepropositions = $manager->findPropositionsOnDate($proposition);
-				$listepropositions = $manager->findPropositionsOnDateAndUp($proposition);
+				$listepropositions = $manager->findPropositionsOnDateAndUp($proposition, $up);
 
 			//association pour chaque proposition à l'agent et le roulement
 				foreach ($listepropositions as $proposition) 
@@ -488,11 +489,11 @@
 				
 			//RECUPERATION DES 10 dernieres propositions de l'up de l'agent
 				$manager = new PropositionsManager($bdd);
-				$proposition = new Proposition(['idup'=>$idup]);
+				$up = new Up(['id'=>$idup]);
 				//recupération des 10 dernieres propositions classés par arrivée du plus
 				//récent au moins récent et dont la date n'est pas obsolète sur une up précise
 				//
-				$dernierespropositions = $manager->getListPropositionsByIdDescDateok($proposition);
+				$dernierespropositions = $manager->getListPropositionsByIdDescDateok($up);
 				
 			return $dernierespropositions;
 		}

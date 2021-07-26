@@ -176,7 +176,7 @@ if (isset($_SESSION['nocp']))
 					 <div class="container-fluid">
 					 	<div class="row justify-content-around">
 							<div class="col-12 col-md-5 border p-0 mt-1">
-								<div class="h4 bg-secondary text-white text-center pb-1">Divers</div>
+								<div class="h4 bg-secondary text-white text-center pb-1">Affichage</div>
 
 								<form id="formfiltres" method="post" class="p-1">
 								    <div class="form-check ">
@@ -195,7 +195,7 @@ if (isset($_SESSION['nocp']))
 							</div>
 
 						    <div class="col-12 col-md-6 border p-0 mt-1">
-						    	<div class="h4 bg-secondary text-white text-center pb-1">Roulements souhaités </div>
+						    	<div class="h4 bg-secondary text-white text-center pb-1">Roulements</div>
 
 							    <form id="formfiltresRoulements" method="post" class="p-1">
 								    <?php

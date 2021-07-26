@@ -16,7 +16,7 @@ class PropositionsManager
 	 */
 	public function add(Proposition $proposition) //retourne l'id de la proposition créée automatiquement par sql
 	{
-		$q = $this->_db->prepare('INSERT INTO propositions(dateproposition, idjournee, idagent, commentaires, idup) VALUES (:dateproposition, :idjournee, :idagent, :commentaires)');
+		$q = $this->_db->prepare('INSERT INTO propositions(dateproposition, idjournee, idagent, commentaires) VALUES (:dateproposition, :idjournee, :idagent, :commentaires)');
 
 		$q->bindValue(':dateproposition', $proposition->getDateproposition());
 		$q->bindValue(':idjournee', $proposition->getIdjournee());
@@ -117,14 +117,14 @@ class PropositionsManager
 		return $propositions;
 	}
 
-	//liste des propositions classées par id desc et non obsoletes (date non dépassée) sur une up précise
-	public function getListPropositionsByIdDescDateok(Proposition $proposition)
+	//liste des 10 dernieres propositions classées par id desc et non obsoletes (date non dépassée) sur une up précise
+	public function getListPropositionsByIdDescDateok(Up $up)
 	{
 		$propositions = [];
 
 		//$q = $this->_db->prepare('SELECT * FROM propositions WHERE idup=:idup AND dateproposition >= CURRENT_DATE() ORDER BY id DESC');
 
-		$q = $this->_db->prepare('SELECT dateproposition, commentaires, nomjournee, heureps, heurefs, lieups, lieufs, nom, prenom, telephone, email, displaymail, displayname
+		$q = $this->_db->prepare('SELECT dateproposition, commentaires, nomjournee, heureps, heurefs, lieups, lieufs, nom, prenom, telephone, email, displaymail, displayname, roulements.id As idroulement
 			FROM propositions
 			LEFT JOIN agents ON propositions.idagent = agents.id
 			LEFT JOIN journees ON propositions.idjournee = journees.id
@@ -135,7 +135,7 @@ class PropositionsManager
 			ORDER BY propositions.id DESC
 			LIMIT 10');
 
-		$q->bindValue(':idup', $proposition->getIdup());
+		$q->bindValue(':idup', $up->getId());
         $q->execute();
 
 		$donnees = $q->fetchAll(PDO::FETCH_ASSOC);
@@ -211,12 +211,19 @@ class PropositionsManager
     }
 
     //retourne une liste d'objet propositions sur une date donnee et une up donné
-    public function findPropositionsOnDateAndUp(Proposition $proposition)
+    public function findPropositionsOnDateAndUp(Proposition $proposition, Up $up)
    	{
    		$listepropositions= [];
        
-        $q = $this->_db->prepare('SELECT * FROM propositions WHERE idup=:idup AND dateproposition=:dateproposition');
-        $q->bindValue(':idup', $proposition->getIdup());
+        //$q = $this->_db->prepare('SELECT * FROM propositions WHERE idup=:idup AND dateproposition=:dateproposition');
+        $q = $this->_db->prepare('SELECT *
+									FROM propositions
+									LEFT JOIN journees ON propositions.idjournee = journees.id
+									LEFT JOIN roulements ON journees.idroulement = roulements.id
+									LEFT JOIN residences ON roulements.idresidence = residences.id
+									LEFT JOIN up ON residences.idup = up.id
+									WHERE up.id = :idup AND dateproposition=:dateproposition');
+        $q->bindValue(':idup', $up->getId());
         $q->bindValue(':dateproposition', $proposition->getDateproposition());
         $q->execute();
             
