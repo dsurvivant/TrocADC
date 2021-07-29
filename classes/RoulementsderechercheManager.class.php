@@ -57,6 +57,28 @@ class RoulementsderechercheManager
 	}
 
 	/**
+	 * EFFACEMENT D'UN AGENT DANS LA TABLE roulementsderecherche
+	 * 
+	 */
+	 public function eraseAgent($agent)
+	 {
+	 	$q = $this->_db->prepare('DELETE FROM roulementsderecherche WHERE idagent=:idagent');
+	 	$q->bindValue(':idagent', $agent->getId());
+		$q-> execute();
+	 }
+
+	/**
+	 * MIS A JOUR POUR UN AGENT
+	 */
+	public function updateagent($agent)
+	{
+		$q = $this->_db->prepare('INSERT INTO roulementsderecherche( idagent, idroulement) VALUES ( :idagent, :idroulement)');
+	 	$q->bindValue(':idagent', $agent->getId());
+	 	$q->bindValue(':idroulement', $agent->getIdroulement());
+		$q-> execute();
+	}
+
+	/**
 	 * LISTE DES ROULEMENTS DE RECHERCHE POUR UN AGENT
 	 */
 	public function ListRoulementsDeRecherche(Roulementsderecherche $roulementsderecherche)

@@ -257,4 +257,15 @@
 		$manager->delete($agent);
 	}
 
+	//mis à jour des roulements de recherche d'un agent
+	function updateRoulementsrechercheAgent($agent)
+	{
+		global $bdd;
+		//remis à zéro de la table roulements de recherche pour l'agent
+            $manager = new RoulementsderechercheManager($bdd);
+            $manager->eraseAgent($agent);
+        //affectation par défaut pour chaque agent
+            $manager->updateagent($agent);   
+	}
+
 ?>

@@ -16,12 +16,6 @@
 	{
 		global $bdd;
 
-		//RECUPERATION DES ROULEMENTS DE RECHERCHE
-		//résultat dans le tableau tabroulementsderecherche
-			$manager = new RoulementsderechercheManager($bdd);
-			$roulementsderecherche= new Roulementsderecherche(['idagent'=>$_SESSION['id']]);
-			$tabroulementsderecherche = $manager->ListRoulementsDeRecherche($roulementsderecherche);
-
 		$_SESSION['message']='';
 		//modification des infos sur la page parametres (retour form)
 			if( isset($_POST['telephone']) and isset($_POST['email']) and isset($_POST['noroulement']) and isset($_POST['noresidence']) and isset($_POST['noup']) )
@@ -34,6 +28,13 @@
 		
 				$message = modifInfosProfil($telephone, $email, $idroulement);
 				$_SESSION['message']= $message;
+
+				//Si changement d'up , mis à jour des roulements de recherche
+					if($idup !=  $_SESSION['idup'])
+                        {
+                            $agent = new Agent(['id'=>$_SESSION['id'], 'idroulement'=>$idroulement]);
+                            updateRoulementsrechercheAgent($agent);
+                        }
 
 				//mis à jour parametres session de l'utilisateur
 				$_SESSION['idup'] = $idup;
@@ -74,6 +75,11 @@
 				}		
 			}
 
+		//RECUPERATION DES ROULEMENTS DE RECHERCHE dans le tableau tabroulementsderecherche
+			$manager = new RoulementsderechercheManager($bdd);
+			$roulementsderecherche= new Roulementsderecherche(['idagent'=>$_SESSION['id']]);
+			$tabroulementsderecherche = $manager->ListRoulementsDeRecherche($roulementsderecherche);
+			
 		//modification case à cocher "Afficher nom et prénom" APPEL AJAX
 			if (isset($_POST['filtrename']))
 			{
