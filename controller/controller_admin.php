@@ -428,7 +428,6 @@ function viewFicheAgent()
                     ModifierAgent($agent);
 
                     //Si changement d'up , mis à jour des roulements de recherche
-
                         if($idup !=  $_SESSION['idup'])
                         {
                             updateRoulementsrechercheAgent($agent);
