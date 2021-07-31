@@ -220,28 +220,6 @@
 		$_SESSION['password'] = $agent->getMotdepasse();
 	}
 
-	function AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $motdepasse, $dateinscription, $actif, $roulement, $cle)
-	{
-		global $bdd;
-
-		$agent = new Agent(
-					[
-						'nom'=>$nom,
-						'prenom'=>$prenom,
-						'telephone'=>$telephone,
-						'email'=>$email,
-						'nocp'=>$nocp,
-						'droits'=>$droits,
-						'motdepasse'=>cryptagemotdepasse($motdepasse),
-						'dateinscription'=>$dateinscription,
-						'actif'=>$actif,
-						'idroulement'=>$roulement,
-						'cle'=>$cle
-					]);
-		$manager = new AgentsManager($bdd);
-		$manager->add($agent);
-	}
-
 	function ModifierAgent($agent)
 	{
 		global $bdd;

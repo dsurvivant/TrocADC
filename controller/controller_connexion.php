@@ -100,12 +100,34 @@
 					
 					mail('jmtentelier@gmail.com','nouvelle inscription',$messageadmin ,$entete);
 					
-					AjouterAgent($nom, $prenom, $telephone, $email, $nocp, $droits, $password, $dateinscription, $actif, $idroulement, $cle); 
+					$agent = new Agent(
+					[
+						'nom'=>$nom,
+						'prenom'=>$prenom,
+						'telephone'=>$telephone,
+						'email'=>$email,
+						'nocp'=>$nocp,
+						'droits'=>$droits,
+						'motdepasse'=>cryptagemotdepasse($password),
+						'dateinscription'=>$dateinscription,
+						'actif'=>$actif,
+						'idroulement'=>$idroulement,
+						'cle'=>$cle
+					]);
+					$manager = new AgentsManager($bdd);
+					$idagent = $manager->add($agent);
 					
 					$titrepage = "inscription";
 					require('view/public/messages/view_message_confirmation_activation.php');
-					//message admin de d'inscription
-					
+
+					//roulements de recherche par défaut
+					$roulementderecherche = new Roulementsderecherche(
+						[
+							'idagent'=>$idagent,
+							'idroulement'=>$idroulement
+						]);
+					$manager = new RoulementsderechercheManager($bdd);
+					$manager->add($roulementderecherche);
 					
 				}
 			else 
