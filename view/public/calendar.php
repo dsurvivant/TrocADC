@@ -18,20 +18,31 @@ if (isset($_SESSION['nocp']))
 		else{$idup='';}
 
 	//choix de la date affichée au calendrier
-	if (isset($_GET['choixdate'])) 
+	if (isset($_GET['choixdate'])) //ex: 15 aout 2021
 		{ 
 			$choixdate = $_GET['choixdate']; 
-			$year =date('Y', $choixdate);
-			$currentmonth = date('n', $choixdate); 
-			$currentday = date('j', $choixdate);
-			$datedujour = date('j M Y', $choixdate);
+			$year =date('Y', $choixdate); //ex: 2021
+			$currentmonth = date('n', $choixdate); // ex: 8
+			$currentday = date('j', $choixdate); // ex: 15
+			$datedujour = date('j M Y', $choixdate); // ex: 15 Aug 2021
 		}
 	else 
 		{ 
-			$year = date('Y');
-			$currentmonth = date('n');
-			$currentday  = date('j');
-			$datedujour = date('j M Y');
+			if (isset($_GET['year']))
+			{
+				$year = $_GET['year'];
+				$currentmonth = 1;
+				$currentday  = 1;
+				$datedujour = "1 Jan " . $year;
+			}
+			else
+			{
+				$year = date('Y');
+				$currentmonth = date('n');
+				$currentday  = date('j');
+				$datedujour = date('j M Y');
+			}
+			
 		}
 	
 	$date = new Date();
@@ -41,7 +52,16 @@ if (isset($_SESSION['nocp']))
 	<div class="border border-secondary p-2">
 		<div class="periods">
 				<div class="text-center">
+					<?php if($year>2021) 
+					{?>
+						<a id="previousyear"  class="h3" href="index.php?page=calendrier&year=<?php echo $year - 1; ?>"> <</a>
+					 <?php
+					}
+					else { $year = 2021;}
+					?>
+					
 					<span class="year text-center h3" style="color:#e91903"><?= $year ?></span>
+					<a id="nextyear"  class="h3" href="index.php?page=calendrier&year=<?php echo $year + 1; ?>">> </a>
 					<img class="monthsupdown" src="public/images/icones/moins-16px.png" title="replier" alt="repliage calendrier">
 				</div>
 				<div class="months mb">

@@ -39,3 +39,7 @@
 #calendar .today {background-color: lightblue;}
 
 #calendar .hidemonth {display: none;}
+
+#calendar #previousyear, #calendar #nextyear { color: #e91903; text-decoration: none;}
+
+#calendar #previousyear:hover, #calendar #nextyear:hover {font-weight: bold; }
