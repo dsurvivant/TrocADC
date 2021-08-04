@@ -24,7 +24,10 @@ if (isset($_SESSION['nocp']))
 	if($_SESSION['displayname']==1){$displayname="checked";}
 	else {$displayname='';}
 	if($_SESSION['displaymail']==1){$displaymail="checked";}
+	if($_SESSION['displaymail']==1){$displaymail="checked";}
 	else {$displaymail='';}
+	if($_SESSION['displaylastpropositions']==1){$displaylastpropositions="checked";}
+	else {$displaylastpropositions='';}
 	/**$residence = $_SESSION['idresidence'];**/
 
 	$mois = array('Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
@@ -175,6 +178,7 @@ if (isset($_SESSION['nocp']))
 				<div class="card-body border">
 					 <div class="container-fluid">
 					 	<div class="row justify-content-around">
+							<!-- AFFICHAGE -->
 							<div class="col-12 col-md-5 border p-0 mt-1">
 								<div class="h4 bg-secondary text-white text-center pb-1">Affichage</div>
 
@@ -188,12 +192,15 @@ if (isset($_SESSION['nocp']))
 								    	<input form="formfiltres" id="inputmail" name="inputmail" class="form-check-input" type="checkbox" value="on" <?= $displaymail ?>>
 								    	<label class="form-check-label" for="inputmail">Email visible</label>
 								    </div>
+
+								    <div class="form-check">
+								    	<input form="formfiltres" id="inputlastpropositions" name="inputlastpropositions" class="form-check-input" type="checkbox" value="on" <?= $displaylastpropositions ?>>
+								    	<label class="form-check-label" for="inputlastpropositions">10 dernières propositions</label>
+								    </div>
 							    </form>
-
-
-							    <div class="lead px-1 mt-3">Eléments que je souhaite laisser visibles aux autres</div>
 							</div>
 
+							<!-- ROULEMENTS -->
 						    <div class="col-12 col-md-6 border p-0 mt-1">
 						    	<div class="h4 bg-secondary text-white text-center pb-1">Roulements</div>
 
@@ -234,8 +241,6 @@ if (isset($_SESSION['nocp']))
 									    ?></div></div><?php
 								    ?>
 							    </form>
-
-							    <div class="lead px-1 mt-3">Seuls les propositions des roulements sélectionnés apparaitront</div>
 							</div>
 						</div>
 					</div>

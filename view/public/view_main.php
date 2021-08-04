@@ -21,7 +21,7 @@ if (isset($_SESSION['nocp']))
 	<div class="container">
 
 		<div class="row">
-			<section  class="col-lg-6">
+			<section  class="col">
 				<div id="calendar" class="mb-3">
 					<?php require("view/public/calendar.php");  ?>
 
@@ -33,11 +33,15 @@ if (isset($_SESSION['nocp']))
 				</div>
 			</section>
 
-			<section class="col-lg-6">
-				<div class="sectionPropositions">
-					<?php require("view/public/view_dernieres_propositions.php"); ?>
-				</div>
-			</section>
+			<?php if($_SESSION['displaylastpropositions']==1)
+			{ ?>
+				<section class="col">
+					<div class="sectionPropositions">
+						<?php require("view/public/view_dernieres_propositions.php"); ?>
+					</div>
+				</section>
+			<?php
+			}?>
 
 		</div>
 

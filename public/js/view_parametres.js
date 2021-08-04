@@ -183,6 +183,21 @@ $(function(){
 			});
 		});
 
+		$('#inputlastpropositions').change(function(event) 
+		{
+			if($(this).prop('checked')==true){ checklastpropositions=1;}
+			else { checklastpropositions = 0;}
+
+			$.ajax({
+				url: 'index.php?page=parametres',
+				type: 'POST',
+				data: {
+						filtrelastpropositions: "filtrelastpropositions",
+						checklastpropositions: checklastpropositions
+					}
+			});
+		});
+
 		$('#formfiltresRoulements .inputroulement').change(function()
 		{
 			if($(this).prop('checked')==true){ checkroulement=1;}

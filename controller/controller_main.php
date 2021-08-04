@@ -98,6 +98,14 @@
 				exit;
 			}
 
+		//modification case à cocher "Afficher dernieres propositions APPEL AJAX"
+			if (isset($_POST['filtrelastpropositions'])) {
+				$manager = new AgentsManager($bdd);
+				$manager->updateDisplayLastPropositions($_POST['checklastpropositions'],$_SESSION['nocp']);
+				$_SESSION['displaylastpropositions']=$_POST['checklastpropositions'];
+				exit;
+			}
+
 		//modification roulements souhaités APPEL AJAX
 			if (isset($_POST['filtreroulement']))
 			{

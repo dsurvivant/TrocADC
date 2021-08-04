@@ -58,6 +58,7 @@
 		        $_SESSION['idroulement'] = $agent->getIdroulement();
 		        $_SESSION['displayname'] = $agent->getDisplayname();
 		        $_SESSION['displaymail'] = $agent->getDisplaymail();
+		        $_SESSION['displaylastpropositions'] = $agent->getDisplaylastpropositions();
 
 		        $roulement = new Roulement(['id'=>$_SESSION['idroulement']]);
 		        $manager = new RoulementsManager($bdd);

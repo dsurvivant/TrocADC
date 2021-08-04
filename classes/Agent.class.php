@@ -18,6 +18,7 @@
 		private $_cle;
 		private $_displayname;
 		private $_displaymail;
+		private $_displaylastpropositions;
 
 		public function __construct($donnees)
 		{
@@ -58,6 +59,7 @@
 		public function getCle(){return $this->_cle;}
 		public function getDisplayname(){return $this->_displayname;}
 		public function getDisplaymail(){return $this->_displaymail;}
+		public function getDisplaylastpropositions(){return $this->_displaylastpropositions;}
 
 		/**
 		 * SETTEURS
@@ -92,5 +94,6 @@
 		public function setCle($cle) { $this->_cle = $cle; }
 		public function setDisplayname($displayname) { $this->_displayname = $displayname; }
 		public function setDisplaymail($displaymail) { $this->_displaymail = $displaymail; }
+		public function setDisplaylastpropositions($displaylastpropositions) { $this->_displaylastpropositions = $displaylastpropositions; }
 
 	}
